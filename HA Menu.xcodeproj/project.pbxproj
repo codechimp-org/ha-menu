@@ -1,0 +1,627 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		491F529D217CBF5200105921 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F529C217CBF5200105921 /* AppDelegate.swift */; };
+		491F52A1217CBF5400105921 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 491F52A0217CBF5400105921 /* Assets.xcassets */; };
+		491F52A4217CBF5400105921 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 491F52A2217CBF5400105921 /* Main.storyboard */; };
+		491F52B0217CBF5400105921 /* HA_MenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F52AF217CBF5400105921 /* HA_MenuTests.swift */; };
+		491F52BB217CBF5400105921 /* HA_MenuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F52BA217CBF5400105921 /* HA_MenuUITests.swift */; };
+		49E61060218F4A2A00EFA408 /* StatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6105F218F4A2A00EFA408 /* StatusBarViewController.swift */; };
+		49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E61062218F5FF400EFA408 /* PrefsViewController.swift */; };
+		49E61065218F605000EFA408 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E61064218F605000EFA408 /* Preferences.swift */; };
+		49E6106721908BC100EFA408 /* HaState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106621908BC100EFA408 /* HaState.swift */; };
+		49E6106921908D1400EFA408 /* HaStateAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106821908D1400EFA408 /* HaStateAttribute.swift */; };
+		49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106E21932B6600EFA408 /* MenuItemController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		491F52AC217CBF5400105921 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 491F5291217CBF5200105921 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 491F5298217CBF5200105921;
+			remoteInfo = "HA Menu";
+		};
+		491F52B7217CBF5400105921 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 491F5291217CBF5200105921 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 491F5298217CBF5200105921;
+			remoteInfo = "HA Menu";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		491F5299217CBF5200105921 /* HA Menu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HA Menu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		491F529C217CBF5200105921 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		491F52A0217CBF5400105921 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		491F52A3217CBF5400105921 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		491F52A5217CBF5400105921 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		491F52A6217CBF5400105921 /* HA_Menu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HA_Menu.entitlements; sourceTree = "<group>"; };
+		491F52AB217CBF5400105921 /* HA MenuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "HA MenuTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		491F52AF217CBF5400105921 /* HA_MenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HA_MenuTests.swift; sourceTree = "<group>"; };
+		491F52B1217CBF5400105921 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		491F52B6217CBF5400105921 /* HA MenuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "HA MenuUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		491F52BA217CBF5400105921 /* HA_MenuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HA_MenuUITests.swift; sourceTree = "<group>"; };
+		491F52BC217CBF5400105921 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		491F52C8217CC48900105921 /* HA Menu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "HA Menu.entitlements"; sourceTree = "<group>"; };
+		491F52C9217CCA4000105921 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		49E6105F218F4A2A00EFA408 /* StatusBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarViewController.swift; sourceTree = "<group>"; };
+		49E61062218F5FF400EFA408 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
+		49E61064218F605000EFA408 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
+		49E6106621908BC100EFA408 /* HaState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaState.swift; sourceTree = "<group>"; };
+		49E6106821908D1400EFA408 /* HaStateAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaStateAttribute.swift; sourceTree = "<group>"; };
+		49E6106E21932B6600EFA408 /* MenuItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		491F5296217CBF5200105921 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F52A8217CBF5400105921 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F52B3217CBF5400105921 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		491F5290217CBF5200105921 = {
+			isa = PBXGroup;
+			children = (
+				491F52C9217CCA4000105921 /* README.md */,
+				491F529B217CBF5200105921 /* HA Menu */,
+				491F52AE217CBF5400105921 /* HA MenuTests */,
+				491F52B9217CBF5400105921 /* HA MenuUITests */,
+				491F529A217CBF5200105921 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		491F529A217CBF5200105921 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				491F5299217CBF5200105921 /* HA Menu.app */,
+				491F52AB217CBF5400105921 /* HA MenuTests.xctest */,
+				491F52B6217CBF5400105921 /* HA MenuUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		491F529B217CBF5200105921 /* HA Menu */ = {
+			isa = PBXGroup;
+			children = (
+				49E61061218F5B3500EFA408 /* ViewControllers */,
+				4950677E217DD2BD008DEF88 /* Models */,
+				491F52C8217CC48900105921 /* HA Menu.entitlements */,
+				491F529C217CBF5200105921 /* AppDelegate.swift */,
+				49E6106E21932B6600EFA408 /* MenuItemController.swift */,
+				491F52A0217CBF5400105921 /* Assets.xcassets */,
+				491F52A2217CBF5400105921 /* Main.storyboard */,
+				491F52A5217CBF5400105921 /* Info.plist */,
+				491F52A6217CBF5400105921 /* HA_Menu.entitlements */,
+			);
+			path = "HA Menu";
+			sourceTree = "<group>";
+		};
+		491F52AE217CBF5400105921 /* HA MenuTests */ = {
+			isa = PBXGroup;
+			children = (
+				491F52AF217CBF5400105921 /* HA_MenuTests.swift */,
+				491F52B1217CBF5400105921 /* Info.plist */,
+			);
+			path = "HA MenuTests";
+			sourceTree = "<group>";
+		};
+		491F52B9217CBF5400105921 /* HA MenuUITests */ = {
+			isa = PBXGroup;
+			children = (
+				491F52BA217CBF5400105921 /* HA_MenuUITests.swift */,
+				491F52BC217CBF5400105921 /* Info.plist */,
+			);
+			path = "HA MenuUITests";
+			sourceTree = "<group>";
+		};
+		4950677E217DD2BD008DEF88 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				49E61064218F605000EFA408 /* Preferences.swift */,
+				49E6106621908BC100EFA408 /* HaState.swift */,
+				49E6106821908D1400EFA408 /* HaStateAttribute.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		49E61061218F5B3500EFA408 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				49E6105F218F4A2A00EFA408 /* StatusBarViewController.swift */,
+				49E61062218F5FF400EFA408 /* PrefsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		491F5298217CBF5200105921 /* HA Menu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 491F52BF217CBF5400105921 /* Build configuration list for PBXNativeTarget "HA Menu" */;
+			buildPhases = (
+				491F5295217CBF5200105921 /* Sources */,
+				491F5296217CBF5200105921 /* Frameworks */,
+				491F5297217CBF5200105921 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "HA Menu";
+			productName = "HA Menu";
+			productReference = 491F5299217CBF5200105921 /* HA Menu.app */;
+			productType = "com.apple.product-type.application";
+		};
+		491F52AA217CBF5400105921 /* HA MenuTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 491F52C2217CBF5400105921 /* Build configuration list for PBXNativeTarget "HA MenuTests" */;
+			buildPhases = (
+				491F52A7217CBF5400105921 /* Sources */,
+				491F52A8217CBF5400105921 /* Frameworks */,
+				491F52A9217CBF5400105921 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				491F52AD217CBF5400105921 /* PBXTargetDependency */,
+			);
+			name = "HA MenuTests";
+			productName = "HA MenuTests";
+			productReference = 491F52AB217CBF5400105921 /* HA MenuTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		491F52B5217CBF5400105921 /* HA MenuUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 491F52C5217CBF5400105921 /* Build configuration list for PBXNativeTarget "HA MenuUITests" */;
+			buildPhases = (
+				491F52B2217CBF5400105921 /* Sources */,
+				491F52B3217CBF5400105921 /* Frameworks */,
+				491F52B4217CBF5400105921 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				491F52B8217CBF5400105921 /* PBXTargetDependency */,
+			);
+			name = "HA MenuUITests";
+			productName = "HA MenuUITests";
+			productReference = 491F52B6217CBF5400105921 /* HA MenuUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		491F5291217CBF5200105921 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1000;
+				LastUpgradeCheck = 1000;
+				ORGANIZATIONNAME = CodeChimp;
+				TargetAttributes = {
+					491F5298217CBF5200105921 = {
+						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
+					};
+					491F52AA217CBF5400105921 = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 491F5298217CBF5200105921;
+					};
+					491F52B5217CBF5400105921 = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 491F5298217CBF5200105921;
+					};
+				};
+			};
+			buildConfigurationList = 491F5294217CBF5200105921 /* Build configuration list for PBXProject "HA Menu" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 491F5290217CBF5200105921;
+			productRefGroup = 491F529A217CBF5200105921 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				491F5298217CBF5200105921 /* HA Menu */,
+				491F52AA217CBF5400105921 /* HA MenuTests */,
+				491F52B5217CBF5400105921 /* HA MenuUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		491F5297217CBF5200105921 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F52A1217CBF5400105921 /* Assets.xcassets in Resources */,
+				491F52A4217CBF5400105921 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F52A9217CBF5400105921 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F52B4217CBF5400105921 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		491F5295217CBF5200105921 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				49E61060218F4A2A00EFA408 /* StatusBarViewController.swift in Sources */,
+				491F529D217CBF5200105921 /* AppDelegate.swift in Sources */,
+				49E61065218F605000EFA408 /* Preferences.swift in Sources */,
+				49E6106721908BC100EFA408 /* HaState.swift in Sources */,
+				49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */,
+				49E6106921908D1400EFA408 /* HaStateAttribute.swift in Sources */,
+				49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F52A7217CBF5400105921 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F52B0217CBF5400105921 /* HA_MenuTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		491F52B2217CBF5400105921 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				491F52BB217CBF5400105921 /* HA_MenuUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		491F52AD217CBF5400105921 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 491F5298217CBF5200105921 /* HA Menu */;
+			targetProxy = 491F52AC217CBF5400105921 /* PBXContainerItemProxy */;
+		};
+		491F52B8217CBF5400105921 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 491F5298217CBF5200105921 /* HA Menu */;
+			targetProxy = 491F52B7217CBF5400105921 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		491F52A2217CBF5400105921 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				491F52A3217CBF5400105921 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		491F52BD217CBF5400105921 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		491F52BE217CBF5400105921 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		491F52C0217CBF5400105921 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "HA Menu/HA Menu.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
+				INFOPLIST_FILE = "HA Menu/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Debug;
+		};
+		491F52C1217CBF5400105921 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "HA Menu/HA Menu.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
+				INFOPLIST_FILE = "HA Menu/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+			};
+			name = Release;
+		};
+		491F52C3217CBF5400105921 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
+				INFOPLIST_FILE = "HA MenuTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-MenuTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HA Menu.app/Contents/MacOS/HA Menu";
+			};
+			name = Debug;
+		};
+		491F52C4217CBF5400105921 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
+				INFOPLIST_FILE = "HA MenuTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-MenuTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HA Menu.app/Contents/MacOS/HA Menu";
+			};
+			name = Release;
+		};
+		491F52C6217CBF5400105921 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
+				INFOPLIST_FILE = "HA MenuUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-MenuUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = "HA Menu";
+			};
+			name = Debug;
+		};
+		491F52C7217CBF5400105921 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
+				INFOPLIST_FILE = "HA MenuUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-MenuUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_TARGET_NAME = "HA Menu";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		491F5294217CBF5200105921 /* Build configuration list for PBXProject "HA Menu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				491F52BD217CBF5400105921 /* Debug */,
+				491F52BE217CBF5400105921 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		491F52BF217CBF5400105921 /* Build configuration list for PBXNativeTarget "HA Menu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				491F52C0217CBF5400105921 /* Debug */,
+				491F52C1217CBF5400105921 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		491F52C2217CBF5400105921 /* Build configuration list for PBXNativeTarget "HA MenuTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				491F52C3217CBF5400105921 /* Debug */,
+				491F52C4217CBF5400105921 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		491F52C5217CBF5400105921 /* Build configuration list for PBXNativeTarget "HA MenuUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				491F52C6217CBF5400105921 /* Debug */,
+				491F52C7217CBF5400105921 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 491F5291217CBF5200105921 /* Project object */;
+}
