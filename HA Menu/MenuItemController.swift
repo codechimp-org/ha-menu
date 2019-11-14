@@ -112,23 +112,36 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 if let decodedResponse = try? JSONDecoder().decode([HaState].self, from: data) {
                     DispatchQueue.main.async {
                         self.haStates = decodedResponse
-
-                        // Add a seperator before static menu items
-                        self.menu.insertItem(NSMenuItem.separator(), at: 0)
                         
-                        // Populate Menu
                         let allSwitches = self.getEntity(entityId: "group.all_switches")
+
+                        if ((allSwitches?.attributes!.entityIds!.count)! > 0) {
+                            // Add a seperator before static menu items
+                            self.menu.insertItem(NSMenuItem.separator(), at: 0)
+                        }
+
+                        // For each switch entity, get it's attributes and add to a switch array then sort
+                        var switches = [HaSwitch]()
+
                         for entityId in (allSwitches?.attributes!.entityIds!)! {
-                            
+
                             let entity = self.getEntity(entityId: entityId)
-                            let friendlyName = entity?.attributes!.friendlyName
-                            let state = entity?.state
-                            
-                            let menuItem = NSMenuItem(title: friendlyName!, action: #selector(self.toggleSwitch(_:)), keyEquivalent: "")
+
+                            let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity?.attributes!.friendlyName!)!, state: (entity?.state!)!)
+
+                            switches.append(haSwitch)
+                        }
+
+                        switches.sort(by: {$0.friendlyName > $1.friendlyName})
+
+                        // Populate menu items for switches
+                        for haSwitch in switches {
+
+                            let menuItem = NSMenuItem(title: haSwitch.friendlyName, action: #selector(self.toggleSwitch(_:)), keyEquivalent: "")
                             menuItem.target = self
                             
-                            menuItem.state = ((state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
-                            menuItem.representedObject = entityId
+                            menuItem.state = ((haSwitch.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
+                            menuItem.representedObject = haSwitch.entityId
                             menuItem.tag = menuItemTypes.switchType.rawValue // Tag defines what type of item it is
                             //                    menuItem.image = NSImage(named: "StatusBarButtonImage")
                             //                    menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
@@ -161,7 +174,6 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
     
     @objc func toggleSwitch(_ sender: NSMenuItem) {
-        //        sender.representedObject
         let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
         
         var request = URLRequest(url: URL(string: "\(prefs.server)/api/services/switch/toggle")!)
@@ -173,7 +185,6 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            //            print(response!)
             print(String(data: data!, encoding: String.Encoding.utf8)!)
         })
         

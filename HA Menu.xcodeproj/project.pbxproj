@@ -12,6 +12,7 @@
 		491F52A4217CBF5400105921 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 491F52A2217CBF5400105921 /* Main.storyboard */; };
 		491F52B0217CBF5400105921 /* HA_MenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F52AF217CBF5400105921 /* HA_MenuTests.swift */; };
 		491F52BB217CBF5400105921 /* HA_MenuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F52BA217CBF5400105921 /* HA_MenuUITests.swift */; };
+		49BDE9D9237D75700087F729 /* HaSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9D8237D75700087F729 /* HaSwitch.swift */; };
 		49E61060218F4A2A00EFA408 /* StatusBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6105F218F4A2A00EFA408 /* StatusBarViewController.swift */; };
 		49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E61062218F5FF400EFA408 /* PrefsViewController.swift */; };
 		49E61065218F605000EFA408 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E61064218F605000EFA408 /* Preferences.swift */; };
@@ -52,6 +53,7 @@
 		491F52BC217CBF5400105921 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		491F52C8217CC48900105921 /* HA Menu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "HA Menu.entitlements"; sourceTree = "<group>"; };
 		491F52C9217CCA4000105921 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		49BDE9D8237D75700087F729 /* HaSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaSwitch.swift; sourceTree = "<group>"; };
 		49E6105F218F4A2A00EFA408 /* StatusBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarViewController.swift; sourceTree = "<group>"; };
 		49E61062218F5FF400EFA408 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
 		49E61064218F605000EFA408 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
@@ -146,6 +148,7 @@
 				49E61064218F605000EFA408 /* Preferences.swift */,
 				49E6106621908BC100EFA408 /* HaState.swift */,
 				49E6106821908D1400EFA408 /* HaStateAttribute.swift */,
+				49BDE9D8237D75700087F729 /* HaSwitch.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				491F529D217CBF5200105921 /* AppDelegate.swift in Sources */,
 				49E61065218F605000EFA408 /* Preferences.swift in Sources */,
 				49E6106721908BC100EFA408 /* HaState.swift in Sources */,
+				49BDE9D9237D75700087F729 /* HaSwitch.swift in Sources */,
 				49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */,
 				49E6106921908D1400EFA408 /* HaStateAttribute.swift in Sources */,
 				49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */,
