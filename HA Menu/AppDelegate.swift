@@ -7,22 +7,37 @@
 //
 
 import Cocoa
+import ServiceManagement
+
+let launcherAppId = "org.codechimp.HA-Menu-Launcher"
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var menuItemController: MenuItemController?
-
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        menuItemController = MenuItemController()
-    }
-
     var prefs = Preferences()
 
+
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // Kill the launcher Application
+        let runningApps = NSWorkspace.shared.runningApplications
+        let isRunning = !runningApps.filter { $0.bundleIdentifier == launcherAppId }.isEmpty
+
+        if isRunning {
+            DistributedNotificationCenter.default().post(name: .killLauncher,
+                                                         object: Bundle.main.bundleIdentifier!)
+        }
+
+        menuItemController = MenuItemController()
+    }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
+}
+
+extension Notification.Name {
+    static let killLauncher = Notification.Name("killLauncher")
 }
 
 
@@ -38,7 +53,8 @@ extension AppDelegate {
     }
 
     func updateFromPrefs() {
-        // TODO: Reconnect
+        SMLoginItemSetEnabled(launcherAppId as CFString, prefs.launch)
+
     }
 
 }

@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
-        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -11,11 +10,11 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="HA Menu" id="1Xt-HY-uBw">
+                            <menuItem title="HA Menu Launcher" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="HA Menu" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="HA Menu Launcher" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
-                                        <menuItem title="About HA Menu" id="5kV-Vb-QxS">
+                                        <menuItem title="About HA Menu Launcher" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="orderFrontStandardAboutPanel:" target="Ady-hI-5gd" id="Exp-CZ-Vem"/>
@@ -29,7 +28,7 @@
                                             <menu key="submenu" title="Services" systemMenu="services" id="hz9-B4-Xy5"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="4je-JR-u6R"/>
-                                        <menuItem title="Hide HA Menu" keyEquivalent="h" id="Olw-nP-bQN">
+                                        <menuItem title="Hide HA Menu Launcher" keyEquivalent="h" id="Olw-nP-bQN">
                                             <connections>
                                                 <action selector="hide:" target="Ady-hI-5gd" id="PnN-Uc-m68"/>
                                             </connections>
@@ -47,7 +46,7 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="kCx-OE-vgT"/>
-                                        <menuItem title="Quit HA Menu" keyEquivalent="q" id="4sb-4s-VLi">
+                                        <menuItem title="Quit HA Menu Launcher" keyEquivalent="q" id="4sb-4s-VLi">
                                             <connections>
                                                 <action selector="terminate:" target="Ady-hI-5gd" id="Te7-pn-YzF"/>
                                             </connections>
@@ -660,7 +659,7 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Help" systemMenu="help" id="F2S-fz-NVQ">
                                     <items>
-                                        <menuItem title="HA Menu Help" keyEquivalent="?" id="FKE-Sm-Kum">
+                                        <menuItem title="HA Menu Launcher Help" keyEquivalent="?" id="FKE-Sm-Kum">
                                             <connections>
                                                 <action selector="showHelp:" target="Ady-hI-5gd" id="y7X-2Q-9no"/>
                                             </connections>
@@ -674,137 +673,11 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="HA_Menu" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="HA_Menu_Launcher" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
-        </scene>
-        <!--Preferences Window Controller-->
-        <scene sceneID="cGL-Ba-Qvq">
-            <objects>
-                <windowController storyboardIdentifier="PrefsWindowController" id="5vR-qe-8Wv" userLabel="Preferences Window Controller" sceneMemberID="viewController">
-                    <window key="window" identifier="PrefsWindowController" title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="99g-Ib-SeE">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-                        <rect key="contentRect" x="245" y="301" width="487" height="264"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <connections>
-                            <outlet property="delegate" destination="5vR-qe-8Wv" id="GKJ-fo-9sp"/>
-                        </connections>
-                    </window>
-                    <connections>
-                        <segue destination="b0o-up-s6N" kind="relationship" relationship="window.shadowedContentViewController" id="y7A-c0-sgW"/>
-                    </connections>
-                </windowController>
-                <customObject id="9ju-T2-ogm" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="662.5" y="260"/>
-        </scene>
-        <!--Preferences View Controller-->
-        <scene sceneID="Sio-Xm-nKm">
-            <objects>
-                <viewController storyboardIdentifier="PreferencesViewController" id="b0o-up-s6N" userLabel="Preferences View Controller" customClass="PrefsViewController" customModule="HA_Menu" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="R2d-cY-rAO">
-                        <rect key="frame" x="0.0" y="0.0" width="425" height="159"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cJg-XY-9A6">
-                                <rect key="frame" x="78" y="118" width="260" height="21"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="http://your.server:8123" drawsBackground="YES" id="9z1-au-9a6">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xLm-S0-5hb" userLabel="Token">
-                                <rect key="frame" x="75" y="49" width="330" height="52"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="52" id="kFd-7h-9jV"/>
-                                </constraints>
-                                <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Your long lived token" drawsBackground="YES" id="j8N-iM-eA9">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="d6B-OZ-GYv">
-                                <rect key="frame" x="18" y="123" width="45" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Server" id="lrv-Ft-Gue">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s4S-Br-111">
-                                <rect key="frame" x="18" y="78" width="41" height="17"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="17" id="pFR-vn-39M"/>
-                                </constraints>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Token" id="bQV-gm-Oxx">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="axF-OX-WUt">
-                                <rect key="frame" x="76" y="25" width="101" height="18"/>
-                                <buttonCell key="cell" type="check" title="Start at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="QMM-8Q-kj2">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                            </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5m-aQ-agS">
-                                <rect key="frame" x="18" y="26" width="50" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Startup" id="iiB-Fn-K0f">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="s4S-Br-111" firstAttribute="leading" secondItem="d6B-OZ-GYv" secondAttribute="leading" id="38N-ph-Zab"/>
-                            <constraint firstItem="axF-OX-WUt" firstAttribute="leading" secondItem="n5m-aQ-agS" secondAttribute="trailing" constant="12" id="91k-og-u4U"/>
-                            <constraint firstAttribute="trailing" secondItem="cJg-XY-9A6" secondAttribute="trailing" constant="20" symbolic="YES" id="Bhy-zY-Obk"/>
-                            <constraint firstItem="d6B-OZ-GYv" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="20" id="EnX-3J-8D4"/>
-                            <constraint firstItem="cJg-XY-9A6" firstAttribute="leading" secondItem="xLm-S0-5hb" secondAttribute="leading" id="IJk-TP-eeF"/>
-                            <constraint firstItem="cJg-XY-9A6" firstAttribute="trailing" secondItem="xLm-S0-5hb" secondAttribute="trailing" id="Mz9-Xv-agm"/>
-                            <constraint firstItem="n5m-aQ-agS" firstAttribute="leading" secondItem="s4S-Br-111" secondAttribute="leading" id="P5I-mK-MY9"/>
-                            <constraint firstItem="xLm-S0-5hb" firstAttribute="leading" secondItem="s4S-Br-111" secondAttribute="trailing" constant="18" id="R1V-E7-zS1"/>
-                            <constraint firstItem="axF-OX-WUt" firstAttribute="top" secondItem="xLm-S0-5hb" secondAttribute="bottom" constant="1" id="RNt-pH-4EK"/>
-                            <constraint firstItem="axF-OX-WUt" firstAttribute="top" secondItem="xLm-S0-5hb" secondAttribute="bottom" constant="8" id="TIJ-jq-rji"/>
-                            <constraint firstItem="xLm-S0-5hb" firstAttribute="top" secondItem="cJg-XY-9A6" secondAttribute="bottom" constant="17" id="UKr-li-gNM"/>
-                            <constraint firstItem="cJg-XY-9A6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="d6B-OZ-GYv" secondAttribute="trailing" constant="8" symbolic="YES" id="Wcv-jz-Xs0"/>
-                            <constraint firstItem="cJg-XY-9A6" firstAttribute="leading" secondItem="d6B-OZ-GYv" secondAttribute="trailing" constant="14" id="bgk-TT-5c0"/>
-                            <constraint firstItem="s4S-Br-111" firstAttribute="centerY" secondItem="xLm-S0-5hb" secondAttribute="centerY" id="cwz-OI-RAW"/>
-                            <constraint firstItem="xLm-S0-5hb" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="s4S-Br-111" secondAttribute="trailing" constant="8" symbolic="YES" id="drg-DS-ah3"/>
-                            <constraint firstItem="d6B-OZ-GYv" firstAttribute="top" secondItem="R2d-cY-rAO" secondAttribute="top" constant="20" id="nuo-Za-N7n"/>
-                            <constraint firstItem="n5m-aQ-agS" firstAttribute="baseline" secondItem="axF-OX-WUt" secondAttribute="baseline" id="p8o-IH-7bn"/>
-                            <constraint firstItem="cJg-XY-9A6" firstAttribute="top" secondItem="d6B-OZ-GYv" secondAttribute="top" id="y0N-05-tRG"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="buttonLogin" destination="axF-OX-WUt" id="stJ-dK-ClI"/>
-                        <outlet property="textfieldServer" destination="cJg-XY-9A6" id="Rc7-3o-x0J"/>
-                        <outlet property="textfieldToken" destination="xLm-S0-5hb" id="sop-gd-QiM"/>
-                    </connections>
-                </viewController>
-                <customObject id="QDp-z1-f7A" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1315.5" y="194.5"/>
-        </scene>
-        <!--Status Bar View Controller-->
-        <scene sceneID="N3H-RE-JSS">
-            <objects>
-                <viewController storyboardIdentifier="StatusBarViewController" id="bfP-wh-iIN" customClass="StatusBarViewController" customModule="HA_Menu" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="o4Z-VC-cgU">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="68"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="DTy-cj-WM8" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="84" y="-123"/>
         </scene>
     </scenes>
 </document>

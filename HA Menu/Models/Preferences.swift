@@ -12,13 +12,7 @@ struct Preferences {
 
     var server: String {
         get {
-            if(UserDefaults.standard.value(forKey: "server") == nil) {
-                return ""
-            }
-            else
-            {
-                return UserDefaults.standard.string(forKey: "server")!
-            }
+            return UserDefaults.standard.string(forKey: "server") ?? ""
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "server")
@@ -27,16 +21,19 @@ struct Preferences {
 
     var token: String {
         get {
-            if(UserDefaults.standard.value(forKey: "token") == nil) {
-                return ""
-            }
-            else
-            {
-                return UserDefaults.standard.string(forKey: "token")!
-            }
+            return UserDefaults.standard.string(forKey: "token") ?? ""
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "token")
+        }
+    }
+
+    var launch: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "launch")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "launch")
         }
     }
 
