@@ -18,7 +18,13 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     let menu = NSMenu()
     
     var preferences: Preferences
-    
+
+    enum menuItemTypes: Int {
+        case switchType = 2
+        case scriptType = 3
+        case inputbooleanType = 4
+    }
+
     override init() {
         preferences = Preferences()
         
@@ -44,9 +50,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     
     
     func buildStaticMenu() {
-        
-        menu.addItem(NSMenuItem.separator())
-        
+
         let prefMenu = NSMenuItem(title: "Preferences", action: #selector(openPreferences(sender:)), keyEquivalent: ",")
         prefMenu.target = self
         menu.addItem(prefMenu)
@@ -87,6 +91,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
     
     func updateDynamicMenuItems() {
+        removeMenuItems()
         getStates()
     }
     
@@ -107,16 +112,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 if let decodedResponse = try? JSONDecoder().decode([HaState].self, from: data) {
                     DispatchQueue.main.async {
                         self.haStates = decodedResponse
-                        // Remove all switchMenu items
-                        var switchMenu: NSMenuItem?
-                        repeat {
-                            switchMenu = self.menu.item(withTag: 2)
-                            if (switchMenu != nil) {
-                                //                        print (String(switchMenu!.title))
-                                self.menu.removeItem(switchMenu!)
-                            }
-                        } while switchMenu != nil
-                        
+
+                        // Add a seperator before static menu items
+                        self.menu.insertItem(NSMenuItem.separator(), at: 0)
                         
                         // Populate Menu
                         let allSwitches = self.getEntity(entityId: "group.all_switches")
@@ -131,12 +129,13 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             
                             menuItem.state = ((state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
                             menuItem.representedObject = entityId
-                            menuItem.tag = 2 // Tag defines what type of item it is
+                            menuItem.tag = menuItemTypes.switchType.rawValue // Tag defines what type of item it is
                             //                    menuItem.image = NSImage(named: "StatusBarButtonImage")
                             //                    menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
                             
                             self.menu.insertItem(menuItem, at: 0)
                         }
+
                     }
                 }
                 
@@ -145,6 +144,16 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             
             print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
         }.resume()
+    }
+
+    func removeMenuItems() {
+        var switchMenu: NSMenuItem?
+        repeat {
+            switchMenu = self.menu.item(withTag: menuItemTypes.switchType.rawValue)
+            if (switchMenu != nil) {
+                self.menu.removeItem(switchMenu!)
+            }
+        } while switchMenu != nil
     }
     
     func getEntity(entityId: String) -> HaState? {
