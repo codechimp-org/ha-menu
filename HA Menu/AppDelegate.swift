@@ -19,6 +19,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        setupPrefs()
+
         // Kill the launcher Application
         let runningApps = NSWorkspace.shared.runningApplications
         let isRunning = !runningApps.filter { $0.bundleIdentifier == launcherAppId }.isEmpty
@@ -53,6 +55,8 @@ extension AppDelegate {
     }
 
     func updateFromPrefs() {
+        print("Prefs Updated")
+
         SMLoginItemSetEnabled(launcherAppId as CFString, prefs.launch)
 
     }
