@@ -2,6 +2,7 @@
 
 A Mac OS Menu Bar app to perform common Home Assistant functions  
 Currently HA Menu supports turning switches on and off.
+If you want to control other items with an on/off state, such as lights then create a [template switch](https://www.home-assistant.io/integrations/switch.template)
 
 ![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/menu.png "HA Menu")
 
