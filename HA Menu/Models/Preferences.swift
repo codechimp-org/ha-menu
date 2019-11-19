@@ -42,10 +42,10 @@ struct Preferences {
     var group: String {
         get {
             let groupid = UserDefaults.standard.string(forKey: "group") ?? defaultGroup
-            return (groupid.trimmingCharacters(in: .whitespacesAndNewlines).count == 0 ? defaultGroup : groupid)
+            return (groupid.count == 0 ? defaultGroup : groupid)
         }
         set {
-             UserDefaults.standard.set(newValue, forKey: "group")
+            UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "group")
          }
     }
 
