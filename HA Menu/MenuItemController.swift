@@ -113,11 +113,11 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     DispatchQueue.main.async {
                         self.haStates = decodedResponse
                         
-                        let allSwitches = self.getEntity(entityId: "group.\(self.prefs.group)")
+                        let groupSwitches = self.getEntity(entityId: "group.\(self.prefs.group)")
 
-                        if (allSwitches == nil) { return }
+                        if (groupSwitches == nil) { return }
 
-                        if ((allSwitches?.attributes!.entityIds!.count)! > 0) {
+                        if ((groupSwitches?.attributes!.entityIds!.count)! > 0) {
                             // Add a seperator before static menu items
                             self.menu.insertItem(NSMenuItem.separator(), at: 0)
                         }
@@ -125,7 +125,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                         // For each switch entity, get it's attributes and add to a switch array then sort
                         var switches = [HaSwitch]()
 
-                        for entityId in (allSwitches?.attributes!.entityIds!)! {
+                        for entityId in (groupSwitches?.attributes!.entityIds!)! {
 
                             let entity = self.getEntity(entityId: entityId)
 
