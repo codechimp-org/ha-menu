@@ -37,4 +37,13 @@ struct Preferences {
         }
     }
 
+    var group: String {
+        get {
+            return UserDefaults.standard.string(forKey: "group") ?? "all_switches"
+        }
+        set {
+             UserDefaults.standard.set(newValue, forKey: "group")
+         }
+    }
+
 }

@@ -2,7 +2,6 @@
 
 A Mac OS Menu Bar app to perform common Home Assistant functions  
 Currently HA Menu supports turning switches on and off.
-If you want to control other items with an on/off state, such as lights then create a [template switch](https://www.home-assistant.io/integrations/switch.template)
 
 ![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/menu.png "HA Menu")
 
@@ -14,3 +13,7 @@ You will have needed to enable Allow app's downloaded from App Store and identif
 
 To create a token within HA, login to HA and click on your profile.
 Under Long Lived Access Tokens, create a new token, give it a name and copy the token value into HA Menu preferences.
+
+If you want to control other items with an on/off state, such as lights then create a [template switch](https://www.home-assistant.io/integrations/switch.template)
+
+If you have a lot of switches and only want to have HA Menu display a specific set then [create a new group within HA](https://www.home-assistant.io/integrations/group/), add your switches to the group and enter the group entitiy id in HA Menu preferences.

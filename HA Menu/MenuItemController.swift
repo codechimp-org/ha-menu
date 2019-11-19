@@ -113,7 +113,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     DispatchQueue.main.async {
                         self.haStates = decodedResponse
                         
-                        let allSwitches = self.getEntity(entityId: "group.all_switches")
+                        let allSwitches = self.getEntity(entityId: "group.\(self.prefs.group)")
+
+                        if (allSwitches == nil) { return }
 
                         if ((allSwitches?.attributes!.entityIds!.count)! > 0) {
                             // Add a seperator before static menu items
