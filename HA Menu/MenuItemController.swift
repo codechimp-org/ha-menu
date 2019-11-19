@@ -117,24 +117,25 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
                         if (groupSwitches == nil) { return }
 
-                        if ((groupSwitches?.attributes!.entityIds!.count)! > 0) {
-                            // Add a seperator before static menu items
-                            self.menu.insertItem(NSMenuItem.separator(), at: 0)
-                        }
-
                         // For each switch entity, get it's attributes and add to a switch array then sort
                         var switches = [HaSwitch]()
 
                         for entityId in (groupSwitches?.attributes!.entityIds!)! {
+                            if (entityId.starts(with: "switch.")) {
+                                let entity = self.getEntity(entityId: entityId)
 
-                            let entity = self.getEntity(entityId: entityId)
+                                let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity?.attributes!.friendlyName!)!, state: (entity?.state!)!)
 
-                            let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity?.attributes!.friendlyName!)!, state: (entity?.state!)!)
-
-                            switches.append(haSwitch)
+                                switches.append(haSwitch)
+                            }
                         }
 
                         switches.sort(by: {$0.friendlyName > $1.friendlyName})
+
+                        if (switches.count > 0) {
+                            // Add a seperator before static menu items
+                            self.menu.insertItem(NSMenuItem.separator(), at: 0)
+                        }
 
                         // Populate menu items for switches
                         for haSwitch in switches {
