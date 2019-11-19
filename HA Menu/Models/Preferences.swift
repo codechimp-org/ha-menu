@@ -10,6 +10,8 @@ import Foundation
 
 struct Preferences {
 
+    let defaultGroup = "all_switches"
+
     var server: String {
         get {
             return UserDefaults.standard.string(forKey: "server") ?? ""
@@ -39,7 +41,8 @@ struct Preferences {
 
     var group: String {
         get {
-            return UserDefaults.standard.string(forKey: "group") ?? "all_switches"
+            let groupid = UserDefaults.standard.string(forKey: "group") ?? defaultGroup
+            return (groupid.trimmingCharacters(in: .whitespacesAndNewlines).count == 0 ? defaultGroup : groupid)
         }
         set {
              UserDefaults.standard.set(newValue, forKey: "group")
