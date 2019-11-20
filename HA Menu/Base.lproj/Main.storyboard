@@ -759,9 +759,9 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <textField verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnf-4Y-ty2" userLabel="Group">
+                            <textField verticalHuggingPriority="750" ambiguous="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnf-4Y-ty2" userLabel="Group">
                                 <rect key="frame" x="74" y="50" width="331" height="20"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" placeholderString="all_switches" drawsBackground="YES" id="uQN-m6-ufd">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" placeholderString="Group ID (optional, default all_switches)" drawsBackground="YES" id="uQN-m6-ufd">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -780,7 +780,6 @@
                             <constraint firstItem="axF-OX-WUt" firstAttribute="leading" secondItem="n5m-aQ-agS" secondAttribute="trailing" constant="11" id="1Ua-Uk-YTD"/>
                             <constraint firstItem="xLm-S0-5hb" firstAttribute="top" secondItem="cJg-XY-9A6" secondAttribute="bottom" constant="10" symbolic="YES" id="1je-9V-dur"/>
                             <constraint firstItem="s4S-Br-111" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="20" id="34T-zI-vwb"/>
-                            <constraint firstItem="Dnf-4Y-ty2" firstAttribute="leading" secondItem="WhI-G0-gVJ" secondAttribute="trailing" constant="16" id="7PH-rK-qp8"/>
                             <constraint firstItem="n5m-aQ-agS" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="20" id="8MV-Go-AfU"/>
                             <constraint firstItem="cJg-XY-9A6" firstAttribute="top" secondItem="R2d-cY-rAO" secondAttribute="top" constant="20" id="EES-ro-OxP"/>
                             <constraint firstItem="d6B-OZ-GYv" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="20" id="EnX-3J-8D4"/>
