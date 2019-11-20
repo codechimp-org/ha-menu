@@ -759,7 +759,7 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
-                            <textField verticalHuggingPriority="750" ambiguous="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnf-4Y-ty2" userLabel="Group">
+                            <textField verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnf-4Y-ty2" userLabel="Group">
                                 <rect key="frame" x="74" y="50" width="331" height="20"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" placeholderString="Group ID (optional, default all_switches)" drawsBackground="YES" id="uQN-m6-ufd">
                                     <font key="font" metaFont="system"/>
@@ -792,6 +792,7 @@
                             <constraint firstAttribute="trailing" secondItem="cJg-XY-9A6" secondAttribute="trailing" constant="20" id="W42-Qg-lQY"/>
                             <constraint firstAttribute="trailing" secondItem="xLm-S0-5hb" secondAttribute="trailing" constant="20" id="WAD-wr-kZD"/>
                             <constraint firstItem="cJg-XY-9A6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="d6B-OZ-GYv" secondAttribute="trailing" constant="8" symbolic="YES" id="Wcv-jz-Xs0"/>
+                            <constraint firstItem="Dnf-4Y-ty2" firstAttribute="leading" secondItem="WhI-G0-gVJ" secondAttribute="trailing" constant="16" id="Wfl-2Z-k42"/>
                             <constraint firstItem="d6B-OZ-GYv" firstAttribute="firstBaseline" secondItem="cJg-XY-9A6" secondAttribute="firstBaseline" id="a0P-rV-MdY"/>
                             <constraint firstItem="cJg-XY-9A6" firstAttribute="leading" secondItem="d6B-OZ-GYv" secondAttribute="trailing" constant="14" id="bgk-TT-5c0"/>
                             <constraint firstItem="WhI-G0-gVJ" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="20" id="blx-B1-6zj"/>
