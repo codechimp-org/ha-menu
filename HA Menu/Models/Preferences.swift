@@ -17,7 +17,7 @@ struct Preferences {
             return UserDefaults.standard.string(forKey: "server") ?? ""
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "server")
+            UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "server")
         }
     }
 
@@ -26,7 +26,7 @@ struct Preferences {
             return UserDefaults.standard.string(forKey: "token") ?? ""
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: "token")
+            UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "token")
         }
     }
 

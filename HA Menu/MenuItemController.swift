@@ -124,9 +124,13 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             if (entityId.starts(with: "switch.")) {
                                 let entity = self.getEntity(entityId: entityId)
 
-                                let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity?.attributes!.friendlyName!)!, state: (entity?.state!)!)
+                                // Do not add unavailable switches
+                                if (entity?.state != "unavailable") {
 
-                                switches.append(haSwitch)
+                                    let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity?.attributes!.friendlyName)!, state: (entity?.state)!)
+
+                                    switches.append(haSwitch)
+                                }
                             }
                         }
 
@@ -170,6 +174,11 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 self.menu.removeItem(switchMenu!)
             }
         } while switchMenu != nil
+
+        // Remove the top seperator
+        if (self.menu.item(at: 0) == NSMenuItem.separator()) {
+            self.menu.removeItem(at: 0)
+        }
     }
     
     func getEntity(entityId: String) -> HaState? {
