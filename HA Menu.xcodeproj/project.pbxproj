@@ -62,7 +62,6 @@
 		491F52A0217CBF5400105921 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		491F52A3217CBF5400105921 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		491F52A5217CBF5400105921 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		491F52A6217CBF5400105921 /* HA_Menu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HA_Menu.entitlements; sourceTree = "<group>"; };
 		491F52AB217CBF5400105921 /* HA MenuTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "HA MenuTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		491F52AF217CBF5400105921 /* HA_MenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HA_MenuTests.swift; sourceTree = "<group>"; };
 		491F52B1217CBF5400105921 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -155,7 +154,6 @@
 				491F52A0217CBF5400105921 /* Assets.xcassets */,
 				491F52A2217CBF5400105921 /* Main.storyboard */,
 				491F52A5217CBF5400105921 /* Info.plist */,
-				491F52A6217CBF5400105921 /* HA_Menu.entitlements */,
 			);
 			path = "HA Menu";
 			sourceTree = "<group>";
