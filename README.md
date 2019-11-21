@@ -14,6 +14,8 @@ You will have needed to enable Allow app's downloaded from App Store and identif
 To create a token within HA, login to HA and click on your profile.
 Under Long Lived Access Tokens, create a new token, give it a name and copy the token value into HA Menu preferences.
 
+For now there's no automatic update when new versions are released.  Suggest using the Watch/Releases Only within GitHub to get notified when new version are available. 
+
 ### Other items
 If you want to control other items with an on/off state, such as lights then create a [template switch](https://www.home-assistant.io/integrations/switch.template)   
 
