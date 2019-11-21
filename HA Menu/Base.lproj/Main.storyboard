@@ -684,7 +684,7 @@
         <!--Preferences Window Controller-->
         <scene sceneID="cGL-Ba-Qvq">
             <objects>
-                <windowController storyboardIdentifier="PrefsWindowController" id="5vR-qe-8Wv" userLabel="Preferences Window Controller" sceneMemberID="viewController">
+                <windowController storyboardIdentifier="PrefsWindowController" showSeguePresentationStyle="single" id="5vR-qe-8Wv" userLabel="Preferences Window Controller" sceneMemberID="viewController">
                     <window key="window" identifier="PrefsWindowController" title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="99g-Ib-SeE">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <rect key="contentRect" x="245" y="301" width="425" height="235"/>
@@ -704,7 +704,7 @@
         <!--Preferences View Controller-->
         <scene sceneID="Sio-Xm-nKm">
             <objects>
-                <viewController storyboardIdentifier="PreferencesViewController" id="b0o-up-s6N" userLabel="Preferences View Controller" customClass="PrefsViewController" customModule="HA_Menu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PreferencesViewController" showSeguePresentationStyle="single" id="b0o-up-s6N" userLabel="Preferences View Controller" customClass="PrefsViewController" customModule="HA_Menu" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="R2d-cY-rAO">
                         <rect key="frame" x="0.0" y="0.0" width="425" height="236"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -802,7 +802,6 @@
                     </view>
                     <connections>
                         <outlet property="buttonLogin" destination="axF-OX-WUt" id="stJ-dK-ClI"/>
-                        <outlet property="testfieldGroup" destination="Dnf-4Y-ty2" id="dAN-EM-emN"/>
                         <outlet property="textfieldGroup" destination="Dnf-4Y-ty2" id="Bat-s8-oXV"/>
                         <outlet property="textfieldServer" destination="cJg-XY-9A6" id="Rc7-3o-x0J"/>
                         <outlet property="textfieldToken" destination="xLm-S0-5hb" id="sop-gd-QiM"/>
