@@ -25,6 +25,7 @@ class PrefsViewController: NSViewController {
 
     override func viewWillDisappear() {
         saveNewPrefs()
+        NSApp.stopModal()
         super.viewWillDisappear()
     }
 

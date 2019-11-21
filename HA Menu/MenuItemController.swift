@@ -87,7 +87,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
         if let windowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("PrefsWindowController")) as? NSWindowController
         {
-            windowController.showWindow(self)
+//            windowController.showWindow(self)
+            NSApp.runModal(for: windowController.window!)
+
             NSApp.activate(ignoringOtherApps: true)
         }
     }
