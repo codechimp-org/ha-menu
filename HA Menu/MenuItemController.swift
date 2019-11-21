@@ -23,6 +23,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         case switchType = 2
         case scriptType = 3
         case inputbooleanType = 4
+
+        case errorType = 999
     }
 
     override init() {
@@ -108,19 +110,33 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         request.addValue("Bearer \(prefs.token)", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) {data, response, error in
+
+            if let httpResponse = response as? HTTPURLResponse {
+                print(httpResponse.statusCode)
+
+                if httpResponse.statusCode == 401 {
+                    self.addErrorMenuItem(message: "Unauthorized")
+                    return
+                }
+            }
+
             if let data = data {
-                if let decodedResponse = try? JSONDecoder().decode([HaState].self, from: data) {
+                do {
+                    let decodedResponse = try JSONDecoder().decode([HaState].self, from: data)
                     DispatchQueue.main.async {
                         self.haStates = decodedResponse
                         
-                        let groupSwitches = self.getEntity(entityId: "group.\(self.prefs.group)")
+                        let group = self.getEntity(entityId: "group.\(self.prefs.group)")
 
-                        if (groupSwitches == nil) { return }
+                        if (group == nil) {
+                            self.addErrorMenuItem(message: "Group not found")
+                            return
+                        }
 
                         // For each switch entity, get it's attributes and add to a switch array then sort
                         var switches = [HaSwitch]()
 
-                        for entityId in (groupSwitches?.attributes!.entityIds!)! {
+                        for entityId in (group?.attributes!.entityIds!)! {
                             if (entityId.starts(with: "switch.")) {
                                 let entity = self.getEntity(entityId: entityId)
 
@@ -136,40 +152,72 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
                         switches.sort(by: {$0.friendlyName > $1.friendlyName})
 
-                        if (switches.count > 0) {
+                        if (switches.count == 0) {
+                            self.addErrorMenuItem(message: "No Switches")
+                        }
+                        else {
+
                             // Add a seperator before static menu items
                             self.menu.insertItem(NSMenuItem.separator(), at: 0)
+
+                            // Populate menu items for switches
+                            for haSwitch in switches {
+                                self.addSwitchMenuItem(haSwitch: haSwitch)
+                            }
                         }
-
-                        // Populate menu items for switches
-                        for haSwitch in switches {
-
-                            let menuItem = NSMenuItem(title: haSwitch.friendlyName, action: #selector(self.toggleSwitch(_:)), keyEquivalent: "")
-                            menuItem.target = self
-                            
-                            menuItem.state = ((haSwitch.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
-                            menuItem.representedObject = haSwitch.entityId
-                            menuItem.tag = menuItemTypes.switchType.rawValue // Tag defines what type of item it is
-                            //                    menuItem.image = NSImage(named: "StatusBarButtonImage")
-                            //                    menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
-                            
-                            self.menu.insertItem(menuItem, at: 0)
-                        }
-
                     }
+
+                } catch {
+                    self.addErrorMenuItem(message: "No data returned")
                 }
-                
                 return
             }
-            
-            print("Fetch failed: \(error?.localizedDescription ?? "Unknown error")")
+
+            self.addErrorMenuItem(message: error?.localizedDescription ?? "Unknown error")
+
         }.resume()
+    }
+
+    func addSwitchMenuItem(haSwitch: HaSwitch) {
+        let menuItem = NSMenuItem(title: haSwitch.friendlyName, action: #selector(self.toggleSwitch(_:)), keyEquivalent: "")
+        menuItem.target = self
+
+        menuItem.state = ((haSwitch.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
+        menuItem.representedObject = haSwitch.entityId
+        menuItem.tag = menuItemTypes.switchType.rawValue // Tag defines what type of item it is
+        //                    menuItem.image = NSImage(named: "StatusBarButtonImage")
+        //                    menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
+
+        self.menu.insertItem(menuItem, at: 0)
+    }
+
+    func addErrorMenuItem(message: String) {
+        // Add a seperator before static menu items
+        self.menu.insertItem(NSMenuItem.separator(), at: 0)
+
+        let menuItem = NSMenuItem(title: message, action: #selector(self.openPreferences(sender:)), keyEquivalent: "")
+        menuItem.target = self
+
+        menuItem.tag = menuItemTypes.errorType.rawValue // Tag defines what type of item it is
+        menuItem.image = NSImage(named: "ErrorImage")
+
+        self.menu.insertItem(menuItem, at: 0)
     }
 
     func removeMenuItems() {
         var switchMenu: NSMenuItem?
+
+        // Switches
         repeat {
             switchMenu = self.menu.item(withTag: menuItemTypes.switchType.rawValue)
+            if (switchMenu != nil) {
+                self.menu.removeItem(switchMenu!)
+            }
+        } while switchMenu != nil
+
+        // Errors
+        repeat {
+            switchMenu = self.menu.item(withTag: menuItemTypes.errorType.rawValue)
             if (switchMenu != nil) {
                 self.menu.removeItem(switchMenu!)
             }
@@ -180,35 +228,35 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             self.menu.removeItem(at: 0)
         }
     }
-    
+
     func getEntity(entityId: String) -> HaState? {
         return self.haStates?.first(where: {$0.entityId == entityId})
     }
-    
+
     @objc func toggleSwitch(_ sender: NSMenuItem) {
         let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
-        
+
         var request = URLRequest(url: URL(string: "\(prefs.server)/api/services/switch/toggle")!)
-        
+
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("Bearer \(prefs.token)", forHTTPHeaderField: "Authorization")
-        
+
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
             print(String(data: data!, encoding: String.Encoding.utf8)!)
         })
-        
+
         task.resume()
     }
-    
+
     public func menuWillOpen(_ menu: NSMenu){
         self.updateDynamicMenuItems()
     }
-    
+
     public func menuDidClose(_ menu: NSMenu){
-        
+
     }
 }
 

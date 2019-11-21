@@ -15,7 +15,25 @@ To create a token within HA, login to HA and click on your profile.
 Under Long Lived Access Tokens, create a new token, give it a name and copy the token value into HA Menu preferences.
 
 ### Other items
-If you want to control other items with an on/off state, such as lights then create a [template switch](https://www.home-assistant.io/integrations/switch.template)
+If you want to control other items with an on/off state, such as lights then create a [template switch](https://www.home-assistant.io/integrations/switch.template)   
+
+Example
+```
+switch:
+  # Your other switches
+  - platform: template
+    switches:
+      desklamp:
+        value_template: "{{ is_state('light.hue_ambiance_spot_1', 'on') }}"
+        turn_on:
+          service: light.turn_on
+          data:
+            entity_id: light.hue_ambiance_spot_1
+        turn_off:
+          service: light.turn_off
+          data:
+            entity_id: light.hue_ambiance_spot_1
+```
 
 ### Groups
 If you have a lot of switches and only want to have HA Menu display a specific set then [create a new group within HA](https://www.home-assistant.io/integrations/group/), add your switches to the group and enter the group entity id in HA Menu preferences.
