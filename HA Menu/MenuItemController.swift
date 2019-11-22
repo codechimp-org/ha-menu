@@ -187,12 +187,16 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     }
 
                 } catch {
-                    self.addErrorMenuItem(message: "No data returned")
+                    DispatchQueue.main.async {
+                        self.addErrorMenuItem(message: "No data returned")
+                    }
                 }
                 return
             }
 
-            self.addErrorMenuItem(message: error?.localizedDescription ?? "Unknown error")
+            DispatchQueue.main.async {
+                self.addErrorMenuItem(message: error?.localizedDescription ?? "Unknown error")
+            }
 
         }.resume()
     }
