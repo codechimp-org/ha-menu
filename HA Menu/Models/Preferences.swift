@@ -14,7 +14,12 @@ struct Preferences {
 
     var server: String {
         get {
-            return UserDefaults.standard.string(forKey: "server") ?? ""
+            var serverUrl = UserDefaults.standard.string(forKey: "server") ?? ""
+            // Remove trailing slash
+            if (serverUrl.hasSuffix("/")) {
+                serverUrl.remove(at: serverUrl.index(before: serverUrl.endIndex))
+            }
+            return serverUrl
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "server")
