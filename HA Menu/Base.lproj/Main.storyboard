@@ -738,7 +738,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="106" id="bRR-fJ-M1d"/>
                                 </constraints>
-                                <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" placeholderString="Your long lived token" drawsBackground="YES" id="j8N-iM-eA9">
+                                <textFieldCell key="cell" lineBreakMode="charWrapping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" placeholderString="Your long lived token" drawsBackground="YES" id="j8N-iM-eA9">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
