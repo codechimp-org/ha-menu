@@ -83,12 +83,11 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
     
     @objc func openPreferences(sender: NSMenuItem) {
-        
+
         let storyboard = NSStoryboard(name: NSStoryboard.Name("Main"), bundle: nil)
         if let windowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier("PrefsWindowController")) as? NSWindowController
         {
-            windowController.showWindow(self)
-            //            NSApp.runModal(for: windowController.window!)
+            NSApp.runModal(for: windowController.window!)
 
             NSApp.activate(ignoringOtherApps: true)
         }
@@ -285,4 +284,3 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     }
 }
-
