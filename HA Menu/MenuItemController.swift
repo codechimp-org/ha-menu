@@ -95,7 +95,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
     
     func updateDynamicMenuItems() {
-        removeMenuItems()
+        removeDynamicMenuItems()
         getStates()
     }
     
@@ -122,18 +122,18 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 print(httpResponse.statusCode)
 
                 if httpResponse.statusCode != 200 {
-                    var errorMessage: String = "\(httpResponse.statusCode) - Unknown Response"
+                    var errorMessage: String
 
-                    if httpResponse.statusCode == 401 {
+                    switch httpResponse.statusCode {
+                    case 401:
                         errorMessage = "401 - Unauthorized"
-                    }
-                    else if httpResponse.statusCode == 404 {
+                    case 404:
                         errorMessage = "404 - Not Found"
+                    default:
+                        errorMessage = "\(httpResponse.statusCode) - Unknown Response"
                     }
 
-                    DispatchQueue.main.async {
-                        self.addErrorMenuItem(message: errorMessage)
-                    }
+                    self.addErrorMenuItem(message: errorMessage)
 
                     return
                 }
@@ -142,63 +142,64 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             if let data = data {
                 do {
                     let decodedResponse = try JSONDecoder().decode([HaState].self, from: data)
-                    DispatchQueue.main.async {
-                        self.haStates = decodedResponse
+                    self.haStates = decodedResponse
 
-                        let group = self.getEntity(entityId: "group.\(self.prefs.group)")
+                    let group = self.getEntity(entityId: "group.\(self.prefs.group)")
 
-                        if (group == nil) {
-                            self.addErrorMenuItem(message: "Group not found")
-                            return
-                        }
+                    if (group == nil) {
+                        self.addErrorMenuItem(message: "Group not found")
+                        return
+                    }
 
-                        // For each switch entity, get it's attributes and add to a switch array then sort
-                        var switches = [HaSwitch]()
+                    // For each switch entity, get it's attributes and if available add to switches array
+                    var switches = [HaSwitch]()
 
-                        for entityId in (group?.attributes!.entityIds!)! {
-                            if (entityId.starts(with: "switch.")) {
-                                let entity = self.getEntity(entityId: entityId)
+                    for entityId in (group?.attributes!.entityIds!)! {
+                        if (entityId.starts(with: "switch.")) {
+                            let entity = self.getEntity(entityId: entityId)
 
-                                // Do not add unavailable switches
-                                if (entity?.state != "unavailable") {
+                            // Do not add unavailable switches
+                            if (entity?.state != "unavailable") {
 
-                                    let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity?.attributes!.friendlyName)!, state: (entity?.state)!)
+                                let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity?.attributes!.friendlyName)!, state: (entity?.state)!)
 
-                                    switches.append(haSwitch)
-                                }
-                            }
-                        }
-
-                        switches.sort(by: {$0.friendlyName > $1.friendlyName})
-
-                        if (switches.count == 0) {
-                            self.addErrorMenuItem(message: "No Switches")
-                        }
-                        else {
-
-                            // Add a seperator before static menu items
-                            self.menu.insertItem(NSMenuItem.separator(), at: 0)
-
-                            // Populate menu items for switches
-                            for haSwitch in switches {
-                                self.addSwitchMenuItem(haSwitch: haSwitch)
+                                switches.append(haSwitch)
                             }
                         }
                     }
+
+                    self.addSwitchesToMenu(switches: switches)
+
 
                 } catch {
-                    DispatchQueue.main.async {
-                        self.addErrorMenuItem(message: "No data returned")
-                    }
+                    self.addErrorMenuItem(message: "No data returned")
                 }
                 return
             }
 
-            DispatchQueue.main.async {
-                self.addErrorMenuItem(message: error?.localizedDescription ?? "Unknown error")
-            }
+            self.addErrorMenuItem(message: error?.localizedDescription ?? "Unknown error")
 
         }.resume()
+    }
+
+    func addSwitchesToMenu(switches: [HaSwitch]) {
+        DispatchQueue.main.async {
+            let sortedSwitches = switches.sorted(by: {$0.friendlyName > $1.friendlyName})
+
+            if (sortedSwitches.count == 0) {
+                self.addErrorMenuItem(message: "No Switches")
+                return
+            }
+
+            // Add a seperator before static menu items
+            self.menu.insertItem(NSMenuItem.separator(), at: 0)
+
+            // Populate menu items for switches
+            for haSwitch in sortedSwitches {
+                self.addSwitchMenuItem(haSwitch: haSwitch)
+            }
+
+        }
     }
 
     func addSwitchMenuItem(haSwitch: HaSwitch) {
@@ -208,26 +209,28 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         menuItem.state = ((haSwitch.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
         menuItem.representedObject = haSwitch.entityId
         menuItem.tag = menuItemTypes.switchType.rawValue // Tag defines what type of item it is
-        //                    menuItem.image = NSImage(named: "StatusBarButtonImage")
-        //                    menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
+//        menuItem.image = NSImage(named: "StatusBarButtonImage")
+//        menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
 
         self.menu.insertItem(menuItem, at: 0)
     }
 
     func addErrorMenuItem(message: String) {
-        // Add a seperator before static menu items
-        self.menu.insertItem(NSMenuItem.separator(), at: 0)
+        DispatchQueue.main.async {
+            // Add a seperator before static menu items
+            self.menu.insertItem(NSMenuItem.separator(), at: 0)
 
-        let menuItem = NSMenuItem(title: message, action: #selector(self.openPreferences(sender:)), keyEquivalent: "")
-        menuItem.target = self
+            let menuItem = NSMenuItem(title: message, action: #selector(self.openPreferences(sender:)), keyEquivalent: "")
+            menuItem.target = self
 
-        menuItem.tag = menuItemTypes.errorType.rawValue // Tag defines what type of item it is
-        menuItem.image = NSImage(named: "ErrorImage")
+            menuItem.tag = menuItemTypes.errorType.rawValue // Tag defines what type of item it is
+            menuItem.image = NSImage(named: "ErrorImage")
 
-        self.menu.insertItem(menuItem, at: 0)
+            self.menu.insertItem(menuItem, at: 0)
+        }
     }
 
-    func removeMenuItems() {
+    func removeDynamicMenuItems() {
         var switchMenu: NSMenuItem?
 
         // Switches
