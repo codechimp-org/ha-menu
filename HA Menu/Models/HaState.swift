@@ -12,15 +12,11 @@ struct HaState : Decodable {
 
     let attributes : HaStateAttribute?
     let entityId : String?
-    let lastChanged : String?
-    let lastUpdated : String?
     let state : String?
 
     enum CodingKeys: String, CodingKey {
         case attributes = "attributes"
         case entityId = "entity_id"
-        case lastChanged = "last_changed"
-        case lastUpdated = "last_updated"
         case state = "state"
     }
 
@@ -29,8 +25,6 @@ struct HaState : Decodable {
         attributes = try HaStateAttribute(from: decoder)
 
         entityId = try values.decodeIfPresent(String.self, forKey: .entityId)
-        lastChanged = try values.decodeIfPresent(String.self, forKey: .lastChanged)
-        lastUpdated = try values.decodeIfPresent(String.self, forKey: .lastUpdated)
         state = try values.decodeIfPresent(String.self, forKey: .state)
     }
 }
