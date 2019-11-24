@@ -109,11 +109,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             return
         }
         
-        var request = URLRequest(url: url)
+        var request = createAuthRequest(url: url)
         
         request.httpMethod = "GET"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Bearer \(prefs.token)", forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) {data, response, error in
             
@@ -260,12 +258,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     @objc func toggleSwitch(_ sender: NSMenuItem) {
         let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
 
-        var request = URLRequest(url: URL(string: "\(prefs.server)/api/services/switch/toggle")!)
+        var request = createAuthRequest(url: URL(string: "\(prefs.server)/api/services/switch/toggle")!)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Bearer \(prefs.token)", forHTTPHeaderField: "Authorization")
 
         let session = URLSession.shared
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
@@ -281,5 +277,14 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     public func menuDidClose(_ menu: NSMenu){
 
+    }
+
+    func createAuthRequest(url: URL) -> URLRequest {
+        var request = URLRequest(url: url)
+
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("Bearer \(prefs.token)", forHTTPHeaderField: "Authorization")
+
+        return request
     }
 }
