@@ -169,9 +169,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
                     self.addSwitchesToMenu(switches: switches)
 
-
                 } catch {
-                    self.addErrorMenuItem(message: "No data returned")
+                    self.addErrorMenuItem(message: error.localizedDescription)
                 }
                 return
             }
