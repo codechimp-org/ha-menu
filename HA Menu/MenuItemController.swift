@@ -109,7 +109,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             return
         }
         
-        var request = createAuthRequest(url: url)
+        var request = createAuthURLRequest(url: url)
         
         request.httpMethod = "GET"
         
@@ -141,31 +141,31 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     let decodedResponse = try JSONDecoder().decode([HaState].self, from: data)
                     self.haStates = decodedResponse
 
-                    let group = self.getEntity(entityId: "group.\(self.prefs.group)")
+                    if let group = self.getEntity(entityId: "group.\(self.prefs.group)") {
 
-                    if (group == nil) {
+                        // For each switch entity, get it's attributes and if available add to switches array
+                        var switches = [HaSwitch]()
+
+                        for entityId in (group.attributes.entityIds) {
+                            if (entityId.starts(with: "switch.")) {
+                                if let entity = self.getEntity(entityId: entityId) {
+
+                                    // Do not add unavailable switches
+                                    if (entity.state != "unavailable") {
+
+                                        let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state))
+
+                                        switches.append(haSwitch)
+                                    }
+                                }
+                            }
+                        }
+
+                        self.addSwitchesToMenu(switches: switches)
+                    } else {
                         self.addErrorMenuItem(message: "Group not found")
                         return
                     }
-
-                    // For each switch entity, get it's attributes and if available add to switches array
-                    var switches = [HaSwitch]()
-
-                    for entityId in (group?.attributes!.entityIds!)! {
-                        if (entityId.starts(with: "switch.")) {
-                            let entity = self.getEntity(entityId: entityId)
-
-                            // Do not add unavailable switches
-                            if (entity?.state != "unavailable") {
-
-                                let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity?.attributes!.friendlyName)!, state: (entity?.state)!)
-
-                                switches.append(haSwitch)
-                            }
-                        }
-                    }
-
-                    self.addSwitchesToMenu(switches: switches)
 
                 } catch {
                     self.addErrorMenuItem(message: error.localizedDescription)
@@ -205,8 +205,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         menuItem.state = ((haSwitch.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
         menuItem.representedObject = haSwitch.entityId
         menuItem.tag = menuItemTypes.switchType.rawValue // Tag defines what type of item it is
-//        menuItem.image = NSImage(named: "StatusBarButtonImage")
-//        menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
+        //        menuItem.image = NSImage(named: "StatusBarButtonImage")
+        //        menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
 
         self.menu.insertItem(menuItem, at: 0)
     }
@@ -258,7 +258,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     @objc func toggleSwitch(_ sender: NSMenuItem) {
         let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
 
-        var request = createAuthRequest(url: URL(string: "\(prefs.server)/api/services/switch/toggle")!)
+        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/switch/toggle")!)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
@@ -279,7 +279,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     }
 
-    func createAuthRequest(url: URL) -> URLRequest {
+    func createAuthURLRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")

@@ -10,9 +10,9 @@ import Foundation
 
 struct HaState : Decodable {
 
-    let attributes : HaStateAttribute?
-    let entityId : String?
-    let state : String?
+    let attributes : HaStateAttribute
+    let entityId : String
+    let state : String
 
     enum CodingKeys: String, CodingKey {
         case attributes = "attributes"
@@ -24,7 +24,16 @@ struct HaState : Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         attributes = try HaStateAttribute(from: decoder)
 
-        entityId = try values.decodeIfPresent(String.self, forKey: .entityId)
-        state = try values.decodeIfPresent(String.self, forKey: .state)
+        if let entityId = try values.decodeIfPresent(String.self, forKey: .entityId) {
+            self.entityId = entityId
+        } else {
+            self.entityId = ""
+        }
+
+        if let state = try values.decodeIfPresent(String.self, forKey: .state) {
+            self.state = state
+        } else {
+            self.state = ""
+        }
     }
 }

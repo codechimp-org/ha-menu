@@ -10,15 +10,14 @@ import Foundation
 
 struct HaStateAttribute : Decodable {
 
-    let entityIds : [String]?
-    let friendlyName : String?
+    let entityIds : [String]
+    let friendlyName : String
 
     enum CodingKeys: String, CodingKey {
         case attributes
     }
 
     enum AttributeKeys: String, CodingKey {
-        case assumedState = "assumed_state"
         case entityIds = "entity_id"
         case friendlyName = "friendly_name"
     }
@@ -27,8 +26,17 @@ struct HaStateAttribute : Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
         let attributes = try values.nestedContainer(keyedBy: AttributeKeys.self, forKey: .attributes)
-        self.entityIds = try attributes.decodeIfPresent([String].self, forKey: .entityIds)
-        self.friendlyName = try attributes.decodeIfPresent(String.self, forKey: .friendlyName)
+        if let entityIds = try attributes.decodeIfPresent([String].self, forKey: .entityIds) {
+            self.entityIds = entityIds
+        } else {
+            self.entityIds = [String]()
+        }
+
+        if let friendlyName = try attributes.decodeIfPresent(String.self, forKey: .friendlyName) {
+            self.friendlyName = friendlyName
+        } else {
+            self.friendlyName = "Unknown"
+        }
     }
 
 }
