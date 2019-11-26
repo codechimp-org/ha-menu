@@ -22,6 +22,11 @@ struct HaStateAttribute : Decodable {
         case friendlyName = "friendly_name"
     }
 
+    init() {
+        entityIds = [String]()
+        friendlyName = ""
+    }
+
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 

@@ -22,7 +22,7 @@ struct HaState : Decodable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        attributes = try HaStateAttribute(from: decoder)
+
 
         if let entityId = try values.decodeIfPresent(String.self, forKey: .entityId) {
             self.entityId = entityId
@@ -35,5 +35,12 @@ struct HaState : Decodable {
         } else {
             self.state = ""
         }
+
+        guard let attributes = try? HaStateAttribute(from: decoder) else {
+            self.attributes = HaStateAttribute()
+            return
+        }
+
+        self.attributes = attributes
     }
 }
