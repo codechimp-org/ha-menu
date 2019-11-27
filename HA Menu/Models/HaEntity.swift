@@ -11,6 +11,7 @@ import Foundation
 enum EntityTypes: Int, CaseIterable {
     case switchType = 2
     case lightType = 3
+    case inputBooleanType = 4
 }
 
 struct HaEntity {
