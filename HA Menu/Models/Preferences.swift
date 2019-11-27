@@ -10,7 +10,7 @@ import Foundation
 
 struct Preferences {
 
-    let defaultGroupList = "all_switches, all_lights"
+    let defaultGroupList = "all_switches,all_lights"
 
     var server: String {
         get {

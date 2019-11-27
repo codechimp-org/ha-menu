@@ -1,7 +1,7 @@
 #  HA Menu
 
 A Mac OS Menu Bar app to perform common Home Assistant functions  
-Currently HA Menu supports turning available switches on and off.
+Currently HA Menu supports turning available switches and lights on and off.
 
 ![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/menu.png "HA Menu")
 
@@ -16,29 +16,8 @@ Under Long Lived Access Tokens, create a new token, give it a name and copy the 
 
 For now there's no automatic update when new versions are released.  Suggest using the Watch/Releases Only within GitHub to get notified when a new version is available. 
 
-### Other items
-If you want to control other items with an on/off state, such as lights then create a [template switch](https://www.home-assistant.io/integrations/switch.template)   
-
-Example
-```
-switch:
-  # Your other switches
-  - platform: template
-    switches:
-      desklamp:
-        value_template: "{{ is_state('light.hue_ambiance_spot_1', 'on') }}"
-        turn_on:
-          service: light.turn_on
-          data:
-            entity_id: light.hue_ambiance_spot_1
-        turn_off:
-          service: light.turn_off
-          data:
-            entity_id: light.hue_ambiance_spot_1
-```
-
 ### Groups
-If you have a lot of switches and only want to have HA Menu display a specific set then [create a new group within HA](https://www.home-assistant.io/integrations/group/), add your switches to the group and enter the group entity id in HA Menu preferences.
+If you have a lot of switches/lights and only want to have HA Menu display a specific set then [create new groups within HA](https://www.home-assistant.io/integrations/group/), add your switches/lights to the group and enter the group entity id's in HA Menu preferences.  You can have multiple groups displayed in HA Menu by comma seperating the entity id's.  They will be displayed in order with a seperator between each group.
 
 Example   
 ```
@@ -49,4 +28,25 @@ hamenu:
   entities:
     - switch.printer
     - switch.lego_lights
+```
+
+### Other items
+If you want to control other items with an on/off state then create a [template switch](https://www.home-assistant.io/integrations/switch.template)   
+
+Example of an input_boolean
+```
+switch:
+  # Your other switches
+  - platform: template
+    switches:
+      mything_switch:
+        value_template: "{{ is_state('input_boolean.mything', 'on') }}"
+        turn_on:
+        service: input_boolean.turn_on
+          data:
+            entity_id: input_boolean.mything
+        turn_off:
+          service: input_boolean.turn_off
+          data:
+            entity_id: input_boolean.mything
 ```

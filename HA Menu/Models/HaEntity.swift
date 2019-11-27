@@ -8,10 +8,16 @@
 
 import Foundation
 
-struct HaSwitch {
+enum EntityTypes: Int, CaseIterable {
+    case switchType = 2
+    case lightType = 3
+}
+
+struct HaEntity {
 
     var entityId : String
     var friendlyName: String
     var state: String
+    var type: EntityTypes
 
 }
