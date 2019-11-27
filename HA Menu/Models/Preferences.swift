@@ -10,7 +10,7 @@ import Foundation
 
 struct Preferences {
 
-    let defaultGroup = "all_switches"
+    let defaultGroupList = "all_switches, all_lights"
 
     var server: String {
         get {
@@ -44,14 +44,29 @@ struct Preferences {
         }
     }
 
-    var group: String {
+    var groupList: String {
         get {
-            let groupid = UserDefaults.standard.string(forKey: "group") ?? defaultGroup
-            return (groupid.count == 0 ? defaultGroup : groupid)
+            var groupList = UserDefaults.standard.string(forKey: "group") ?? defaultGroupList
+
+            // replace spaces with commas, remove duplicated commas
+            groupList = groupList.replacingOccurrences(of: " ", with: ",")
+            groupList = groupList.replacingOccurrences(of: ",,", with: ",")
+
+            return (groupList.count == 0 ? defaultGroupList : groupList)
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "group")
          }
     }
 
+    var groups: [String] {
+
+        var groupArray = [String]()
+
+         // create array of groups, reverse order
+        groupArray = self.groupList.components(separatedBy: ",")
+        groupArray.reverse()
+
+        return groupArray
+    }
 }

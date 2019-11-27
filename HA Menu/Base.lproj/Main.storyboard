@@ -761,15 +761,15 @@
                             </button>
                             <textField verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dnf-4Y-ty2" userLabel="Group">
                                 <rect key="frame" x="74" y="50" width="331" height="20"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" placeholderString="Group ID (optional, default all_switches)" drawsBackground="YES" id="uQN-m6-ufd">
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="border" placeholderString="Group ID (optional, default all_switches, all_lights)" drawsBackground="YES" id="uQN-m6-ufd">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WhI-G0-gVJ">
-                                <rect key="frame" x="18" y="51" width="42" height="16"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Group" id="aca-F8-Am3">
+                                <rect key="frame" x="18" y="51" width="49" height="16"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Groups" id="aca-F8-Am3">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -786,13 +786,13 @@
                             <constraint firstItem="cJg-XY-9A6" firstAttribute="leading" secondItem="xLm-S0-5hb" secondAttribute="leading" id="IJk-TP-eeF"/>
                             <constraint firstAttribute="bottom" secondItem="Dnf-4Y-ty2" secondAttribute="bottom" constant="50" id="K9g-Kd-cw9"/>
                             <constraint firstAttribute="trailing" secondItem="Dnf-4Y-ty2" secondAttribute="trailing" constant="20" id="Kht-SP-kWZ"/>
+                            <constraint firstItem="Dnf-4Y-ty2" firstAttribute="leading" secondItem="WhI-G0-gVJ" secondAttribute="trailing" constant="9" id="L0z-43-Muz"/>
                             <constraint firstAttribute="bottom" secondItem="xLm-S0-5hb" secondAttribute="bottom" constant="80" id="S2K-8Q-nmG"/>
                             <constraint firstAttribute="bottom" secondItem="axF-OX-WUt" secondAttribute="bottom" constant="20" id="TFo-VK-yUg"/>
                             <constraint firstAttribute="bottom" secondItem="n5m-aQ-agS" secondAttribute="bottom" constant="20" id="V2z-p1-2nI"/>
                             <constraint firstAttribute="trailing" secondItem="cJg-XY-9A6" secondAttribute="trailing" constant="20" id="W42-Qg-lQY"/>
                             <constraint firstAttribute="trailing" secondItem="xLm-S0-5hb" secondAttribute="trailing" constant="20" id="WAD-wr-kZD"/>
                             <constraint firstItem="cJg-XY-9A6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="d6B-OZ-GYv" secondAttribute="trailing" constant="8" symbolic="YES" id="Wcv-jz-Xs0"/>
-                            <constraint firstItem="Dnf-4Y-ty2" firstAttribute="leading" secondItem="WhI-G0-gVJ" secondAttribute="trailing" constant="16" id="Wfl-2Z-k42"/>
                             <constraint firstItem="d6B-OZ-GYv" firstAttribute="firstBaseline" secondItem="cJg-XY-9A6" secondAttribute="firstBaseline" id="a0P-rV-MdY"/>
                             <constraint firstItem="cJg-XY-9A6" firstAttribute="leading" secondItem="d6B-OZ-GYv" secondAttribute="trailing" constant="14" id="bgk-TT-5c0"/>
                             <constraint firstItem="WhI-G0-gVJ" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="20" id="blx-B1-6zj"/>

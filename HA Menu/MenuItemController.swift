@@ -141,30 +141,34 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     let decodedResponse = try JSONDecoder().decode([HaState].self, from: data)
                     self.haStates = decodedResponse
 
-                    if let group = self.getEntity(entityId: "group.\(self.prefs.group)") {
+                    // Iterate groups
+                    for groupId in (self.prefs.groups) {
 
-                        // For each switch entity, get it's attributes and if available add to switches array
-                        var switches = [HaSwitch]()
+                        if let group = self.getEntity(entityId: "group.\(groupId)") {
 
-                        for entityId in (group.attributes.entityIds) {
-                            if (entityId.starts(with: "switch.")) {
-                                if let entity = self.getEntity(entityId: entityId) {
+                            // For each switch entity, get it's attributes and if available add to switches array
+                            var switches = [HaSwitch]()
 
-                                    // Do not add unavailable switches
-                                    if (entity.state != "unavailable") {
+                            for entityId in (group.attributes.entityIds) {
+                                if (entityId.starts(with: "switch.")) {
+                                    if let entity = self.getEntity(entityId: entityId) {
 
-                                        let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state))
+                                        // Do not add unavailable switches
+                                        if (entity.state != "unavailable") {
 
-                                        switches.append(haSwitch)
+                                            let haSwitch: HaSwitch = HaSwitch(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state))
+
+                                            switches.append(haSwitch)
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        self.addSwitchesToMenu(switches: switches)
-                    } else {
-                        self.addErrorMenuItem(message: "Group not found")
-                        return
+                            self.addSwitchesToMenu(switches: switches)
+                        } else {
+                            self.addErrorMenuItem(message: "Group \(groupId) not found")
+                            return
+                        }
                     }
 
                 } catch {
@@ -187,7 +191,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 return
             }
 
-            // Add a seperator before static menu items
+            // Add a seperator before static menu items/previous group
             self.menu.insertItem(NSMenuItem.separator(), at: 0)
 
             // Populate menu items for switches
