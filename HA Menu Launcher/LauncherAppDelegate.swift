@@ -1,5 +1,5 @@
 //
-//  AppDelegate.swift
+//  LauncherAppDelegate.swift
 //  HA Menu Launcher
 //
 //  Created by Andrew Jackson on 14/11/2019.
@@ -9,7 +9,7 @@
 import Cocoa
 
 @NSApplicationMain
-class HelperAppDelegate: NSObject, NSApplicationDelegate {
+class LauncherAppDelegate: NSObject, NSApplicationDelegate {
 
 
 
