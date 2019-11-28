@@ -9,7 +9,7 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class HelperAppDelegate: NSObject, NSApplicationDelegate {
 
 
 
