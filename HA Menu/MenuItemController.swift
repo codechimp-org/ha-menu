@@ -138,46 +138,48 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
                     // Iterate groups in preferences
                     for groupId in (self.prefs.groups) {
+                        if groupId.count > 0 {
 
-                        if let group = self.getEntity(entityId: "group.\(groupId)") {
+                            if let group = self.getEntity(entityId: "group.\(groupId)") {
 
-                            // For each switch entity, get it's attributes and if available add to switches array
-                            var entities = [HaEntity]()
+                                // For each switch entity, get it's attributes and if available add to switches array
+                                var entities = [HaEntity]()
 
-                            for entityId in (group.attributes.entityIds) {
+                                for entityId in (group.attributes.entityIds) {
 
-                                let entityType = entityId.components(separatedBy: ".")[0]
-                                var itemType: EntityTypes?
+                                    let entityType = entityId.components(separatedBy: ".")[0]
+                                    var itemType: EntityTypes?
 
-                                switch entityType {
-                                case "switch":
-                                    itemType = EntityTypes.switchType
-                                case "light":
-                                    itemType = EntityTypes.lightType
-                                case "input_boolean":
-                                    itemType = EntityTypes.inputBooleanType
-                                default:
-                                    itemType = nil
-                                }
+                                    switch entityType {
+                                    case "switch":
+                                        itemType = EntityTypes.switchType
+                                    case "light":
+                                        itemType = EntityTypes.lightType
+                                    case "input_boolean":
+                                        itemType = EntityTypes.inputBooleanType
+                                    default:
+                                        itemType = nil
+                                    }
 
-                                if itemType != nil {
-                                    if let entity = self.getEntity(entityId: entityId) {
+                                    if itemType != nil {
+                                        if let entity = self.getEntity(entityId: entityId) {
 
-                                        // Do not add unavailable state entities
-                                        if (entity.state != "unavailable") {
+                                            // Do not add unavailable state entities
+                                            if (entity.state != "unavailable") {
 
-                                            let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), type: itemType! )
+                                                let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), type: itemType! )
 
-                                            entities.append(haEntity)
+                                                entities.append(haEntity)
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            self.addEntitiesToMenu(entities: entities)
-                        } else {
-                            self.addErrorMenuItem(message: "Group \(groupId) not found")
-                            return
+                                self.addEntitiesToMenu(entities: entities)
+                            } else {
+                                self.addErrorMenuItem(message: "Group \(groupId) not found")
+                                return
+                            }
                         }
                     }
 
