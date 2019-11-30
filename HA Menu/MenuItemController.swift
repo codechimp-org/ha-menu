@@ -175,6 +175,14 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                     }
                                 }
 
+                                // If a default group then sort, otherwise reverse
+                                if (groupId == "all_switches" || groupId == "all_lights") {
+                                    entities = entities.sorted(by: {$0.friendlyName > $1.friendlyName})
+                                }
+                                else {
+                                    entities = entities.reversed()
+                                }
+                                
                                 self.addEntitiesToMenu(entities: entities)
                             } else {
                                 self.addErrorMenuItem(message: "Group \(groupId) not found")
@@ -196,18 +204,17 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     func addEntitiesToMenu(entities: [HaEntity]) {
         DispatchQueue.main.async {
-            let sortedEntities = entities.sorted(by: {$0.friendlyName > $1.friendlyName})
-
-            if (sortedEntities.count == 0) {
-                self.addErrorMenuItem(message: "No Entities")
-                return
-            }
 
             // Add a seperator before static menu items/previous group
             self.menu.insertItem(NSMenuItem.separator(), at: 0)
 
+            if (entities.count == 0) {
+                self.addErrorMenuItem(message: "No Entities")
+                return
+            }
+
             // Populate menu items for switches
-            for haEntity in sortedEntities {
+            for haEntity in entities {
                 self.addEntityMenuItem(haEntity: haEntity)
             }
 
