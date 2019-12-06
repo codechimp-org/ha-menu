@@ -42,3 +42,6 @@ ha_menu:
     - light.desk_lamp
     - input_boolean.notifications
 ```
+
+## Say Thanks
+If you like HA Menu buy me a :coffee: via [PayPal](https://www.paypal.me/codechimporg/2)
