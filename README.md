@@ -23,7 +23,7 @@ HA provides default all_switches and all_light groups (not all_input_boolean's).
 
 If you have a lot of switches/lights or want to list input_boolean's you can have HA Menu display a specific set by [creating new groups within HA](https://www.home-assistant.io/integrations/group/). 
 
-First of all create your group(s) within groups.yaml as per the example.  Note the group entity id is ha_menu in this example.  Validate and restart HA to have the group added to HA. If you want multiple groups just repeat the block and rename the entity id/name and change your entity's.
+First of all create your group(s) within groups.yaml as per the example.  Note the group entity id is ha_menu in this example.  Validate and Reload Groups within HA (Configuration/Server Controls) to have the group added to HA. If you want multiple groups just repeat the block and rename the entity id/name and change your entity's.
 
 Once you have the group(s) added to HA, within HA Menu go to Preferences and within the Groups field enter the group entity ID's you want to be displayed (ha_menu in this example). If you have created multiple groups you can comma separate their entity ID's e.g. ha_menu,all_switches,all_lights  
 Close preferences to save these settings.
