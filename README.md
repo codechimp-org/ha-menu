@@ -19,7 +19,7 @@ Under Long Lived Access Tokens, create a new token, give it a name and copy the 
 For now there's no automatic update when new versions are released.  Suggest using the Watch/Releases Only within GitHub to get notified when a new version is available. 
 
 ### Groups
-HA provides default all_switches and all_light groups (not all_input_boolean's). HA Menu displays these two groups by default (in Preferences you will see under groups there is all_switches,all_lights 
+Home Assistant provides default all_switches and all_light groups (not all_input_boolean's). HA Menu displays these two groups by default (in Preferences you will see under groups there is all_switches,all_lights)
 
 If you have a lot of switches/lights or want to list input_boolean's you can have HA Menu display a specific set by [creating new groups within HA](https://www.home-assistant.io/integrations/group/). 
 
