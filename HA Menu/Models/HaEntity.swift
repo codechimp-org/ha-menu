@@ -12,6 +12,7 @@ enum EntityTypes: Int, CaseIterable {
     case switchType = 2
     case lightType = 3
     case inputBooleanType = 4
+    case automation = 5
 }
 
 struct HaEntity {

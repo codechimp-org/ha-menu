@@ -157,6 +157,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                         itemType = EntityTypes.lightType
                                     case "input_boolean":
                                         itemType = EntityTypes.inputBooleanType
+                                    case "automation":
+                                            itemType = EntityTypes.automation
                                     default:
                                         itemType = nil
                                     }
@@ -231,6 +233,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             menuItem.action = #selector(self.toggleLight(_:))
         case EntityTypes.inputBooleanType:
             menuItem.action = #selector(self.toggleInputBoolean(_:))
+        case EntityTypes.automation:
+              menuItem.action = #selector(self.toggleAutomation(_:))
         }
 
         menuItem.target = self
@@ -327,6 +331,22 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
 
         var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/input_boolean/toggle")!)
+
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
+            print(String(data: data!, encoding: String.Encoding.utf8)!)
+        })
+
+        task.resume()
+    }
+
+    @objc func toggleAutomation(_ sender: NSMenuItem) {
+        let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
+
+        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/automation/toggle")!)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
