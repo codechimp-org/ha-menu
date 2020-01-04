@@ -2,7 +2,7 @@
 # HA Menu
 
 A Mac OS Menu Bar app to perform common Home Assistant functions  
-Currently HA Menu supports turning available switches, lights and input_boolean's on and off.  
+Currently HA Menu supports turning available switches, lights, automations and input_boolean's on and off.  
 HA Menu supports MacOS 10.13 (High Sierra) and later.
 
 ![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/menu.png "HA Menu")
@@ -21,14 +21,14 @@ For now there's no automatic update when new versions are released.  Suggest usi
 ### Groups
 Home Assistant provides default all_switches and all_light groups (not all_input_boolean's). HA Menu displays these two groups by default (in Preferences you will see under groups there is all_switches,all_lights)
 
-If you have a lot of switches/lights or want to list input_boolean's you can have HA Menu display a specific set by [creating new groups within HA](https://www.home-assistant.io/integrations/group/). 
+If you have a lot of switches/lights or want to list automations or input_boolean's you can have HA Menu display a specific set by [creating new groups within HA](https://www.home-assistant.io/integrations/group/). 
 
 First of all create your group(s) within groups.yaml as per the example.  Note the group entity id is ha_menu in this example.  Validate and Reload Groups within HA (Configuration/Server Controls) to have the group added to HA. If you want multiple groups just repeat the block and rename the entity id/name and change your entity's.
 
 Once you have the group(s) added to HA, within HA Menu go to Preferences and within the Groups field enter the group entity ID's you want to be displayed (ha_menu in this example). If you have created multiple groups you can comma separate their entity ID's e.g. ha_menu,all_switches,all_lights  
 Close preferences to save these settings.
 
-Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, with custom groups the items are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications in the example).  With default groups (all_switches, all_lights) they are displayed alphabetically.
+Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, with custom groups the items are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert in the example).  With default groups (all_switches, all_lights) they are displayed alphabetically.
 
 Example groups.yaml
 ```
@@ -41,6 +41,7 @@ ha_menu:
     - switch.lego_lights
     - light.desk_lamp
     - input_boolean.notifications
+    - automation.entry_alert
 ```
 
 ## Say Thanks
