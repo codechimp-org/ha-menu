@@ -178,7 +178,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                 }
 
                                 // If a default group then sort, otherwise reverse
-                                if (groupId == "all_switches" || groupId == "all_lights") {
+                                if (groupId.starts(with: "all_")) {
                                     entities = entities.sorted(by: {$0.friendlyName > $1.friendlyName})
                                 }
                                 else {
