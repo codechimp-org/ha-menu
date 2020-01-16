@@ -46,6 +46,14 @@ extension Notification.Name {
 extension AppDelegate {
     // MARK: - Preferences
     func setupPrefs() {
+
+        UserDefaults.standard.register(defaults: [
+               "domain_lights": true,
+               "domain_switches": true,
+               "domain_automations": true,
+               "domain_inputbooleans": true
+               ])
+
         let notificationName = Notification.Name(rawValue: "PrefsChanged")
         NotificationCenter.default.addObserver(forName: notificationName,
                                                object: nil, queue: nil) {

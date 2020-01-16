@@ -10,8 +10,6 @@ import Foundation
 
 struct Preferences {
 
-    let defaultGroupList = "all_switches,all_lights"
-
     var server: String {
         get {
             var serverUrl = UserDefaults.standard.string(forKey: "server") ?? ""
@@ -46,13 +44,26 @@ struct Preferences {
 
     var groupList: String {
         get {
-            var groupList = UserDefaults.standard.string(forKey: "group") ?? defaultGroupList
+            var groupList = UserDefaults.standard.string(forKey: "group") ?? ""
+
+            // remove all_* groups that are deprecated, we use domains now
+            groupList = groupList.replacingOccurrences(of: "all_lights", with: "")
+            groupList = groupList.replacingOccurrences(of: "all_switches", with: "")
+            groupList = groupList.replacingOccurrences(of: "all_automations", with: "")
 
             // replace spaces with commas, remove duplicated commas
             groupList = groupList.replacingOccurrences(of: " ", with: ",")
             groupList = groupList.replacingOccurrences(of: ",,", with: ",")
 
-            return (groupList.count == 0 ? defaultGroupList : groupList)
+            // remove leading/trailing commas
+            if (groupList.hasPrefix(",")) {
+                groupList = String(groupList.dropFirst())
+            }
+            if (groupList.hasSuffix(",")) {
+                groupList = String(groupList.dropLast())
+            }
+
+            return (groupList)
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "group")
@@ -69,4 +80,41 @@ struct Preferences {
 
         return groupArray
     }
+
+    var domainLights: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_lights")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_lights")
+        }
+    }
+
+    var domainSwitches: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_switches")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_switches")
+        }
+    }
+
+    var domainAutomations: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_automations")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_automations")
+        }
+    }
+
+    var domainInputbooleans: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_inputbooleans")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_inputbooleans")
+        }
+    }
+
 }

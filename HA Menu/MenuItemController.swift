@@ -136,13 +136,45 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     let decodedResponse = try JSONDecoder().decode([HaState].self, from: data)
                     self.haStates = decodedResponse
 
+
+                    //MARK: Domains
+                    if (self.prefs.domainInputbooleans) {
+                        let inputBooleans = self.filterEntities(entityDomain: EntityDomains.inputBooleanDomain.rawValue, itemType: EntityTypes.inputBooleanType)
+                        if inputBooleans.count > 0 {
+                            self.addEntitiesToMenu(entities: inputBooleans)
+                        }
+                    }
+
+                    if (self.prefs.domainAutomations) {
+                        let automations = self.filterEntities(entityDomain: EntityDomains.automationDomain.rawValue, itemType: EntityTypes.automation)
+                        if automations.count > 0 {
+                            self.addEntitiesToMenu(entities: automations)
+                        }
+                    }
+
+                    if (self.prefs.domainSwitches) {
+                        let switches = self.filterEntities(entityDomain: EntityDomains.switchDomain.rawValue, itemType: EntityTypes.switchType)
+                        if switches.count > 0 {
+                            self.addEntitiesToMenu(entities: switches)
+                        }
+                    }
+
+                    if (self.prefs.domainLights) {
+                        let lights = self.filterEntities(entityDomain: EntityDomains.lightDomain.rawValue, itemType: EntityTypes.lightType)
+                        if lights.count > 0 {
+                            self.addEntitiesToMenu(entities: lights)
+                        }
+                    }
+
+
+                    //MARK: Groups
                     // Iterate groups in preferences
                     for groupId in (self.prefs.groups) {
                         if groupId.count > 0 {
 
                             if let group = self.getEntity(entityId: "group.\(groupId)") {
 
-                                // For each switch entity, get it's attributes and if available add to switches array
+                                // For each entity, get it's attributes and if available add to array
                                 var entities = [HaEntity]()
 
                                 for entityId in (group.attributes.entityIds) {
@@ -158,7 +190,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                     case "input_boolean":
                                         itemType = EntityTypes.inputBooleanType
                                     case "automation":
-                                            itemType = EntityTypes.automation
+                                        itemType = EntityTypes.automation
                                     default:
                                         itemType = nil
                                     }
@@ -234,7 +266,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         case EntityTypes.inputBooleanType:
             menuItem.action = #selector(self.toggleInputBoolean(_:))
         case EntityTypes.automation:
-              menuItem.action = #selector(self.toggleAutomation(_:))
+            menuItem.action = #selector(self.toggleAutomation(_:))
         }
 
         menuItem.target = self
@@ -295,6 +327,26 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         return self.haStates?.first(where: {$0.entityId == entityId})
     }
 
+    func filterEntities(entityDomain: String, itemType: EntityTypes) -> [HaEntity] {
+        var entities = [HaEntity]()
+
+        for haState in self.haStates! {
+            if (haState.entityId.starts(with: entityDomain + ".")) {
+                // Do not add unavailable state entities
+                if (haState.state != "unavailable") {
+
+                    let haEntity: HaEntity = HaEntity(entityId: haState.entityId, friendlyName: (haState.attributes.friendlyName), state: (haState.state), type: itemType )
+
+                    entities.append(haEntity)
+                }
+            }
+        }
+
+        entities = entities.sorted(by: {$0.friendlyName > $1.friendlyName})
+
+        return entities
+    }
+
     @objc func toggleSwitch(_ sender: NSMenuItem) {
         let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
 
@@ -339,7 +391,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
             print(String(data: data!, encoding: String.Encoding.utf8)!)
         })
-
+        
         task.resume()
     }
 

@@ -16,22 +16,27 @@ You will have needed to enable Allow app's downloaded from App Store and identif
 To create a token within HA, login to HA and click on your profile.
 Under Long Lived Access Tokens, create a new token, give it a name and copy the token value into HA Menu preferences.
 
-For now there's no automatic update when new versions are released.  Suggest using the Watch/Releases Only within GitHub to get notified when a new version is available. 
+![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/preferences.png "Preferences")
+
+For now there's no automatic update when new versions are released.  Use the Watch/Releases Only within GitHub to get notified when a new version is available. 
+
+### Domains
+
+Within the preference screen you can choose which domains to display.  Domains are a list of all entities within that domain, e.g. Lights will display all lights within HA Menu.  
+If you want to display just a few items from a domain, create a custom group as detailed below.   
+Entities within domains are displayed alphabetically.
 
 ### Groups
 
-Important: If you are using Home Assistant version 0.104 or later all_* groups are no longer available. To use HA Menu add custom groups with your chosen entities and remove the all_* groups from the preferences screen. An updated version of the app will be released soon allowing you to show entities within domains as well as custom groups to get around this.
-
-Home Assistant (earlier than 0.104) provides default all_switches and all_light groups (not all_input_boolean's). HA Menu displays these two groups by default (in Preferences you will see under groups there is all_switches,all_lights)
-
-If you have a lot of switches/lights or want to list automations or input_boolean's you can have HA Menu display a specific set by [creating new groups within HA](https://www.home-assistant.io/integrations/group/). 
+If you have a lot of entities within your domains you can have HA Menu display a specific set by [creating new groups within HA](https://www.home-assistant.io/integrations/group/).  
+You can create multiple groups and they will be separated within the drop down menu.
 
 First of all create your group(s) within groups.yaml as per the example.  Note the group entity id is ha_menu in this example.  Validate and Reload Groups within HA (Configuration/Server Controls) to have the group added to HA. If you want multiple groups just repeat the block and rename the entity id/name and change your entity's.
 
-Once you have the group(s) added to HA, within HA Menu go to Preferences and within the Groups field enter the group entity ID's you want to be displayed (ha_menu in this example). If you have created multiple groups you can comma separate their entity ID's e.g. ha_menu,all_switches,all_lights  
+Once you have the group(s) added to HA, within HA Menu go to Preferences and within the Groups field enter the group entity ID's you want to be displayed (ha_menu in this example). If you have created multiple groups you can comma separate their entity ID's e.g. ha_menu,my_automations,living_room
 Close preferences to save these settings.
 
-Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, with custom groups the items are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert in the example).  With default groups (all_switches, all_lights) they are displayed alphabetically.
+Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, with custom groups the items are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert in the example).  
 
 Example groups.yaml
 ```
