@@ -36,7 +36,7 @@ First of all create your group(s) within groups.yaml as per the example.  Note t
 Once you have the group(s) added to HA, within HA Menu go to Preferences and within the Groups field enter the group entity ID's you want to be displayed (ha_menu in this example). If you have created multiple groups you can comma separate their entity ID's e.g. ha_menu,my_automations,living_room
 Close preferences to save these settings.
 
-Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, with custom groups the items are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert in the example).  
+Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, entities within groups are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert in the example).  
 
 Example groups.yaml
 ```
