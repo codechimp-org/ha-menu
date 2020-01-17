@@ -209,14 +209,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                     }
                                 }
 
-                                // If a default group then sort, otherwise reverse
-                                if (groupId.starts(with: "all_")) {
-                                    entities = entities.sorted(by: {$0.friendlyName > $1.friendlyName})
-                                }
-                                else {
-                                    entities = entities.reversed()
-                                }
-                                
+                                entities = entities.reversed()
+
                                 self.addEntitiesToMenu(entities: entities)
                             } else {
                                 self.addErrorMenuItem(message: "Group \(groupId) not found")
