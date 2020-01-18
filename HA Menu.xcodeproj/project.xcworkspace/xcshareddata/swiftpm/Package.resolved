@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "FeedKit",
+        "repositoryURL": "https://github.com/nmdias/FeedKit.git",
+        "state": {
+          "branch": null,
+          "revision": "a74fcfbfb2dc54f1f8fa3c6848ae1efe697e0ebf",
+          "version": "9.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

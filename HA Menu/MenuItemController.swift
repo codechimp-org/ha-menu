@@ -8,6 +8,7 @@
 
 import Foundation
 import Cocoa
+import FeedKit
 
 final class MenuItemController: NSObject, NSMenuDelegate {
     
@@ -19,8 +20,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     
     var preferences: Preferences
 
+    let menuItemTypeInfo = 997
     let menuItemTypeError = 999
 
+    let releaseFeedURL = URL(string: "https://hamenu.codechimp.org/releases.atom")!
     
     override init() {
         preferences = Preferences()
@@ -35,10 +38,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             //            button.action = #selector(self.statusBarButtonClicked(sender:))
             statusButton.sendAction(on: [.leftMouseUp, .rightMouseUp])
         }
-        
+
         buildStaticMenu()
-        
-        updateDynamicMenuItems()
         
         statusItem.menu = menu
         
@@ -91,6 +92,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     func updateDynamicMenuItems() {
         removeDynamicMenuItems()
         getStates()
+        checkForUpdate()
     }
     
     func getStates() {
@@ -111,7 +113,6 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         URLSession.shared.dataTask(with: request) {data, response, error in
             
             if let httpResponse = response as? HTTPURLResponse {
-                print(httpResponse.statusCode)
 
                 if httpResponse.statusCode != 200 {
                     var errorMessage: String
@@ -303,6 +304,14 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             } while dynamicItem != nil
         }
 
+        // Info
+        repeat {
+            dynamicItem = self.menu.item(withTag: self.menuItemTypeInfo)
+            if (dynamicItem != nil) {
+                self.menu.removeItem(dynamicItem!)
+            }
+        } while dynamicItem != nil
+
         // Errors
         repeat {
             dynamicItem = self.menu.item(withTag: self.menuItemTypeError)
@@ -420,5 +429,50 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         request.addValue("Bearer \(prefs.token)", forHTTPHeaderField: "Authorization")
 
         return request
+    }
+
+    func checkForUpdate() {
+        let parser = FeedParser(URL: releaseFeedURL)
+
+        parser.parseAsync { [weak self] (result) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let feed):
+
+                if let latestId = (feed.atomFeed?.entries?.first?.id!) {
+                    let idArray = latestId.components(separatedBy: "/")
+                    let latestVersion = idArray.last
+
+                    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+
+                    if (latestVersion != appVersion) {
+                        DispatchQueue.main.async {
+                            // Add a seperator before static menu items
+                            self.menu.insertItem(NSMenuItem.separator(), at: 0)
+
+                            let menuItem = NSMenuItem(title: "A new version is available", action: #selector(self.openAppWebsite(sender:)), keyEquivalent: "")
+                            menuItem.target = self
+
+                            menuItem.tag = self.menuItemTypeInfo // Tag defines what type of item it is
+                            menuItem.image = NSImage(named: "InfoImage")
+
+                            self.menu.insertItem(menuItem, at: 0)                    }
+                    }
+                }
+                else {
+                    print("Unable to get release feed")
+                }
+
+            case .failure(let error):
+                // Silently ignore
+                print(error)
+            }
+        }
+    }
+
+    @objc func openAppWebsite(sender: NSMenuItem) {
+        if let url = URL(string: "https://hamenu.codechimp.org/releases") {
+            NSWorkspace.shared.open(url)
+        }
     }
 }

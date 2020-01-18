@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4904FBB923D35A6700575D29 /* FeedKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4904FBB823D35A6700575D29 /* FeedKit */; };
 		491F529D217CBF5200105921 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F529C217CBF5200105921 /* AppDelegate.swift */; };
 		491F52A1217CBF5400105921 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 491F52A0217CBF5400105921 /* Assets.xcassets */; };
 		491F52A4217CBF5400105921 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 491F52A2217CBF5400105921 /* Main.storyboard */; };
@@ -94,6 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49BDE9DC237DA0FA0087F729 /* ServiceManagement.framework in Frameworks */,
+				4904FBB923D35A6700575D29 /* FeedKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,6 +238,9 @@
 			dependencies = (
 			);
 			name = "HA Menu";
+			packageProductDependencies = (
+				4904FBB823D35A6700575D29 /* FeedKit */,
+			);
 			productName = "HA Menu";
 			productReference = 491F5299217CBF5200105921 /* HA Menu.app */;
 			productType = "com.apple.product-type.application";
@@ -335,6 +340,9 @@
 				Base,
 			);
 			mainGroup = 491F5290217CBF5200105921;
+			packageReferences = (
+				4904FBB723D35A6700575D29 /* XCRemoteSwiftPackageReference "FeedKit" */,
+			);
 			productRefGroup = 491F529A217CBF5200105921 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -583,7 +591,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu/Info.plist";
@@ -591,7 +599,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -606,7 +614,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu/Info.plist";
@@ -614,7 +622,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -711,7 +719,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu Launcher/Info.plist";
@@ -719,7 +727,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -735,7 +743,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu Launcher/Info.plist";
@@ -743,7 +751,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -800,6 +808,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4904FBB723D35A6700575D29 /* XCRemoteSwiftPackageReference "FeedKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nmdias/FeedKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4904FBB823D35A6700575D29 /* FeedKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4904FBB723D35A6700575D29 /* XCRemoteSwiftPackageReference "FeedKit" */;
+			productName = FeedKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 491F5291217CBF5200105921 /* Project object */;
 }
