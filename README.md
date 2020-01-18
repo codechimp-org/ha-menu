@@ -18,8 +18,6 @@ Under Long Lived Access Tokens, create a new token, give it a name and copy the 
 
 ![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/preferences.png "Preferences")
 
-For now there's no automatic update when new versions are released.  Use the Watch/Releases Only within GitHub to get notified when a new version is available. 
-
 ### Domains
 
 Within the preference screen you can choose which domains to display.  Domains are a list of all entities within that domain, e.g. Lights will display all lights within HA Menu.  
