@@ -24,7 +24,7 @@
 		49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E61062218F5FF400EFA408 /* PrefsViewController.swift */; };
 		49E61065218F605000EFA408 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E61064218F605000EFA408 /* Preferences.swift */; };
 		49E6106721908BC100EFA408 /* HaState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106621908BC100EFA408 /* HaState.swift */; };
-		49E6106921908D1400EFA408 /* HaStateAttribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106821908D1400EFA408 /* HaStateAttribute.swift */; };
+		49E6106921908D1400EFA408 /* HaStateAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106821908D1400EFA408 /* HaStateAttributes.swift */; };
 		49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106E21932B6600EFA408 /* MenuItemController.swift */; };
 /* End PBXBuildFile section */
 
@@ -85,8 +85,12 @@
 		49E61062218F5FF400EFA408 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
 		49E61064218F605000EFA408 /* Preferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		49E6106621908BC100EFA408 /* HaState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaState.swift; sourceTree = "<group>"; };
-		49E6106821908D1400EFA408 /* HaStateAttribute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaStateAttribute.swift; sourceTree = "<group>"; };
+		49E6106821908D1400EFA408 /* HaStateAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaStateAttributes.swift; sourceTree = "<group>"; };
 		49E6106E21932B6600EFA408 /* MenuItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItemController.swift; sourceTree = "<group>"; };
+		49E6C92423D99BE800F22973 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		49E6C92523D99BE800F22973 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		49E6C92623D99BE800F22973 /* Switch Icon.sketch */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Switch Icon.sketch"; sourceTree = "<group>"; };
+		49E6C92723D99BE800F22973 /* preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				491F52C9217CCA4000105921 /* README.md */,
+				49E6C92323D99BE800F22973 /* Art */,
 				491F529B217CBF5200105921 /* HA Menu */,
 				491F52AE217CBF5400105921 /* HA MenuTests */,
 				491F52B9217CBF5400105921 /* HA MenuUITests */,
@@ -186,7 +191,7 @@
 			children = (
 				49E61064218F605000EFA408 /* Preferences.swift */,
 				49E6106621908BC100EFA408 /* HaState.swift */,
-				49E6106821908D1400EFA408 /* HaStateAttribute.swift */,
+				49E6106821908D1400EFA408 /* HaStateAttributes.swift */,
 				49BDE9D8237D75700087F729 /* HaEntity.swift */,
 			);
 			path = Models;
@@ -219,6 +224,17 @@
 				49E61062218F5FF400EFA408 /* PrefsViewController.swift */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		49E6C92323D99BE800F22973 /* Art */ = {
+			isa = PBXGroup;
+			children = (
+				49E6C92423D99BE800F22973 /* menu.png */,
+				49E6C92523D99BE800F22973 /* logo.png */,
+				49E6C92623D99BE800F22973 /* Switch Icon.sketch */,
+				49E6C92723D99BE800F22973 /* preferences.png */,
+			);
+			path = Art;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,7 +418,7 @@
 				49E6106721908BC100EFA408 /* HaState.swift in Sources */,
 				49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */,
 				49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */,
-				49E6106921908D1400EFA408 /* HaStateAttribute.swift in Sources */,
+				49E6106921908D1400EFA408 /* HaStateAttributes.swift in Sources */,
 				49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -591,7 +607,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu/Info.plist";
@@ -599,7 +615,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -614,7 +630,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu/Info.plist";
@@ -622,7 +638,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -719,7 +735,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu Launcher/Info.plist";
@@ -727,7 +743,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -743,7 +759,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu Launcher/Info.plist";
@@ -751,7 +767,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

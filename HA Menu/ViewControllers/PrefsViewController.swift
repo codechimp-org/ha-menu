@@ -19,6 +19,7 @@ class PrefsViewController: NSViewController {
     @IBOutlet weak var buttonSwitches: NSButton!
     @IBOutlet weak var buttonAutomations: NSButton!
     @IBOutlet weak var buttonInputBooleans: NSButton!
+    @IBOutlet weak var buttonInputSelects: NSButton!
 
     var prefs = Preferences()
 
@@ -39,7 +40,8 @@ class PrefsViewController: NSViewController {
         buttonLights.state = (prefs.domainLights == true ? .on : .off)
         buttonSwitches.state = (prefs.domainSwitches == true ? .on : .off)
         buttonAutomations.state = (prefs.domainAutomations == true ? .on : .off)
-        buttonInputBooleans.state = (prefs.domainInputbooleans == true ? .on : .off)
+        buttonInputBooleans.state = (prefs.domainInputBooleans == true ? .on : .off)
+        buttonInputSelects.state = (prefs.domainInputSelects == true ? .on : .off)
         textfieldGroup.stringValue = prefs.groupList
         buttonLogin.state = (prefs.launch == true ? .on : .off)
     }
@@ -50,7 +52,8 @@ class PrefsViewController: NSViewController {
         prefs.domainLights = (buttonLights.state == .on)
         prefs.domainSwitches = (buttonSwitches.state == .on)
         prefs.domainAutomations = (buttonAutomations.state == .on)
-        prefs.domainInputbooleans = (buttonInputBooleans.state == .on)
+        prefs.domainInputBooleans = (buttonInputBooleans.state == .on)
+        prefs.domainInputSelects = (buttonInputSelects.state == .on)
         prefs.groupList = textfieldGroup.stringValue
         prefs.launch = (buttonLogin.state == .on)
 

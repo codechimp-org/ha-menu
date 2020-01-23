@@ -10,7 +10,7 @@ import Foundation
 
 struct HaState : Decodable {
 
-    let attributes : HaStateAttribute
+    let attributes : HaStateAttributes
     let entityId : String
     let state : String
 
@@ -36,9 +36,13 @@ struct HaState : Decodable {
             self.state = ""
         }
 
-        guard let attributes = try? HaStateAttribute(from: decoder) else {
-            self.attributes = HaStateAttribute()
+        guard var attributes = try? HaStateAttributes(from: decoder) else {
+            self.attributes = HaStateAttributes()
             return
+        }
+
+        if (attributes.friendlyName.isEmpty) {
+            attributes.friendlyName = self.entityId
         }
 
         self.attributes = attributes

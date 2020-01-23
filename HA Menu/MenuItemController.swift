@@ -23,7 +23,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     let menuItemTypeInfo = 997
     let menuItemTypeError = 999
 
-    let releaseFeedURL = URL(string: "https://hamenu.codechimp.org/releases.atom")!
+    let releasesFeedURL = URL(string: "https://hamenu.codechimp.org/releases.atom")!
+    let releasesURL = URL(string: "https://hamenu.codechimp.org/releases")!
     
     override init() {
         preferences = Preferences()
@@ -45,7 +46,16 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         
         menu.delegate = self
     }
-    
+
+    public func menuWillOpen(_ menu: NSMenu){
+        self.removeDynamicMenuItems()
+        self.getStates()
+        self.checkForUpdate()
+    }
+
+    public func menuDidClose(_ menu: NSMenu){
+
+    }
     
     func buildStaticMenu() {
         
@@ -67,7 +77,11 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         menu.addItem(NSMenuItem(title: "Quit HA Menu", action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q"))
         
     }
-    
+
+    @objc func openAppWebsite(sender: NSMenuItem) {
+        NSWorkspace.shared.open(releasesURL)
+    }
+
     @objc func openHA(sender: NSMenuItem) {
         NSWorkspace.shared.open(NSURL(string: prefs.server)! as URL)
     }
@@ -88,13 +102,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             NSApp.activate(ignoringOtherApps: true)
         }
     }
-    
-    func updateDynamicMenuItems() {
-        removeDynamicMenuItems()
-        getStates()
-        checkForUpdate()
-    }
-    
+
     func getStates() {
         if (prefs.server.count == 0 ) {
             self.addErrorMenuItem(message: "Server URL missing")
@@ -139,7 +147,14 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
 
                     //MARK: Domains
-                    if (self.prefs.domainInputbooleans) {
+                    if (self.prefs.domainInputSelects) {
+                        let inputSelects = self.filterEntities(entityDomain: EntityDomains.inputSelectDomain.rawValue, itemType: EntityTypes.inputSelectType)
+                        if inputSelects.count > 0 {
+                            self.addEntitiesToMenu(entities: inputSelects)
+                        }
+                    }
+
+                    if (self.prefs.domainInputBooleans) {
                         let inputBooleans = self.filterEntities(entityDomain: EntityDomains.inputBooleanDomain.rawValue, itemType: EntityTypes.inputBooleanType)
                         if inputBooleans.count > 0 {
                             self.addEntitiesToMenu(entities: inputBooleans)
@@ -147,7 +162,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     }
 
                     if (self.prefs.domainAutomations) {
-                        let automations = self.filterEntities(entityDomain: EntityDomains.automationDomain.rawValue, itemType: EntityTypes.automation)
+                        let automations = self.filterEntities(entityDomain: EntityDomains.automationDomain.rawValue, itemType: EntityTypes.automationType)
                         if automations.count > 0 {
                             self.addEntitiesToMenu(entities: automations)
                         }
@@ -190,19 +205,26 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                         itemType = EntityTypes.lightType
                                     case "input_boolean":
                                         itemType = EntityTypes.inputBooleanType
+                                    case "input_select":
+                                        itemType = EntityTypes.inputSelectType
                                     case "automation":
-                                        itemType = EntityTypes.automation
+                                        itemType = EntityTypes.automationType
                                     default:
                                         itemType = nil
                                     }
 
                                     if itemType != nil {
                                         if let entity = self.getEntity(entityId: entityId) {
+                                            var options = [String]()
+
+                                            if itemType == EntityTypes.inputSelectType {
+                                                options = entity.attributes.options
+                                            }
 
                                             // Do not add unavailable state entities
                                             if (entity.state != "unavailable") {
 
-                                                let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), type: itemType! )
+                                                let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), type: itemType!, options: options)
 
                                                 entities.append(haEntity)
                                             }
@@ -251,29 +273,41 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
 
     func addEntityMenuItem(haEntity: HaEntity) {
-        let menuItem = NSMenuItem()
 
-        switch haEntity.type {
-        case EntityTypes.switchType:
-            menuItem.action = #selector(self.toggleSwitch(_:))
-        case EntityTypes.lightType:
-            menuItem.action = #selector(self.toggleLight(_:))
-        case EntityTypes.inputBooleanType:
-            menuItem.action = #selector(self.toggleInputBoolean(_:))
-        case EntityTypes.automation:
-            menuItem.action = #selector(self.toggleAutomation(_:))
+        if haEntity.type == EntityTypes.inputSelectType {
+            let inputSelectMenuItem = NSMenuItem()
+            inputSelectMenuItem.title = haEntity.friendlyName
+            inputSelectMenuItem.tag = haEntity.type.rawValue
+            self.menu.insertItem(inputSelectMenuItem, at: 0)
+
+            let subMenu = NSMenu()
+            self.menu.setSubmenu(subMenu, for: inputSelectMenuItem)
+
+            for option in haEntity.options {
+                let optionMenuItem = NSMenuItem()
+                optionMenuItem.target = self
+                optionMenuItem.title = option
+                optionMenuItem.state = ((haEntity.state == option) ? NSControl.StateValue.on : NSControl.StateValue.off)
+                optionMenuItem.action = #selector(self.selectInputSelectOption(_ :))
+                optionMenuItem.representedObject = haEntity
+                optionMenuItem.tag = haEntity.type.rawValue // Tag defines what type of item it is
+                subMenu.addItem(optionMenuItem)
+            }
         }
+        else {
+            let menuItem = NSMenuItem()
+            menuItem.action = #selector(self.toggleEntityState(_:))
+            menuItem.target = self
+            menuItem.title = haEntity.friendlyName
+            menuItem.keyEquivalent = ""
+            menuItem.state = ((haEntity.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
+            menuItem.representedObject = haEntity
+            menuItem.tag = haEntity.type.rawValue // Tag defines what type of item it is
+            //        menuItem.image = NSImage(named: "StatusBarButtonImage")
+            //        menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
 
-        menuItem.target = self
-        menuItem.title = haEntity.friendlyName
-        menuItem.keyEquivalent = ""
-        menuItem.state = ((haEntity.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
-        menuItem.representedObject = haEntity.entityId
-        menuItem.tag = haEntity.type.rawValue // Tag defines what type of item it is
-        //        menuItem.image = NSImage(named: "StatusBarButtonImage")
-        //        menuItem.offStateImage = NSImage(named: "NSMenuOnStateTemplate")
-
-        self.menu.insertItem(menuItem, at: 0)
+            self.menu.insertItem(menuItem, at: 0)
+        }
     }
 
     func addErrorMenuItem(message: String) {
@@ -338,7 +372,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 // Do not add unavailable state entities
                 if (haState.state != "unavailable") {
 
-                    let haEntity: HaEntity = HaEntity(entityId: haState.entityId, friendlyName: (haState.attributes.friendlyName), state: (haState.state), type: itemType )
+                    let haEntity: HaEntity = HaEntity(entityId: haState.entityId, friendlyName: (haState.attributes.friendlyName), state: (haState.state), type: itemType, options: haState.attributes.options)
 
                     entities.append(haEntity)
                 }
@@ -350,26 +384,12 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         return entities
     }
 
-    @objc func toggleSwitch(_ sender: NSMenuItem) {
-        let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
+    @objc func toggleEntityState(_ sender: NSMenuItem) {
+        let haEntity: HaEntity = sender.representedObject as! HaEntity
 
-        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/switch/toggle")!)
+        let params = ["entity_id": haEntity.entityId]
 
-        request.httpMethod = "POST"
-        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-
-        let session = URLSession.shared
-        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            print(String(data: data!, encoding: String.Encoding.utf8)!)
-        })
-
-        task.resume()
-    }
-
-    @objc func toggleLight(_ sender: NSMenuItem) {
-        let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
-
-        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/light/toggle")!)
+        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/\(haEntity.domain)/toggle")!)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
@@ -382,26 +402,12 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         task.resume()
     }
 
-    @objc func toggleInputBoolean(_ sender: NSMenuItem) {
-        let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
+    @objc func selectInputSelectOption(_ sender: NSMenuItem) {
+        let haEntity: HaEntity = sender.representedObject as! HaEntity
 
-        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/input_boolean/toggle")!)
+        let params = ["entity_id": haEntity.entityId, "option": sender.title]
 
-        request.httpMethod = "POST"
-        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-
-        let session = URLSession.shared
-        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            print(String(data: data!, encoding: String.Encoding.utf8)!)
-        })
-        
-        task.resume()
-    }
-
-    @objc func toggleAutomation(_ sender: NSMenuItem) {
-        let params = ["entity_id": sender.representedObject] as! Dictionary<String, String>
-
-        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/automation/toggle")!)
+        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/input_select/select_option")!)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
@@ -412,14 +418,6 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         })
 
         task.resume()
-    }
-
-    public func menuWillOpen(_ menu: NSMenu){
-        self.updateDynamicMenuItems()
-    }
-
-    public func menuDidClose(_ menu: NSMenu){
-
     }
 
     func createAuthURLRequest(url: URL) -> URLRequest {
@@ -432,7 +430,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
 
     func checkForUpdate() {
-        let parser = FeedParser(URL: releaseFeedURL)
+        let parser = FeedParser(URL: releasesFeedURL)
 
         parser.parseAsync { [weak self] (result) in
             guard let self = self else { return }
@@ -442,6 +440,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 if let latestId = (feed.atomFeed?.entries?.first?.id!) {
                     let idArray = latestId.components(separatedBy: "/")
                     let latestVersion = idArray.last
+
+                    if (latestVersion?.hasSuffix("beta"))! {
+                        return
+                    }
 
                     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
 
@@ -456,7 +458,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             menuItem.tag = self.menuItemTypeInfo // Tag defines what type of item it is
                             menuItem.image = NSImage(named: "InfoImage")
 
-                            self.menu.insertItem(menuItem, at: 0)                    }
+                            self.menu.insertItem(menuItem, at: 0)
+                        }
                     }
                 }
                 else {
@@ -467,12 +470,6 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 // Silently ignore
                 print(error)
             }
-        }
-    }
-
-    @objc func openAppWebsite(sender: NSMenuItem) {
-        if let url = URL(string: "https://hamenu.codechimp.org/releases") {
-            NSWorkspace.shared.open(url)
         }
     }
 }

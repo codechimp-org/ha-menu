@@ -108,12 +108,21 @@ struct Preferences {
         }
     }
 
-    var domainInputbooleans: Bool {
+    var domainInputBooleans: Bool {
         get {
             return UserDefaults.standard.bool(forKey: "domain_inputbooleans")
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_inputbooleans")
+        }
+    }
+
+    var domainInputSelects: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_inputselects")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_inputselects")
         }
     }
 

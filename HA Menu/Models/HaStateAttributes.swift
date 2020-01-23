@@ -1,5 +1,5 @@
 //
-//  HaStateAttribute.swift
+//  HaStateAttributes.swift
 //  HA Menu
 //
 //  Created by Andrew Jackson on 05/11/2018.
@@ -8,10 +8,11 @@
 
 import Foundation
 
-struct HaStateAttribute : Decodable {
+struct HaStateAttributes : Decodable {
 
-    let entityIds : [String]
-    let friendlyName : String
+    let entityIds: [String]
+    var friendlyName: String // Allow rewriting to entityId when decoded
+    let options: [String]
 
     enum CodingKeys: String, CodingKey {
         case attributes
@@ -20,11 +21,13 @@ struct HaStateAttribute : Decodable {
     enum AttributeKeys: String, CodingKey {
         case entityIds = "entity_id"
         case friendlyName = "friendly_name"
+        case options = "options"
     }
 
     init() {
         entityIds = [String]()
         friendlyName = ""
+        options = [String]()
     }
 
     init(from decoder: Decoder) throws {
@@ -40,7 +43,13 @@ struct HaStateAttribute : Decodable {
         if let friendlyName = try attributes.decodeIfPresent(String.self, forKey: .friendlyName) {
             self.friendlyName = friendlyName
         } else {
-            self.friendlyName = "Unknown"
+            self.friendlyName = ""
+        }
+
+        if let options = try attributes.decodeIfPresent([String].self, forKey: .options) {
+            self.options = options
+        } else {
+            self.options = [String]()
         }
     }
 

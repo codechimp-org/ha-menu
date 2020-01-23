@@ -12,7 +12,8 @@ enum EntityTypes: Int, CaseIterable {
     case switchType = 2
     case lightType = 3
     case inputBooleanType = 4
-    case automation = 5
+    case automationType = 5
+    case inputSelectType = 6
 }
 
 enum EntityDomains: String {
@@ -20,6 +21,7 @@ enum EntityDomains: String {
     case lightDomain = "light"
     case inputBooleanDomain = "input_boolean"
     case automationDomain = "automation"
+    case inputSelectDomain = "input_select"
 }
 
 struct HaEntity {
@@ -28,4 +30,22 @@ struct HaEntity {
     var friendlyName: String
     var state: String
     var type: EntityTypes
+    var options: [String]
+
+    var domain: String {
+        get {
+            switch type {
+            case .switchType:
+                return EntityDomains.switchDomain.rawValue
+            case .lightType:
+                return EntityDomains.lightDomain.rawValue
+            case .inputBooleanType:
+                return EntityDomains.inputBooleanDomain.rawValue
+            case .automationType:
+                return EntityDomains.automationDomain.rawValue
+            case .inputSelectType:
+                return EntityDomains.inputSelectDomain.rawValue
+            }
+        }
+    }
 }

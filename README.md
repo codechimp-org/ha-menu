@@ -2,7 +2,7 @@
 # HA Menu
 
 A Mac OS Menu Bar app to perform common Home Assistant functions  
-Currently HA Menu supports turning available switches, lights, automations and input_boolean's on and off.  
+Currently HA Menu supports turning available switches, lights, automations and input_boolean's on and off.  Plus input_select's option menus.
 HA Menu supports MacOS 10.13 (High Sierra) and later.
 
 ![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/menu.png "HA Menu")
@@ -12,6 +12,8 @@ Get the latest HA.Menu.zip from [Releases](https://github.com/andrew-codechimp/h
 Unzip and copy the HA Menu app to your Applications folder
 
 You will have needed to enable Allow app's downloaded from App Store and identified developers enabled in Security & Privacy Settings to run.  
+
+For the server connection you can use your local ip:port as per the example, an external facing address you have setup via DuckDNS or similar, or your Nabu Casa URL.  Ensure you prefix with http:// or https:// as appropriate.
 
 To create a token within HA, login to HA and click on your profile.
 Under Long Lived Access Tokens, create a new token, give it a name and copy the token value into HA Menu preferences.
@@ -34,7 +36,7 @@ First of all create your group(s) within groups.yaml as per the example.  Note t
 Once you have the group(s) added to HA, within HA Menu go to Preferences and within the Groups field enter the group entity ID's you want to be displayed (ha_menu in this example). If you have created multiple groups you can comma separate their entity ID's e.g. ha_menu,my_automations,living_room
 Close preferences to save these settings.
 
-Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, entities within groups are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert in the example).  
+Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, entities within groups are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert, who_cooks in the example).  
 
 Example groups.yaml
 ```
@@ -48,6 +50,7 @@ ha_menu:
     - light.desk_lamp
     - input_boolean.notifications
     - automation.entry_alert
+    - input_select.who_cooks
 ```
 
 ## Say Thanks
