@@ -51,7 +51,8 @@ extension AppDelegate {
                "domain_lights": true,
                "domain_switches": true,
                "domain_automations": true,
-               "domain_inputbooleans": true
+               "domain_inputbooleans": true,
+               "domain_inputselects": true
                ])
 
         let notificationName = Notification.Name(rawValue: "PrefsChanged")
