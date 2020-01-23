@@ -2,7 +2,7 @@
 # HA Menu
 
 A Mac OS Menu Bar app to perform common Home Assistant functions  
-Currently HA Menu supports turning available switches, lights, automations and input_boolean's on and off.  Plus input_select's option menus.
+Currently HA Menu supports turning available switches, lights, automations and input_boolean's on and off.  Plus input_select option menus.
 HA Menu supports MacOS 10.13 (High Sierra) and later.
 
 ![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/menu.png "HA Menu")
