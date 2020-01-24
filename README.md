@@ -1,14 +1,14 @@
-![Logo](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/logo.png)
+![Logo](https://github.com/codechimp-org/ha-menu/blob/master/Art/logo.png)
 # HA Menu
 
 A Mac OS Menu Bar app to perform common Home Assistant functions  
 Currently HA Menu supports turning available switches, lights, automations and input_boolean's on and off.  Plus input_select option menus.
 HA Menu supports MacOS 10.13 (High Sierra) and later.
 
-![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/menu.png "HA Menu")
+![alt text](https://github.com/codechimp-org/ha-menu/blob/master/Art/menu.png "HA Menu")
 
 ## Installation
-Get the latest HA.Menu.zip from [Releases](https://github.com/andrew-codechimp/ha-menu/releases)  
+Get the latest HA.Menu.zip from [Releases](https://github.com/codechimp-org/ha-menu/releases)  
 Unzip and copy the HA Menu app to your Applications folder
 
 You will have needed to enable Allow app's downloaded from App Store and identified developers enabled in Security & Privacy Settings to run.  
@@ -18,7 +18,7 @@ For the server connection you can use your local ip:port as per the example, an 
 To create a token within HA, login to HA and click on your profile.
 Under Long Lived Access Tokens, create a new token, give it a name and copy the token value into HA Menu preferences.
 
-![alt text](https://github.com/andrew-codechimp/ha-menu/blob/master/Art/preferences.png "Preferences")
+![alt text](https://github.com/codechimp-org/ha-menu/blob/master/Art/preferences.png "Preferences")
 
 ### Domains
 
