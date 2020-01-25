@@ -8,9 +8,14 @@ HA Menu supports MacOS 10.13 (High Sierra) and later.
 ![alt text](https://github.com/codechimp-org/ha-menu/blob/master/Art/menu.png "HA Menu")
 
 ## Installation
+**Manual**  
 Get the latest HA.Menu.zip from [Releases](https://github.com/codechimp-org/ha-menu/releases)  
 Unzip and copy the HA Menu app to your Applications folder
 
+**Homebrew Cask**  
+```brew cask install ha-menu```
+
+## Configuration
 You will have needed to enable Allow app's downloaded from App Store and identified developers enabled in Security & Privacy Settings to run.  
 
 For the server connection you can use your local ip:port as per the example, an external facing address you have setup via DuckDNS or similar, or your Nabu Casa URL.  Ensure you prefix with http:// or https:// as appropriate.
