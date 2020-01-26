@@ -14,6 +14,7 @@ enum EntityTypes: Int, CaseIterable {
     case inputBooleanType = 4
     case automationType = 5
     case inputSelectType = 6
+    case groupType = 7
 }
 
 enum EntityDomains: String {
@@ -22,6 +23,7 @@ enum EntityDomains: String {
     case inputBooleanDomain = "input_boolean"
     case automationDomain = "automation"
     case inputSelectDomain = "input_select"
+    case groupDomain = "group"
 }
 
 struct HaEntity {
@@ -45,6 +47,8 @@ struct HaEntity {
                 return EntityDomains.automationDomain.rawValue
             case .inputSelectType:
                 return EntityDomains.inputSelectDomain.rawValue
+            case .groupType:
+                return EntityDomains.groupDomain.rawValue
             }
         }
     }

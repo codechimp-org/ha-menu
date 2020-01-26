@@ -11,7 +11,8 @@ import Cocoa
 import FeedKit
 
 final class MenuItemController: NSObject, NSMenuDelegate {
-    
+
+    var haService = HaService.shared
     var prefs = Preferences()
     var haStates : [HaState]?
     
@@ -49,7 +50,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     public func menuWillOpen(_ menu: NSMenu){
         self.removeDynamicMenuItems()
-        self.getStates()
+        self.addDynamicMenuItems()
         self.checkForUpdate()
     }
 
@@ -103,154 +104,140 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         }
     }
 
-    func getStates() {
-        if (prefs.server.count == 0 ) {
-            self.addErrorMenuItem(message: "Server URL missing")
-            return
-        }
-        
-        guard let url = URL(string: "\(prefs.server)/api/states") else {
-            self.addErrorMenuItem(message: "Invalid URL")
-            return
-        }
-        
-        var request = createAuthURLRequest(url: url)
-        
-        request.httpMethod = "GET"
-        
-        URLSession.shared.dataTask(with: request) {data, response, error in
-            
-            if let httpResponse = response as? HTTPURLResponse {
+    func addDynamicMenuItems() {
+        haService.getStates() {
+            result in
+            switch result {
+            case .success( _):
+                self.addDomains()
+                self.addGroups()
 
-                if httpResponse.statusCode != 200 {
-                    var errorMessage: String
-
-                    switch httpResponse.statusCode {
-                    case 401:
-                        errorMessage = "401 - Unauthorized"
-                    case 404:
-                        errorMessage = "404 - Not Found"
-                    default:
-                        errorMessage = "\(httpResponse.statusCode) - Unknown Response"
-                    }
-
-                    self.addErrorMenuItem(message: errorMessage)
-
-                    return
+            case .failure(let haServiceApiError):
+                switch haServiceApiError {
+                case .URLMissing:
+                    self.addErrorMenuItem(message: "Server URL missing")
+                case .InvalidURL:
+                    self.addErrorMenuItem(message: "Invalid URL")
+                case .Unauthorized:
+                    self.addErrorMenuItem(message: "Unauthorized")
+                case .NotFound:
+                    self.addErrorMenuItem(message: "Not Found")
+                case .UnknownResponse:
+                    self.addErrorMenuItem(message: "Unknown Response")
+                case .JSONDecodeError:
+                    self.addErrorMenuItem(message: "Error Decoding JSON")
+                case .UnknownError:
+                    self.addErrorMenuItem(message: "Unknown Error")
                 }
+                break
             }
+        }
+    }
 
-            if let data = data {
-                do {
-                    let decodedResponse = try JSONDecoder().decode([HaState].self, from: data)
-                    self.haStates = decodedResponse
+    func addDomains() {
+        if (self.prefs.domainInputSelects) {
+            let inputSelects = self.haService.filterEntities(entityDomain: EntityDomains.inputSelectDomain.rawValue, itemType: EntityTypes.inputSelectType)
+            if inputSelects.count > 0 {
+                self.addEntitiesToMenu(entities: inputSelects)
+            }
+        }
 
+        if (self.prefs.domainInputBooleans) {
+            let inputBooleans = self.haService.filterEntities(entityDomain: EntityDomains.inputBooleanDomain.rawValue, itemType: EntityTypes.inputBooleanType)
+            if inputBooleans.count > 0 {
+                self.addEntitiesToMenu(entities: inputBooleans)
+            }
+        }
 
-                    //MARK: Domains
-                    if (self.prefs.domainInputSelects) {
-                        let inputSelects = self.filterEntities(entityDomain: EntityDomains.inputSelectDomain.rawValue, itemType: EntityTypes.inputSelectType)
-                        if inputSelects.count > 0 {
-                            self.addEntitiesToMenu(entities: inputSelects)
-                        }
-                    }
+        if (self.prefs.domainAutomations) {
+            let automations = self.haService.filterEntities(entityDomain: EntityDomains.automationDomain.rawValue, itemType: EntityTypes.automationType)
+            if automations.count > 0 {
+                self.addEntitiesToMenu(entities: automations)
+            }
+        }
 
-                    if (self.prefs.domainInputBooleans) {
-                        let inputBooleans = self.filterEntities(entityDomain: EntityDomains.inputBooleanDomain.rawValue, itemType: EntityTypes.inputBooleanType)
-                        if inputBooleans.count > 0 {
-                            self.addEntitiesToMenu(entities: inputBooleans)
-                        }
-                    }
+        if (self.prefs.domainSwitches) {
+            let switches = self.haService.filterEntities(entityDomain: EntityDomains.switchDomain.rawValue, itemType: EntityTypes.switchType)
+            if switches.count > 0 {
+                self.addEntitiesToMenu(entities: switches)
+            }
+        }
 
-                    if (self.prefs.domainAutomations) {
-                        let automations = self.filterEntities(entityDomain: EntityDomains.automationDomain.rawValue, itemType: EntityTypes.automationType)
-                        if automations.count > 0 {
-                            self.addEntitiesToMenu(entities: automations)
-                        }
-                    }
+        if (self.prefs.domainLights) {
+            let lights = self.haService.filterEntities(entityDomain: EntityDomains.lightDomain.rawValue, itemType: EntityTypes.lightType)
+            if lights.count > 0 {
+                self.addEntitiesToMenu(entities: lights)
+            }
+        }
+    }
 
-                    if (self.prefs.domainSwitches) {
-                        let switches = self.filterEntities(entityDomain: EntityDomains.switchDomain.rawValue, itemType: EntityTypes.switchType)
-                        if switches.count > 0 {
-                            self.addEntitiesToMenu(entities: switches)
-                        }
-                    }
+    func addGroups() {
+        // Iterate groups in preferences
+        for groupId in (self.prefs.groups) {
+            if groupId.count > 0 {
 
-                    if (self.prefs.domainLights) {
-                        let lights = self.filterEntities(entityDomain: EntityDomains.lightDomain.rawValue, itemType: EntityTypes.lightType)
-                        if lights.count > 0 {
-                            self.addEntitiesToMenu(entities: lights)
-                        }
-                    }
+                self.haService.getState(entityId: "group.\(groupId)") { result in
+                    switch result {
+                    case .success(let group):
+                        // For each entity, get it's attributes and if available add to array
+                        var entities = [HaEntity]()
 
+                        for entityId in (group.attributes.entityIds) {
 
-                    //MARK: Groups
-                    // Iterate groups in preferences
-                    for groupId in (self.prefs.groups) {
-                        if groupId.count > 0 {
+                            let entityType = entityId.components(separatedBy: ".")[0]
+                            var itemType: EntityTypes?
 
-                            if let group = self.getEntity(entityId: "group.\(groupId)") {
+                            switch entityType {
+                            case "switch":
+                                itemType = EntityTypes.switchType
+                            case "light":
+                                itemType = EntityTypes.lightType
+                            case "input_boolean":
+                                itemType = EntityTypes.inputBooleanType
+                            case "input_select":
+                                itemType = EntityTypes.inputSelectType
+                            case "automation":
+                                itemType = EntityTypes.automationType
+                            default:
+                                itemType = nil
+                            }
 
-                                // For each entity, get it's attributes and if available add to array
-                                var entities = [HaEntity]()
+                            if itemType != nil {
 
-                                for entityId in (group.attributes.entityIds) {
+                                self.haService.getState(entityId: entityId) { result in
+                                    switch result {
+                                    case .success(let entity):
+                                        var options = [String]()
 
-                                    let entityType = entityId.components(separatedBy: ".")[0]
-                                    var itemType: EntityTypes?
-
-                                    switch entityType {
-                                    case "switch":
-                                        itemType = EntityTypes.switchType
-                                    case "light":
-                                        itemType = EntityTypes.lightType
-                                    case "input_boolean":
-                                        itemType = EntityTypes.inputBooleanType
-                                    case "input_select":
-                                        itemType = EntityTypes.inputSelectType
-                                    case "automation":
-                                        itemType = EntityTypes.automationType
-                                    default:
-                                        itemType = nil
-                                    }
-
-                                    if itemType != nil {
-                                        if let entity = self.getEntity(entityId: entityId) {
-                                            var options = [String]()
-
-                                            if itemType == EntityTypes.inputSelectType {
-                                                options = entity.attributes.options
-                                            }
-
-                                            // Do not add unavailable state entities
-                                            if (entity.state != "unavailable") {
-
-                                                let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), type: itemType!, options: options)
-
-                                                entities.append(haEntity)
-                                            }
+                                        if itemType == EntityTypes.inputSelectType {
+                                            options = entity.attributes.options
                                         }
+
+                                        // Do not add unavailable state entities
+                                        if (entity.state != "unavailable") {
+
+                                            let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), type: itemType!, options: options)
+
+                                            entities.append(haEntity)
+                                        }
+                                    case .failure( _):
+                                        break
                                     }
                                 }
-
-                                entities = entities.reversed()
-
-                                self.addEntitiesToMenu(entities: entities)
-                            } else {
-                                self.addErrorMenuItem(message: "Group \(groupId) not found")
-                                return
                             }
                         }
+
+                        entities = entities.reversed()
+
+                        self.addEntitiesToMenu(entities: entities)
+
+                        break
+                    case .failure( _):
+                        self.addErrorMenuItem(message: "Group not found")
                     }
-
-                } catch {
-                    self.addErrorMenuItem(message: error.localizedDescription)
                 }
-                return
             }
-
-            self.addErrorMenuItem(message: error?.localizedDescription ?? "Unknown error")
-
-        }.resume()
+        }
     }
 
     func addEntitiesToMenu(entities: [HaEntity]) {
@@ -360,73 +347,14 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         }
     }
 
-    func getEntity(entityId: String) -> HaState? {
-        return self.haStates?.first(where: {$0.entityId == entityId})
-    }
-
-    func filterEntities(entityDomain: String, itemType: EntityTypes) -> [HaEntity] {
-        var entities = [HaEntity]()
-
-        for haState in self.haStates! {
-            if (haState.entityId.starts(with: entityDomain + ".")) {
-                // Do not add unavailable state entities
-                if (haState.state != "unavailable") {
-
-                    let haEntity: HaEntity = HaEntity(entityId: haState.entityId, friendlyName: (haState.attributes.friendlyName), state: (haState.state), type: itemType, options: haState.attributes.options)
-
-                    entities.append(haEntity)
-                }
-            }
-        }
-
-        entities = entities.sorted(by: {$0.friendlyName > $1.friendlyName})
-
-        return entities
-    }
-
     @objc func toggleEntityState(_ sender: NSMenuItem) {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
-
-        let params = ["entity_id": haEntity.entityId]
-
-        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/\(haEntity.domain)/toggle")!)
-
-        request.httpMethod = "POST"
-        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-
-        let session = URLSession.shared
-        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            print(String(data: data!, encoding: String.Encoding.utf8)!)
-        })
-
-        task.resume()
+        haService.toggleEntityState(haEntity: haEntity)
     }
 
     @objc func selectInputSelectOption(_ sender: NSMenuItem) {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
-
-        let params = ["entity_id": haEntity.entityId, "option": sender.title]
-
-        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/input_select/select_option")!)
-
-        request.httpMethod = "POST"
-        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-
-        let session = URLSession.shared
-        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
-            print(String(data: data!, encoding: String.Encoding.utf8)!)
-        })
-
-        task.resume()
-    }
-
-    func createAuthURLRequest(url: URL) -> URLRequest {
-        var request = URLRequest(url: url)
-
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("Bearer \(prefs.token)", forHTTPHeaderField: "Authorization")
-
-        return request
+        haService.selectInputSelectOption(haEntity: haEntity, option: sender.title)
     }
 
     func checkForUpdate() {
