@@ -35,30 +35,45 @@ struct HaEntity {
     var state: String
     var options: [String]
 
-    var domain: String {
+    var domain: EntityDomains {
         get {
-            return entityId.components(separatedBy: ".")[0]
+            switch entityId.components(separatedBy: ".")[0]{
+            case EntityDomains.switchDomain.rawValue:
+                return EntityDomains.switchDomain
+            case EntityDomains.lightDomain.rawValue:
+                return EntityDomains.lightDomain
+            case EntityDomains.inputBooleanDomain.rawValue:
+                return EntityDomains.inputBooleanDomain
+            case EntityDomains.automationDomain.rawValue:
+                return EntityDomains.automationDomain
+            case EntityDomains.inputSelectDomain.rawValue:
+                return EntityDomains.inputSelectDomain
+            case EntityDomains.groupDomain.rawValue:
+                return EntityDomains.groupDomain
+            default:
+                return EntityDomains.unknownDomain
+            }
         }
     }
 
     var type: EntityTypes {
         get {
             switch domain{
-            case EntityDomains.switchDomain.rawValue:
+            case EntityDomains.switchDomain:
                 return EntityTypes.switchType
-            case EntityDomains.lightDomain.rawValue:
+            case EntityDomains.lightDomain:
                 return EntityTypes.lightType
-            case EntityDomains.inputBooleanDomain.rawValue:
+            case EntityDomains.inputBooleanDomain:
                 return EntityTypes.inputBooleanType
-            case EntityDomains.automationDomain.rawValue:
+            case EntityDomains.automationDomain:
                 return EntityTypes.automationType
-            case EntityDomains.inputSelectDomain.rawValue:
+            case EntityDomains.inputSelectDomain:
                 return EntityTypes.inputSelectType
-            case EntityDomains.groupDomain.rawValue:
-                 return EntityTypes.groupType
+            case EntityDomains.groupDomain:
+                return EntityTypes.groupType
             default:
                 return EntityTypes.unknownType
+            }
         }
-    }
     }
 }

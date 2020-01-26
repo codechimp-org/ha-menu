@@ -257,7 +257,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     func addEntityMenuItem(haEntity: HaEntity) {
 
-        if haEntity.domain == "inputselect" {
+        if haEntity.domain.rawValue == "inputselect" {
             let inputSelectMenuItem = NSMenuItem()
             inputSelectMenuItem.title = haEntity.friendlyName
             inputSelectMenuItem.tag = haEntity.type.rawValue
