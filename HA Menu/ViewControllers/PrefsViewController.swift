@@ -45,7 +45,7 @@ class PrefsViewController: NSViewController {
         super.viewDidLoad()
         showExistingPrefs()
 
-        let groupEntities = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue, itemType: EntityTypes.groupType)
+        let groupEntities = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue)
 
         for groupEntity in groupEntities {
             groups.append(groupEntity.friendlyName)

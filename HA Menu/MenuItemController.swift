@@ -136,35 +136,35 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     func addDomains() {
         if (self.prefs.domainInputSelects) {
-            let inputSelects = self.haService.filterEntities(entityDomain: EntityDomains.inputSelectDomain.rawValue, itemType: EntityTypes.inputSelectType)
+            let inputSelects = self.haService.filterEntities(entityDomain: EntityDomains.inputSelectDomain.rawValue)
             if inputSelects.count > 0 {
                 self.addEntitiesToMenu(entities: inputSelects)
             }
         }
 
         if (self.prefs.domainInputBooleans) {
-            let inputBooleans = self.haService.filterEntities(entityDomain: EntityDomains.inputBooleanDomain.rawValue, itemType: EntityTypes.inputBooleanType)
+            let inputBooleans = self.haService.filterEntities(entityDomain: EntityDomains.inputBooleanDomain.rawValue)
             if inputBooleans.count > 0 {
                 self.addEntitiesToMenu(entities: inputBooleans)
             }
         }
 
         if (self.prefs.domainAutomations) {
-            let automations = self.haService.filterEntities(entityDomain: EntityDomains.automationDomain.rawValue, itemType: EntityTypes.automationType)
+            let automations = self.haService.filterEntities(entityDomain: EntityDomains.automationDomain.rawValue)
             if automations.count > 0 {
                 self.addEntitiesToMenu(entities: automations)
             }
         }
 
         if (self.prefs.domainSwitches) {
-            let switches = self.haService.filterEntities(entityDomain: EntityDomains.switchDomain.rawValue, itemType: EntityTypes.switchType)
+            let switches = self.haService.filterEntities(entityDomain: EntityDomains.switchDomain.rawValue)
             if switches.count > 0 {
                 self.addEntitiesToMenu(entities: switches)
             }
         }
 
         if (self.prefs.domainLights) {
-            let lights = self.haService.filterEntities(entityDomain: EntityDomains.lightDomain.rawValue, itemType: EntityTypes.lightType)
+            let lights = self.haService.filterEntities(entityDomain: EntityDomains.lightDomain.rawValue)
             if lights.count > 0 {
                 self.addEntitiesToMenu(entities: lights)
             }
@@ -209,14 +209,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                     case .success(let entity):
                                         var options = [String]()
 
-                                        if itemType == EntityTypes.inputSelectType {
-                                            options = entity.attributes.options
-                                        }
-
                                         // Do not add unavailable state entities
                                         if (entity.state != "unavailable") {
 
-                                            let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), type: itemType!, options: options)
+                                            let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), options: options)
 
                                             entities.append(haEntity)
                                         }
@@ -261,7 +257,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     func addEntityMenuItem(haEntity: HaEntity) {
 
-        if haEntity.type == EntityTypes.inputSelectType {
+        if haEntity.domain == "inputselect" {
             let inputSelectMenuItem = NSMenuItem()
             inputSelectMenuItem.title = haEntity.friendlyName
             inputSelectMenuItem.tag = haEntity.type.rawValue

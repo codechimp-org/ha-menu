@@ -15,41 +15,50 @@ enum EntityTypes: Int, CaseIterable {
     case automationType = 5
     case inputSelectType = 6
     case groupType = 7
+    case unknownType = 999
 }
 
-enum EntityDomains: String {
+enum EntityDomains: String, CaseIterable {
     case switchDomain = "switch"
     case lightDomain = "light"
     case inputBooleanDomain = "input_boolean"
     case automationDomain = "automation"
     case inputSelectDomain = "input_select"
     case groupDomain = "group"
+    case unknownDomain = "unknown"
 }
 
 struct HaEntity {
 
-    var entityId : String
+    var entityId: String
     var friendlyName: String
     var state: String
-    var type: EntityTypes
     var options: [String]
 
     var domain: String {
         get {
-            switch type {
-            case .switchType:
-                return EntityDomains.switchDomain.rawValue
-            case .lightType:
-                return EntityDomains.lightDomain.rawValue
-            case .inputBooleanType:
-                return EntityDomains.inputBooleanDomain.rawValue
-            case .automationType:
-                return EntityDomains.automationDomain.rawValue
-            case .inputSelectType:
-                return EntityDomains.inputSelectDomain.rawValue
-            case .groupType:
-                return EntityDomains.groupDomain.rawValue
-            }
+            return entityId.components(separatedBy: ".")[0]
         }
+    }
+
+    var type: EntityTypes {
+        get {
+            switch domain{
+            case EntityDomains.switchDomain.rawValue:
+                return EntityTypes.switchType
+            case EntityDomains.lightDomain.rawValue:
+                return EntityTypes.lightType
+            case EntityDomains.inputBooleanDomain.rawValue:
+                return EntityTypes.inputBooleanType
+            case EntityDomains.automationDomain.rawValue:
+                return EntityTypes.automationType
+            case EntityDomains.inputSelectDomain.rawValue:
+                return EntityTypes.inputSelectType
+            case EntityDomains.groupDomain.rawValue:
+                 return EntityTypes.groupType
+            default:
+                return EntityTypes.unknownType
+        }
+    }
     }
 }

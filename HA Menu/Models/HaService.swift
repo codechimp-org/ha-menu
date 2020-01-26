@@ -100,7 +100,7 @@ class HaService {
         completionHandler(.success(entity))
     }
 
-    func filterEntities(entityDomain: String, itemType: EntityTypes) -> [HaEntity] {
+    func filterEntities(entityDomain: String) -> [HaEntity] {
         var entities = [HaEntity]()
 
         for haState in self.haStates {
@@ -108,7 +108,7 @@ class HaService {
                 // Do not add unavailable state entities
                 if (haState.state != "unavailable") {
 
-                    let haEntity: HaEntity = HaEntity(entityId: haState.entityId, friendlyName: (haState.attributes.friendlyName), state: (haState.state), type: itemType, options: haState.attributes.options)
+                    let haEntity: HaEntity = HaEntity(entityId: haState.entityId, friendlyName: (haState.attributes.friendlyName), state: (haState.state), options: haState.attributes.options)
 
                     entities.append(haEntity)
                 }
