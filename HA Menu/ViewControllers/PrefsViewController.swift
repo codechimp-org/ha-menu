@@ -26,18 +26,9 @@ class PrefsViewController: NSViewController {
     @IBOutlet weak var tableViewGroups: NSTableView!
 
 
-    @IBAction func buttonAddGroup(_ sender: Any) {
-    }
-
-    @IBAction func buttonRemoveGroup(_ sender: Any) {
-    }
-
-
-    @IBAction func buttonEdit(_ sender: Any) {
-    }
-
     var prefs = Preferences()
     var groups = [String]()
+    var menuItems = [PrefMenuItem]()
     private var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
 
 
@@ -56,8 +47,6 @@ class PrefsViewController: NSViewController {
         tableViewGroups.registerForDraggedTypes([dragDropType])
         tableViewGroups.target = self
         tableViewGroups.doubleAction = #selector(tableViewGroupsDoubleClick(_:))
-
-
 
         tableViewGroups.reloadData()
     }
@@ -78,6 +67,8 @@ class PrefsViewController: NSViewController {
         buttonInputSelects.state = (prefs.domainInputSelects == true ? .on : .off)
         textfieldGroup.stringValue = prefs.groupList
         buttonLogin.state = (prefs.launch == true ? .on : .off)
+
+        menuItems = prefs.menuItems
     }
 
     func saveNewPrefs() {
@@ -101,7 +92,7 @@ class PrefsViewController: NSViewController {
             return
         }
 
-        let item = groups[tableViewGroups.selectedRow]
+        let item = self.menuItems[tableViewGroups.selectedRow]
     }
 
 }
@@ -109,42 +100,94 @@ class PrefsViewController: NSViewController {
 extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     public func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.groups.count
+        return self.menuItems.count
     }
 
     fileprivate enum TableColumns {
         static let GroupName = NSUserInterfaceItemIdentifier("GroupName")
     }
 
-    func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> String? {
-        if tableColumn?.identifier == TableColumns.GroupName {
-            return self.groups[row]
-        } else {
-            return nil
-        }
+    private func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> PrefMenuItem? {
+        return self.menuItems[row]
     }
 
 
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    //    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+    //
+    //        var image: NSImage?
+    //        var text: String = ""
+    //        var cellIdentifier: NSUserInterfaceItemIdentifier = TableColumns.GroupName
+    //
+    //
+    //        let item = self.menuItems[row]
+    //
+    //        if tableColumn == tableView.tableColumns[0] {
+    //            text = item.entityId
+    //            cellIdentifier = TableColumns.GroupName
+    //        }
+    //
+    //        if let cell = tableView.makeView(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
+    //            cell.state = item.enabled
+    //            cell.textField?.stringValue = text
+    //            cell.imageView?.image = image ?? nil
+    //            return cell
+    //        }
+    //        return nil
+    //    }
 
-        var image: NSImage?
-        var text: String = ""
-        var cellIdentifier: NSUserInterfaceItemIdentifier = TableColumns.GroupName
-
-
-        let item = self.groups[row]
+    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?
+        , row: Int) -> Any? {
 
         if tableColumn == tableView.tableColumns[0] {
-            text = item
-            cellIdentifier = TableColumns.GroupName
-        }
+            let cell = tableColumn!.dataCell as! NSButtonCell
+            let item = self.menuItems[row]
 
-        if let cell = tableView.makeView(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
-            cell.textField?.stringValue = text
-            cell.imageView?.image = image ?? nil
+            cell.state = (item.enabled ? .on : .off)
+            cell.title = item.entityId
+
             return cell
         }
+
+//        if tableColumn == tableView.tableColumns[1] {
+//            let cell = tableColumn!.dataCell as! NSTextFieldCell
+//            let item = self.menuItems[row]
+//
+////            let image = NSImage(named: NSImage.Name("InfoImage"))
+//
+//            cell.title = item.entityId
+////            cell.image = image
+//            return cell
+//        }
+
+        if tableColumn == tableView.tableColumns[1] {
+            let cell = tableColumn!.dataCell as! NSButtonCell
+            let item = self.menuItems[row]
+
+            cell.state = (item.subMenu ? .on : .off)
+            return cell
+        }
+
         return nil
+    }
+
+    func tableView(_ tableView: NSTableView, setObjectValue object: Any?
+        , for tableColumn: NSTableColumn?, row: Int) {
+
+        if tableColumn == tableView.tableColumns[0] {
+            if (object! as AnyObject).intValue == 1 {
+                self.menuItems[row].enabled = true
+            } else {
+                self.menuItems[row].enabled = false
+            }
+        }
+
+        if tableColumn == tableView.tableColumns[1] {
+            if (object! as AnyObject).intValue == 1 {
+                self.menuItems[row].subMenu = true
+            } else {
+                self.menuItems[row].subMenu = false
+            }
+        }
     }
 
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {

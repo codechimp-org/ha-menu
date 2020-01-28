@@ -27,6 +27,7 @@
 		49E6106921908D1400EFA408 /* HaStateAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106821908D1400EFA408 /* HaStateAttributes.swift */; };
 		49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6106E21932B6600EFA408 /* MenuItemController.swift */; };
 		49E6C92923DDE98A00F22973 /* HaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6C92823DDE98A00F22973 /* HaService.swift */; };
+		49E6C92B23E07EE300F22973 /* PrefMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E6C92A23E07EE300F22973 /* PrefMenuItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +94,7 @@
 		49E6C92623D99BE800F22973 /* Switch Icon.sketch */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Switch Icon.sketch"; sourceTree = "<group>"; };
 		49E6C92723D99BE800F22973 /* preferences.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = preferences.png; sourceTree = "<group>"; };
 		49E6C92823DDE98A00F22973 /* HaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaService.swift; sourceTree = "<group>"; };
+		49E6C92A23E07EE300F22973 /* PrefMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefMenuItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				49E61064218F605000EFA408 /* Preferences.swift */,
+				49E6C92A23E07EE300F22973 /* PrefMenuItem.swift */,
 				49E6C92823DDE98A00F22973 /* HaService.swift */,
 				49E6106621908BC100EFA408 /* HaState.swift */,
 				49E6106821908D1400EFA408 /* HaStateAttributes.swift */,
@@ -419,6 +422,7 @@
 				49E6C92923DDE98A00F22973 /* HaService.swift in Sources */,
 				491F529D217CBF5200105921 /* AppDelegate.swift in Sources */,
 				49E61065218F605000EFA408 /* Preferences.swift in Sources */,
+				49E6C92B23E07EE300F22973 /* PrefMenuItem.swift in Sources */,
 				49E6106721908BC100EFA408 /* HaState.swift in Sources */,
 				49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */,
 				49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */,

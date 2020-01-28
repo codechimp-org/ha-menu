@@ -67,14 +67,14 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "group")
-         }
+        }
     }
 
     var groups: [String] {
 
         var groupArray = [String]()
 
-         // create array of groups, reverse order
+        // create array of groups, reverse order
         groupArray = self.groupList.components(separatedBy: ",")
         groupArray.reverse()
 
@@ -123,6 +123,51 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_inputselects")
+        }
+    }
+
+    var menuItems: [PrefMenuItem] {
+        get {
+            var decodedResponse = [PrefMenuItem]()
+
+            guard let jsonData = UserDefaults.standard.data(forKey: "menu_items") else {
+                // Init Domains
+                decodedResponse.append(PrefMenuItem(entityId: "lights", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainLights))
+
+                decodedResponse.append(PrefMenuItem(entityId: "switches", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainSwitches))
+
+                decodedResponse.append(PrefMenuItem(entityId: "automations", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainAutomations))
+
+                decodedResponse.append(PrefMenuItem(entityId: "inputbooleans", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainInputBooleans))
+
+                decodedResponse.append(PrefMenuItem(entityId: "inputselects", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainInputSelects))
+
+                // Init Groups
+                for group in groups {
+                    decodedResponse.append(PrefMenuItem(entityId: group, menuItemType: menuItemTypes.Group, subMenu: false, enabled: true))
+                }
+                
+                return decodedResponse
+            }
+            do {
+                decodedResponse = try JSONDecoder().decode([PrefMenuItem].self, from: jsonData)
+            }
+            catch {
+                // Something odd with json, blank it out
+            }
+            return decodedResponse
+        }
+        set {
+
+            let encoder = JSONEncoder()
+            do {
+                let data = try encoder.encode(newValue)
+                let dataString = String(data: data, encoding: .utf8)!
+                UserDefaults.standard.set(dataString, forKey: "menu_items")
+            }
+            catch {
+                // Error encoding json, don't write new value
+            }
         }
     }
 
