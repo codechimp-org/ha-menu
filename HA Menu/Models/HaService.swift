@@ -13,14 +13,14 @@ class HaService {
     static var shared = HaService()
     private init() {}
 
-    enum HaServiceApiError: Error {
+    enum HaServiceApiError: LocalizedError {
         case URLMissing
         case InvalidURL
         case Unauthorized
         case NotFound
         case UnknownResponse
         case JSONDecodeError
-        case UnknownError
+        case UnknownError(message: String)
     }
 
     enum HaServiceEntityError: Error {
@@ -31,7 +31,7 @@ class HaService {
 
     var prefs = Preferences()
 
-    private func createAuthURLRequest(url: URL) -> URLRequest {
+    func createAuthURLRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
 
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -58,7 +58,6 @@ class HaService {
         URLSession.shared.dataTask(with: request) {data, response, error in
 
             if let httpResponse = response as? HTTPURLResponse {
-
                 if httpResponse.statusCode != 200 {
                     switch httpResponse.statusCode {
                     case 401:
@@ -84,15 +83,14 @@ class HaService {
                 }
                 return
             }
-
-            completionHandler(.failure(.UnknownError))
+            completionHandler(.failure(.UnknownError(message: error?.localizedDescription ?? "")))
 
         }.resume()
     }
 
     func getState(entityId: String, completionHandler: @escaping (Result<HaState, HaServiceEntityError>) -> Void) {
 
-        guard let entity = self.haStates.first(where: {$0.entityId == entityId}) else {
+        guard let entity = haStates.first(where: {$0.entityId == entityId}) else {
             completionHandler(.failure(.EntityNotFound))
             return
         }
@@ -103,7 +101,7 @@ class HaService {
     func filterEntities(entityDomain: String) -> [HaEntity] {
         var entities = [HaEntity]()
 
-        for haState in self.haStates {
+        for haState in haStates {
             if (haState.entityId.starts(with: entityDomain + ".")) {
                 // Do not add unavailable state entities
                 if (haState.state != "unavailable") {

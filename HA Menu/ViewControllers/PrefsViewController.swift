@@ -14,17 +14,13 @@ class PrefsViewController: NSViewController {
 
     @IBOutlet weak var textfieldServer: NSTextField!
     @IBOutlet weak var textfieldToken: NSTextField!
-    @IBOutlet weak var textfieldGroup: NSTextField!
     @IBOutlet weak var buttonLogin: NSButton!
-    @IBOutlet weak var buttonLights: NSButton!
-    @IBOutlet weak var buttonSwitches: NSButton!
-    @IBOutlet weak var buttonAutomations: NSButton!
-    @IBOutlet weak var buttonInputBooleans: NSButton!
-    @IBOutlet weak var buttonInputSelects: NSButton!
-
-
+    @IBOutlet weak var textfieldStatus: NSTextField!
     @IBOutlet weak var tableViewGroups: NSTableView!
 
+    @IBAction func buttonCheckConnection(_ sender: NSButton) {
+        checkConnection()
+    }
 
     var prefs = Preferences()
     var groups = [String]()
@@ -35,12 +31,7 @@ class PrefsViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showExistingPrefs()
-
-        let groupEntities = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue)
-
-        for groupEntity in groupEntities {
-            groups.append(groupEntity.friendlyName)
-        }
+        checkConnection()
 
         tableViewGroups.delegate = self
         tableViewGroups.dataSource = self
@@ -57,15 +48,56 @@ class PrefsViewController: NSViewController {
         super.viewWillDisappear()
     }
 
+    func checkConnection() {
+        saveNewPrefs()
+        
+        haService.getStates() {
+            result in
+            switch result {
+            case .success( _):
+                DispatchQueue.main.async {
+                    self.textfieldStatus.stringValue = "OK"
+                }
+
+                let groupEntities = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue)
+
+                for groupEntity in groupEntities {
+                    self.groups.append(groupEntity.friendlyName)
+                }
+
+            case .failure(let haServiceApiError):
+                DispatchQueue.main.async {
+                    switch haServiceApiError {
+                    case .URLMissing:
+                        self.textfieldStatus.stringValue = "Server URL missing"
+                    case .InvalidURL:
+                        self.textfieldStatus.stringValue = "Invalid URL"
+                    case .Unauthorized:
+                        self.textfieldStatus.stringValue = "Unauthorized"
+                    case .NotFound:
+                        self.textfieldStatus.stringValue = "Not Found"
+                    case .UnknownResponse:
+                        self.textfieldStatus.stringValue = "Unknown Response"
+                    case .JSONDecodeError:
+                        self.textfieldStatus.stringValue = "Error Decoding JSON"
+                    case .UnknownError:
+                        print(haServiceApiError.localizedDescription)
+                        self.textfieldStatus.stringValue = "Unknown Error (check your server/port)"
+                    }
+                }
+            }
+        }
+    }
+
     func showExistingPrefs() {
         textfieldServer.stringValue = prefs.server
         textfieldToken.stringValue = prefs.token
-        buttonLights.state = (prefs.domainLights == true ? .on : .off)
-        buttonSwitches.state = (prefs.domainSwitches == true ? .on : .off)
-        buttonAutomations.state = (prefs.domainAutomations == true ? .on : .off)
-        buttonInputBooleans.state = (prefs.domainInputBooleans == true ? .on : .off)
-        buttonInputSelects.state = (prefs.domainInputSelects == true ? .on : .off)
-        textfieldGroup.stringValue = prefs.groupList
+        //        buttonLights.state = (prefs.domainLights == true ? .on : .off)
+        //        buttonSwitches.state = (prefs.domainSwitches == true ? .on : .off)
+        //        buttonAutomations.state = (prefs.domainAutomations == true ? .on : .off)
+        //        buttonInputBooleans.state = (prefs.domainInputBooleans == true ? .on : .off)
+        //        buttonInputSelects.state = (prefs.domainInputSelects == true ? .on : .off)
+        //        textfieldGroup.stringValue = prefs.groupList
         buttonLogin.state = (prefs.launch == true ? .on : .off)
 
         menuItems = prefs.menuItems
@@ -74,12 +106,12 @@ class PrefsViewController: NSViewController {
     func saveNewPrefs() {
         prefs.server = textfieldServer.stringValue
         prefs.token = textfieldToken.stringValue
-        prefs.domainLights = (buttonLights.state == .on)
-        prefs.domainSwitches = (buttonSwitches.state == .on)
-        prefs.domainAutomations = (buttonAutomations.state == .on)
-        prefs.domainInputBooleans = (buttonInputBooleans.state == .on)
-        prefs.domainInputSelects = (buttonInputSelects.state == .on)
-        prefs.groupList = textfieldGroup.stringValue
+        //        prefs.domainLights = (buttonLights.state == .on)
+        //        prefs.domainSwitches = (buttonSwitches.state == .on)
+        //        prefs.domainAutomations = (buttonAutomations.state == .on)
+        //        prefs.domainInputBooleans = (buttonInputBooleans.state == .on)
+        //        prefs.domainInputSelects = (buttonInputSelects.state == .on)
+        //        prefs.groupList = textfieldGroup.stringValue
         prefs.launch = (buttonLogin.state == .on)
 
         NotificationCenter.default.post(name: Notification.Name(rawValue: "PrefsChanged"),
@@ -148,16 +180,16 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
             return cell
         }
 
-//        if tableColumn == tableView.tableColumns[1] {
-//            let cell = tableColumn!.dataCell as! NSTextFieldCell
-//            let item = self.menuItems[row]
-//
-////            let image = NSImage(named: NSImage.Name("InfoImage"))
-//
-//            cell.title = item.entityId
-////            cell.image = image
-//            return cell
-//        }
+        //        if tableColumn == tableView.tableColumns[1] {
+        //            let cell = tableColumn!.dataCell as! NSTextFieldCell
+        //            let item = self.menuItems[row]
+        //
+        ////            let image = NSImage(named: NSImage.Name("InfoImage"))
+        //
+        //            cell.title = item.entityId
+        ////            cell.image = image
+        //            return cell
+        //        }
 
         if tableColumn == tableView.tableColumns[1] {
             let cell = tableColumn!.dataCell as! NSButtonCell

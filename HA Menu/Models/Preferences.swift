@@ -105,6 +105,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_automations")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -114,6 +115,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_inputbooleans")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -123,6 +125,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_inputselects")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -164,6 +167,7 @@ struct Preferences {
                 let data = try encoder.encode(newValue)
                 let dataString = String(data: data, encoding: .utf8)!
                 UserDefaults.standard.set(dataString, forKey: "menu_items")
+                UserDefaults.standard.synchronize()
             }
             catch {
                 // Error encoding json, don't write new value
