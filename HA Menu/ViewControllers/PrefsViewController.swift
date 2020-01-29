@@ -23,7 +23,7 @@ class PrefsViewController: NSViewController {
     }
 
     var prefs = Preferences()
-    var groups = [String]()
+    var groups = [String: HaEntity]()
     var menuItems = [PrefMenuItem]()
     private var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
 
@@ -31,7 +31,6 @@ class PrefsViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         showExistingPrefs()
-        checkConnection()
 
         tableViewGroups.delegate = self
         tableViewGroups.dataSource = self
@@ -39,7 +38,7 @@ class PrefsViewController: NSViewController {
         tableViewGroups.target = self
         tableViewGroups.doubleAction = #selector(tableViewGroupsDoubleClick(_:))
 
-        tableViewGroups.reloadData()
+        checkConnection()
     }
 
     override func viewWillDisappear() {
@@ -57,12 +56,22 @@ class PrefsViewController: NSViewController {
             case .success( _):
                 DispatchQueue.main.async {
                     self.textfieldStatus.stringValue = "OK"
-                }
 
-                let groupEntities = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue)
+                    let groupEntities = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue)
 
-                for groupEntity in groupEntities {
-                    self.groups.append(groupEntity.friendlyName)
+                    for groupEntity in groupEntities {
+                        self.groups[groupEntity.entityId] = groupEntity
+                    }
+
+                    let menuItemsWithFriendlyNames = self.prefs.menuItemsWithFriendlyNames(groups: self.groups)
+
+                    let sortedMenuItemsWithFriendlyNames = menuItemsWithFriendlyNames.sorted { $0.value.index < $1.value.index }
+
+                    for (_, value) in sortedMenuItemsWithFriendlyNames {
+                        self.menuItems.append(value)
+                    }
+
+                    self.tableViewGroups.reloadData()
                 }
 
             case .failure(let haServiceApiError):
@@ -99,8 +108,6 @@ class PrefsViewController: NSViewController {
         //        buttonInputSelects.state = (prefs.domainInputSelects == true ? .on : .off)
         //        textfieldGroup.stringValue = prefs.groupList
         buttonLogin.state = (prefs.launch == true ? .on : .off)
-
-        menuItems = prefs.menuItems
     }
 
     func saveNewPrefs() {
@@ -175,7 +182,7 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
             let item = self.menuItems[row]
 
             cell.state = (item.enabled ? .on : .off)
-            cell.title = item.entityId
+            cell.title = item.friendlyName
 
             return cell
         }

@@ -745,7 +745,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n5m-aQ-agS">
-                                <rect key="frame" x="18" y="19" width="50" height="16"/>
+                                <rect key="frame" x="18" y="15" width="50" height="16"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Startup" id="iiB-Fn-K0f">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -753,7 +753,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="axF-OX-WUt">
-                                <rect key="frame" x="78" y="18" width="101" height="18"/>
+                                <rect key="frame" x="78" y="14" width="101" height="18"/>
                                 <buttonCell key="cell" type="check" title="Start at login" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="QMM-8Q-kj2">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -853,7 +853,7 @@
                             <constraint firstItem="d6B-OZ-GYv" firstAttribute="firstBaseline" secondItem="cJg-XY-9A6" secondAttribute="firstBaseline" id="a0P-rV-MdY"/>
                             <constraint firstItem="xLm-S0-5hb" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="80" id="mlv-fV-Os6"/>
                             <constraint firstItem="n5m-aQ-agS" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="20" id="rXR-3p-4O0"/>
-                            <constraint firstAttribute="bottom" secondItem="n5m-aQ-agS" secondAttribute="bottom" constant="19" id="s9p-y3-Tw5"/>
+                            <constraint firstAttribute="bottom" secondItem="n5m-aQ-agS" secondAttribute="bottom" constant="15" id="s9p-y3-Tw5"/>
                             <constraint firstItem="0wc-Hy-MC4" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="20" id="uVa-bO-Oih"/>
                             <constraint firstItem="axF-OX-WUt" firstAttribute="leading" secondItem="R2d-cY-rAO" secondAttribute="leading" constant="80" id="vND-ld-nML"/>
                             <constraint firstItem="sDh-nR-2un" firstAttribute="top" secondItem="0wc-Hy-MC4" secondAttribute="bottom" constant="8" id="vSB-sd-Kmy"/>

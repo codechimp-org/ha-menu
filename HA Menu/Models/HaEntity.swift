@@ -76,4 +76,8 @@ struct HaEntity {
             }
         }
     }
+
+    var entityIdNoPrefix: String {
+        return entityId.components(separatedBy: ".")[0]
+    }
 }

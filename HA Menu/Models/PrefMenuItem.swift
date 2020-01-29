@@ -8,14 +8,20 @@
 
 import Foundation
 
-enum menuItemTypes: String, Encodable, Decodable {
+enum itemTypes: String, Codable {
     case Domain = "Domain"
     case Group = "Group"
 }
 
-struct PrefMenuItem : Encodable, Decodable {
+struct PrefMenuItem : Codable {
     var entityId: String
-    var menuItemType: menuItemTypes
+    var itemType: itemTypes
     var subMenu: Bool
     var enabled: Bool
+    var friendlyName: String?
+    var index: Int = 0
+
+    private enum CodingKeys: String, CodingKey {
+        case entityId, itemType, subMenu, enabled
+    }
 }

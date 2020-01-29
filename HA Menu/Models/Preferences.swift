@@ -135,19 +135,19 @@ struct Preferences {
 
             guard let jsonData = UserDefaults.standard.data(forKey: "menu_items") else {
                 // Init Domains
-                decodedResponse.append(PrefMenuItem(entityId: "lights", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainLights))
+                decodedResponse.append(PrefMenuItem(entityId: "lights", itemType: itemTypes.Domain, subMenu: false, enabled: domainLights, friendlyName: "Lights"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "switches", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainSwitches))
+                decodedResponse.append(PrefMenuItem(entityId: "switches", itemType: itemTypes.Domain, subMenu: false, enabled: domainSwitches, friendlyName: "Switches"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "automations", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainAutomations))
+                decodedResponse.append(PrefMenuItem(entityId: "automations", itemType: itemTypes.Domain, subMenu: false, enabled: domainAutomations, friendlyName: "Automations"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "inputbooleans", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainInputBooleans))
+                decodedResponse.append(PrefMenuItem(entityId: "inputbooleans", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputBooleans, friendlyName: "Input Booleans"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "inputselects", menuItemType: menuItemTypes.Domain, subMenu: false, enabled: domainInputSelects))
+                decodedResponse.append(PrefMenuItem(entityId: "inputselects", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputSelects, friendlyName: "Input Selects"))
 
                 // Init Groups
                 for group in groups {
-                    decodedResponse.append(PrefMenuItem(entityId: group, menuItemType: menuItemTypes.Group, subMenu: false, enabled: true))
+                    decodedResponse.append(PrefMenuItem(entityId: group, itemType: itemTypes.Group, subMenu: false, enabled: true))
                 }
                 
                 return decodedResponse
@@ -173,6 +173,40 @@ struct Preferences {
                 // Error encoding json, don't write new value
             }
         }
+    }
+
+    func menuItemsWithFriendlyNames(groups: [String: HaEntity]) -> [String: PrefMenuItem] {
+        var completedItems = [String: PrefMenuItem]()
+
+        var index = 0
+
+        for item in menuItems {
+            index+=1
+            if item.itemType == itemTypes.Group {
+                let friendlyName = groups["group." + item.entityId]?.friendlyName ?? item.entityId
+
+                let completedItem = PrefMenuItem(entityId: item.entityId, itemType: item.itemType, subMenu: item.subMenu, enabled: item.enabled, friendlyName: friendlyName, index: index)
+
+                completedItems[completedItem.entityId] = completedItem
+            }
+            else {
+                var domainItem = item
+                domainItem.index = index
+                completedItems[item.entityId] = domainItem
+            }
+        }
+
+        // Add missing groups
+        for group in groups {
+            if completedItems[group.value.entityIdNoPrefix] == nil {
+                index+=1
+                let completedItem = PrefMenuItem(entityId: group.value.entityIdNoPrefix, itemType: itemTypes.Group, subMenu: false, enabled: false, friendlyName: group.value.friendlyName, index: index)
+
+                completedItems[group.value.entityIdNoPrefix] = completedItem
+            }
+        }
+
+        return completedItems
     }
 
 }
