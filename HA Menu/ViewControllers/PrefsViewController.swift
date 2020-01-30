@@ -49,6 +49,8 @@ class PrefsViewController: NSViewController {
 
     func checkConnection() {
         saveNewPrefs()
+
+        self.menuItems.removeAll()
         
         haService.getStates() {
             result in
@@ -142,38 +144,15 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
         return self.menuItems.count
     }
 
-    fileprivate enum TableColumns {
-        static let GroupName = NSUserInterfaceItemIdentifier("GroupName")
-    }
+//    fileprivate enum TableColumns {
+//        static let GroupName = NSUserInterfaceItemIdentifier("GroupName")
+//    }
 
     private func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> PrefMenuItem? {
         return self.menuItems[row]
     }
 
-
-    //    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-    //
-    //        var image: NSImage?
-    //        var text: String = ""
-    //        var cellIdentifier: NSUserInterfaceItemIdentifier = TableColumns.GroupName
-    //
-    //
-    //        let item = self.menuItems[row]
-    //
-    //        if tableColumn == tableView.tableColumns[0] {
-    //            text = item.entityId
-    //            cellIdentifier = TableColumns.GroupName
-    //        }
-    //
-    //        if let cell = tableView.makeView(withIdentifier: cellIdentifier, owner: nil) as? NSTableCellView {
-    //            cell.state = item.enabled
-    //            cell.textField?.stringValue = text
-    //            cell.imageView?.image = image ?? nil
-    //            return cell
-    //        }
-    //        return nil
-    //    }
-
+    
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?
         , row: Int) -> Any? {
 
@@ -182,23 +161,15 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
             let item = self.menuItems[row]
 
             cell.state = (item.enabled ? .on : .off)
-            cell.title = item.friendlyName
-
             return cell
         }
 
-        //        if tableColumn == tableView.tableColumns[1] {
-        //            let cell = tableColumn!.dataCell as! NSTextFieldCell
-        //            let item = self.menuItems[row]
-        //
-        ////            let image = NSImage(named: NSImage.Name("InfoImage"))
-        //
-        //            cell.title = item.entityId
-        ////            cell.image = image
-        //            return cell
-        //        }
-
         if tableColumn == tableView.tableColumns[1] {
+            let item = self.menuItems[row]
+            return item.friendlyName!
+        }
+
+        if tableColumn == tableView.tableColumns[2] {
             let cell = tableColumn!.dataCell as! NSButtonCell
             let item = self.menuItems[row]
 
@@ -208,6 +179,7 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
 
         return nil
     }
+
 
     func tableView(_ tableView: NSTableView, setObjectValue object: Any?
         , for tableColumn: NSTableColumn?, row: Int) {
@@ -220,7 +192,7 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
             }
         }
 
-        if tableColumn == tableView.tableColumns[1] {
+        if tableColumn == tableView.tableColumns[2] {
             if (object! as AnyObject).intValue == 1 {
                 self.menuItems[row].subMenu = true
             } else {
