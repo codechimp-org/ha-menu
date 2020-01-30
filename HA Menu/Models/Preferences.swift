@@ -181,15 +181,19 @@ struct Preferences {
         var index = 0
 
         for item in menuItems {
-            index+=1
+
             if item.itemType == itemTypes.Group {
-                let friendlyName = groups["group." + item.entityId]?.friendlyName ?? item.entityId
+                // Check if still a group
+                if let group = groups["group." + item.entityId] {
+                    index+=1
 
-                let completedItem = PrefMenuItem(entityId: item.entityId, itemType: item.itemType, subMenu: item.subMenu, enabled: item.enabled, friendlyName: friendlyName, index: index)
+                    let completedItem = PrefMenuItem(entityId: item.entityId, itemType: item.itemType, subMenu: item.subMenu, enabled: item.enabled, friendlyName: group.friendlyName, index: index)
 
-                completedItems[completedItem.entityId] = completedItem
+                    completedItems[completedItem.entityId] = completedItem
+                }
             }
             else {
+                index+=1
                 var domainItem = item
                 domainItem.index = index
                 completedItems[item.entityId] = domainItem
