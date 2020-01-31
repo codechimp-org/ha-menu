@@ -207,7 +207,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                 self.haService.getState(entityId: entityId) { result in
                                     switch result {
                                     case .success(let entity):
-                                        var options = [String]()
+                                        let options = [String]()
 
                                         // Do not add unavailable state entities
                                         if (entity.state != "unavailable") {

@@ -18,10 +18,10 @@ struct PrefMenuItem : Codable {
     var itemType: itemTypes
     var subMenu: Bool
     var enabled: Bool
-    var friendlyName: String?
+    var friendlyName: String
     var index: Int = 0
 
     private enum CodingKeys: String, CodingKey {
-        case entityId, itemType, subMenu, enabled
+        case entityId, friendlyName, itemType, subMenu, enabled
     }
 }

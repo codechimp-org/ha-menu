@@ -19,11 +19,11 @@ class PrefsViewController: NSViewController {
     @IBOutlet weak var tableViewGroups: NSTableView!
 
     @IBAction func buttonCheckConnection(_ sender: NSButton) {
-        checkConnection()
+        connect()
     }
 
     var prefs = Preferences()
-    var groups = [String: HaEntity]()
+    var groups = [HaEntity]()
     var menuItems = [PrefMenuItem]()
     private var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
 
@@ -36,18 +36,19 @@ class PrefsViewController: NSViewController {
         tableViewGroups.dataSource = self
         tableViewGroups.registerForDraggedTypes([dragDropType])
         tableViewGroups.target = self
-        tableViewGroups.doubleAction = #selector(tableViewGroupsDoubleClick(_:))
+//        tableViewGroups.doubleAction = #selector(tableViewGroupsDoubleClick(_:))
 
-        checkConnection()
+        connect()
     }
 
     override func viewWillDisappear() {
         saveNewPrefs()
+        saveNewMenuItems()
         NSApp.stopModal()
         super.viewWillDisappear()
     }
 
-    func checkConnection() {
+    func connect() {
         saveNewPrefs()
 
         self.menuItems.removeAll()
@@ -59,11 +60,7 @@ class PrefsViewController: NSViewController {
                 DispatchQueue.main.async {
                     self.textfieldStatus.stringValue = "OK"
 
-                    let groupEntities = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue)
-
-                    for groupEntity in groupEntities {
-                        self.groups[groupEntity.entityId] = groupEntity
-                    }
+                    self.groups = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue).reversed()
 
                     let menuItemsWithFriendlyNames = self.prefs.menuItemsWithFriendlyNames(groups: self.groups)
 
@@ -78,6 +75,9 @@ class PrefsViewController: NSViewController {
 
             case .failure(let haServiceApiError):
                 DispatchQueue.main.async {
+                    self.menuItems.removeAll()
+                    self.tableViewGroups.reloadData()
+
                     switch haServiceApiError {
                     case .URLMissing:
                         self.textfieldStatus.stringValue = "Server URL missing"
@@ -103,38 +103,30 @@ class PrefsViewController: NSViewController {
     func showExistingPrefs() {
         textfieldServer.stringValue = prefs.server
         textfieldToken.stringValue = prefs.token
-        //        buttonLights.state = (prefs.domainLights == true ? .on : .off)
-        //        buttonSwitches.state = (prefs.domainSwitches == true ? .on : .off)
-        //        buttonAutomations.state = (prefs.domainAutomations == true ? .on : .off)
-        //        buttonInputBooleans.state = (prefs.domainInputBooleans == true ? .on : .off)
-        //        buttonInputSelects.state = (prefs.domainInputSelects == true ? .on : .off)
-        //        textfieldGroup.stringValue = prefs.groupList
         buttonLogin.state = (prefs.launch == true ? .on : .off)
     }
 
     func saveNewPrefs() {
         prefs.server = textfieldServer.stringValue
         prefs.token = textfieldToken.stringValue
-        //        prefs.domainLights = (buttonLights.state == .on)
-        //        prefs.domainSwitches = (buttonSwitches.state == .on)
-        //        prefs.domainAutomations = (buttonAutomations.state == .on)
-        //        prefs.domainInputBooleans = (buttonInputBooleans.state == .on)
-        //        prefs.domainInputSelects = (buttonInputSelects.state == .on)
-        //        prefs.groupList = textfieldGroup.stringValue
         prefs.launch = (buttonLogin.state == .on)
 
         NotificationCenter.default.post(name: Notification.Name(rawValue: "PrefsChanged"),
                                         object: nil)
     }
 
-    @objc func tableViewGroupsDoubleClick(_ sender:AnyObject) {
-
-        guard tableViewGroups.selectedRow >= 0 else {
-            return
-        }
-
-        let item = self.menuItems[tableViewGroups.selectedRow]
+    func saveNewMenuItems() {
+        prefs.menuItems = menuItems
     }
+
+//    @objc func tableViewGroupsDoubleClick(_ sender:AnyObject) {
+//
+//        guard tableViewGroups.selectedRow >= 0 else {
+//            return
+//        }
+//
+//        let item = self.menuItems[tableViewGroups.selectedRow]
+//    }
 
 }
 
@@ -144,9 +136,9 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
         return self.menuItems.count
     }
 
-//    fileprivate enum TableColumns {
-//        static let GroupName = NSUserInterfaceItemIdentifier("GroupName")
-//    }
+    //    fileprivate enum TableColumns {
+    //        static let GroupName = NSUserInterfaceItemIdentifier("GroupName")
+    //    }
 
     private func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> PrefMenuItem? {
         return self.menuItems[row]
@@ -166,7 +158,7 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
 
         if tableColumn == tableView.tableColumns[1] {
             let item = self.menuItems[row]
-            return item.friendlyName!
+            return item.friendlyName
         }
 
         if tableColumn == tableView.tableColumns[2] {
@@ -225,23 +217,18 @@ extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
             }
         }
 
-        var oldIndexOffset = 0
-        var newIndexOffset = 0
 
-        // For simplicity, the code below uses `tableView.moveRowAtIndex` to move rows around directly.
-        // You may want to move rows in your content array and then call `tableView.reloadData()` instead.
-        tableView.beginUpdates()
-        for oldIndex in oldIndexes {
-            if oldIndex < row {
-                tableView.moveRow(at: oldIndex + oldIndexOffset, to: row - 1)
-                oldIndexOffset -= 1
-            } else {
-                tableView.moveRow(at: oldIndex, to: row + newIndexOffset)
-                newIndexOffset += 1
-            }
+        let oldIndex = oldIndexes[0]
+        let element = menuItems.remove(at: oldIndexes[0])
+
+        if oldIndex < row {
+            self.menuItems.insert(element, at: row - 1)
         }
-        tableView.endUpdates()
+        else {
+            self.menuItems.insert(element, at: row)
+        }
 
+        tableView.reloadData()
         return true
     }
 

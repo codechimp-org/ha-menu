@@ -133,7 +133,7 @@ struct Preferences {
         get {
             var decodedResponse = [PrefMenuItem]()
 
-            guard let jsonData = UserDefaults.standard.data(forKey: "menu_items") else {
+            guard let jsonString = UserDefaults.standard.string(forKey: "menu_items") else {
                 // Init Domains
                 decodedResponse.append(PrefMenuItem(entityId: "lights", itemType: itemTypes.Domain, subMenu: false, enabled: domainLights, friendlyName: "Lights"))
 
@@ -145,15 +145,16 @@ struct Preferences {
 
                 decodedResponse.append(PrefMenuItem(entityId: "inputselects", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputSelects, friendlyName: "Input Selects"))
 
-                // Init Groups
+                // Init Groups from old setting
                 for group in groups {
-                    decodedResponse.append(PrefMenuItem(entityId: group, itemType: itemTypes.Group, subMenu: false, enabled: true))
+                    decodedResponse.append(PrefMenuItem(entityId: group, itemType: itemTypes.Group, subMenu: false, enabled: true, friendlyName: ""))
                 }
                 
                 return decodedResponse
             }
             do {
-                decodedResponse = try JSONDecoder().decode([PrefMenuItem].self, from: jsonData)
+                let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                decodedResponse = try JSONDecoder().decode([PrefMenuItem].self, from: jsonData!)
             }
             catch {
                 // Something odd with json, blank it out
@@ -161,10 +162,8 @@ struct Preferences {
             return decodedResponse
         }
         set {
-
-            let encoder = JSONEncoder()
             do {
-                let data = try encoder.encode(newValue)
+                let data = try JSONEncoder().encode(newValue)
                 let dataString = String(data: data, encoding: .utf8)!
                 UserDefaults.standard.set(dataString, forKey: "menu_items")
                 UserDefaults.standard.synchronize()
@@ -175,7 +174,7 @@ struct Preferences {
         }
     }
 
-    func menuItemsWithFriendlyNames(groups: [String: HaEntity]) -> [String: PrefMenuItem] {
+    func menuItemsWithFriendlyNames(groups: [HaEntity]) -> [String: PrefMenuItem] {
         var completedItems = [String: PrefMenuItem]()
 
         var index = 0
@@ -184,7 +183,7 @@ struct Preferences {
 
             if item.itemType == itemTypes.Group {
                 // Check if still a group
-                if let group = groups["group." + item.entityId] {
+                if let group = getGroup(groups: groups, entityId: "group." + item.entityId) {
                     index+=1
 
                     let completedItem = PrefMenuItem(entityId: item.entityId, itemType: item.itemType, subMenu: item.subMenu, enabled: item.enabled, friendlyName: group.friendlyName, index: index)
@@ -202,15 +201,24 @@ struct Preferences {
 
         // Add missing groups
         for group in groups {
-            if completedItems[group.value.entityIdNoPrefix] == nil {
+            if completedItems[group.entityIdNoPrefix] == nil {
                 index+=1
-                let completedItem = PrefMenuItem(entityId: group.value.entityIdNoPrefix, itemType: itemTypes.Group, subMenu: false, enabled: false, friendlyName: group.value.friendlyName, index: index)
+                let completedItem = PrefMenuItem(entityId: group.entityIdNoPrefix, itemType: itemTypes.Group, subMenu: false, enabled: false, friendlyName: group.friendlyName, index: index)
 
-                completedItems[group.value.entityIdNoPrefix] = completedItem
+                completedItems[group.entityIdNoPrefix] = completedItem
             }
         }
 
         return completedItems
+    }
+
+    private func getGroup(groups: [HaEntity], entityId: String) -> HaEntity? {
+        for g in groups {
+            if g.entityId == entityId {
+                return g
+            }
+        }
+        return nil
     }
 
 }
