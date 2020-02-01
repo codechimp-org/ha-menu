@@ -40,7 +40,7 @@ class HaService {
         return request
     }
 
-    func getStates(completionHandler: @escaping (Result<Int, HaServiceApiError>) -> Void)  {
+    func getStates(completionHandler: @escaping (Result<Bool, HaServiceApiError>) -> Void)  {
 
         if (prefs.server.count == 0 ) {
             completionHandler(.failure(.URLMissing))
@@ -76,7 +76,7 @@ class HaService {
                     let decodedResponse = try JSONDecoder().decode([HaState].self, from: data)
                     self.haStates = decodedResponse
 
-                    completionHandler(.success(1))
+                    completionHandler(.success(true))
 
                 } catch {
                     completionHandler(.failure(.JSONDecodeError))
@@ -120,8 +120,9 @@ class HaService {
 
     func toggleEntityState(haEntity: HaEntity) {
         let params = ["entity_id": haEntity.entityId]
+        let urlString = "\(prefs.server)/api/services/\(haEntity.domain)/toggle"
 
-        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/\(haEntity.domain)/toggle")!)
+        var request = createAuthURLRequest(url: URL(string: urlString)!)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])

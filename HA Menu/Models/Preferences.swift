@@ -10,6 +10,15 @@ import Foundation
 
 struct Preferences {
 
+    var settingsVersion: Int {
+        get {
+            return UserDefaults.standard.integer(forKey: "settingsVersion")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "settingsVersion")
+        }
+    }
+
     var server: String {
         get {
             var serverUrl = UserDefaults.standard.string(forKey: "server") ?? ""
@@ -176,7 +185,8 @@ struct Preferences {
                 let data = try JSONEncoder().encode(newValue)
                 let dataString = String(data: data, encoding: .utf8)!
                 UserDefaults.standard.set(dataString, forKey: "menu_items")
-                UserDefaults.standard.synchronize()
+
+                settingsVersion = 2
             }
             catch {
                 // Error encoding json, don't write new value

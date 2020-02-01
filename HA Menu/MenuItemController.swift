@@ -53,8 +53,16 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     public func menuWillOpen(_ menu: NSMenu){
         self.removeDynamicMenuItems()
-        self.addDynamicMenuItems()
-        self.checkForUpdate()
+
+        self.addDynamicMenuItems(){
+            result in
+            switch result {
+            case .success( _):
+                self.checkForUpdate()
+            case .failure( _):
+                break
+            }
+        }
     }
 
     public func menuDidClose(_ menu: NSMenu){
@@ -107,7 +115,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         }
     }
 
-    func addDynamicMenuItems() {
+    func addDynamicMenuItems(completionHandler: @escaping (Result<Bool, HaService.HaServiceApiError>) -> Void) {
         haService.getStates() {
             result in
             switch result {
@@ -131,6 +139,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                         self.addMenuItem(menuItem: menuItem)
                     }
                 }
+                completionHandler(.success(true))
 
             case .failure(let haServiceApiError):
                 switch haServiceApiError {
@@ -147,8 +156,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 case .JSONDecodeError:
                     self.addErrorMenuItem(message: "Error Decoding JSON")
                 case .UnknownError:
-                    self.addErrorMenuItem(message: "Unknown Error")
+                    self.addErrorMenuItem(message: "Unknown Error (check your server/port)")
                 }
+                completionHandler(.failure(haServiceApiError))
                 break
             }
         }
@@ -158,7 +168,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         switch menuItem.itemType {
         case itemTypes.Domain:
             let domainItems = self.haService.filterEntities(entityDomain: menuItem.entityId)
-            self.addEntitiesToMenu(menuItem: menuItem, entities: domainItems)
+            self.addMenuItem(menuItem: menuItem, entities: domainItems)
         case itemTypes.Group:
             self.haService.getState(entityId: "group.\(menuItem.entityId)") { result in
                 switch result {
@@ -213,7 +223,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
                     entities = entities.reversed()
 
-                    self.addEntitiesToMenu(menuItem: menuItem, entities: entities)
+                    self.addMenuItem(menuItem: menuItem, entities: entities)
 
                     break
                 case .failure( _):
@@ -224,7 +234,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     }
 
-    func addEntitiesToMenu(menuItem: PrefMenuItem, entities: [HaEntity]) {
+    func addMenuItem(menuItem: PrefMenuItem, entities: [HaEntity]) {
         DispatchQueue.main.async {
 
             if entities.count == 0 {
@@ -258,7 +268,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     func addEntityMenuItem(parent: NSMenu, haEntity: HaEntity) {
 
-        if haEntity.domain == EntityDomains.inputSelectDomain {
+        if haEntity.domainType == EntityDomains.inputSelectDomain {
             let inputSelectMenuItem = NSMenuItem()
             inputSelectMenuItem.title = haEntity.friendlyName
             inputSelectMenuItem.tag = haEntity.type.rawValue

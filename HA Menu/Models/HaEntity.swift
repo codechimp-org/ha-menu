@@ -35,7 +35,7 @@ struct HaEntity {
     var state: String
     var options: [String]
 
-    var domain: EntityDomains {
+    var domainType: EntityDomains {
         get {
             switch entityId.components(separatedBy: ".")[0]{
             case EntityDomains.switchDomain.rawValue:
@@ -56,9 +56,15 @@ struct HaEntity {
         }
     }
 
+    var domain: String {
+        get {
+            return entityId.components(separatedBy: ".")[0]
+        }
+    }
+
     var type: EntityTypes {
         get {
-            switch domain{
+            switch domainType{
             case EntityDomains.switchDomain:
                 return EntityTypes.switchType
             case EntityDomains.lightDomain:
