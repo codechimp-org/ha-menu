@@ -48,8 +48,6 @@ Now when you click on HA Menu again the group's you have setup will be displayed
 Example groups.yaml
 ```
 ha_menu:
-  control: hidden
-  view: no
   name: HA Menu Switches
   entities:
     - switch.printer
