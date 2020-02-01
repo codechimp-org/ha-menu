@@ -25,6 +25,7 @@ class PrefsViewController: NSViewController {
     var prefs = Preferences()
     var groups = [HaEntity]()
     var menuItems = [PrefMenuItem]()
+    var okToSaveMenuItems = false
     private var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
 
 
@@ -58,7 +59,8 @@ class PrefsViewController: NSViewController {
             switch result {
             case .success( _):
                 DispatchQueue.main.async {
-                    self.textfieldStatus.stringValue = "OK"
+                    self.okToSaveMenuItems = true
+                    self.textfieldStatus.stringValue = "Connected"
 
                     self.groups = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue).reversed()
 
@@ -75,6 +77,8 @@ class PrefsViewController: NSViewController {
 
             case .failure(let haServiceApiError):
                 DispatchQueue.main.async {
+                    self.okToSaveMenuItems = false
+
                     self.menuItems.removeAll()
                     self.tableViewGroups.reloadData()
 
@@ -116,7 +120,9 @@ class PrefsViewController: NSViewController {
     }
 
     func saveNewMenuItems() {
-        prefs.menuItems = menuItems
+        if okToSaveMenuItems {
+            prefs.menuItems = menuItems
+        }
     }
 
 //    @objc func tableViewGroupsDoubleClick(_ sender:AnyObject) {

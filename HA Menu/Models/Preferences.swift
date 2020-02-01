@@ -133,17 +133,33 @@ struct Preferences {
         get {
             var decodedResponse = [PrefMenuItem]()
 
-            guard let jsonString = UserDefaults.standard.string(forKey: "menu_items") else {
+            // Check if string empty
+            var jsonString = UserDefaults.standard.string(forKey: "menu_items") ?? ""
+
+            if !jsonString.isEmpty {
+                // Got JSON
+                do {
+                    let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    decodedResponse = try JSONDecoder().decode([PrefMenuItem].self, from: jsonData!)
+                    return decodedResponse
+                }
+                catch {
+                    // Something odd with json, blank it out and default
+                    jsonString = ""
+                }
+            }
+
+            if jsonString.isEmpty {
                 // Init Domains
-                decodedResponse.append(PrefMenuItem(entityId: "lights", itemType: itemTypes.Domain, subMenu: false, enabled: domainLights, friendlyName: "Lights"))
+                decodedResponse.append(PrefMenuItem(entityId: "light", itemType: itemTypes.Domain, subMenu: false, enabled: domainLights, friendlyName: "Lights"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "switches", itemType: itemTypes.Domain, subMenu: false, enabled: domainSwitches, friendlyName: "Switches"))
+                decodedResponse.append(PrefMenuItem(entityId: "switch", itemType: itemTypes.Domain, subMenu: false, enabled: domainSwitches, friendlyName: "Switches"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "automations", itemType: itemTypes.Domain, subMenu: false, enabled: domainAutomations, friendlyName: "Automations"))
+                decodedResponse.append(PrefMenuItem(entityId: "automation", itemType: itemTypes.Domain, subMenu: false, enabled: domainAutomations, friendlyName: "Automations"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "inputbooleans", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputBooleans, friendlyName: "Input Booleans"))
+                decodedResponse.append(PrefMenuItem(entityId: "input_boolean", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputBooleans, friendlyName: "Input Booleans"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "inputselects", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputSelects, friendlyName: "Input Selects"))
+                decodedResponse.append(PrefMenuItem(entityId: "input_select", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputSelects, friendlyName: "Input Selects"))
 
                 // Init Groups from old setting
                 for group in groups {
@@ -152,13 +168,7 @@ struct Preferences {
                 
                 return decodedResponse
             }
-            do {
-                let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false)
-                decodedResponse = try JSONDecoder().decode([PrefMenuItem].self, from: jsonData!)
-            }
-            catch {
-                // Something odd with json, blank it out
-            }
+
             return decodedResponse
         }
         set {

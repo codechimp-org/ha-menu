@@ -64,10 +64,7 @@ extension AppDelegate {
     }
 
     func updateFromPrefs() {
-        print("Prefs Updated")
-
         SMLoginItemSetEnabled(launcherAppId as CFString, prefs.launch)
-
     }
 
 }
