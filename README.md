@@ -5,7 +5,7 @@ A Mac OS Menu Bar app to perform common Home Assistant functions
 Currently HA Menu supports turning available switches, lights, automations and input_boolean's on and off.  Plus input_select option menus.
 HA Menu supports MacOS 10.13 (High Sierra) and later.
 
-![alt text](https://github.com/codechimp-org/ha-menu/blob/master/Art/menu.png "HA Menu")
+![alt text](Art/menu.png "HA Menu")
 
 ## Installation
 **Manual**  
@@ -25,7 +25,7 @@ Under Long Lived Access Tokens, create a new token, give it a name and copy the 
 
 Press Connect to validate your connection and get your groups.  You can now choose which domains/groups to display within HA Menu, drag them to reorder and optionally make them a submenu.
 
-![alt text](https://github.com/codechimp-org/ha-menu/blob/master/Art/preferences.png "Preferences")
+![alt text](Art/preferences.png "Preferences")
 
 ### Domains
 
