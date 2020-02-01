@@ -20,8 +20,10 @@ You will have needed to enable Allow app's downloaded from App Store and identif
 
 For the server connection you can use your local ip:port as per the example, an external facing address you have setup via DuckDNS or similar, or your Nabu Casa URL.  Ensure you prefix with http:// or https:// as appropriate.
 
-To create a token within HA, login to HA and click on your profile.
+To create a token within HA, login to HA and click on your profile.  
 Under Long Lived Access Tokens, create a new token, give it a name and copy the token value into HA Menu preferences.
+
+Press Connect to validate your connection and get your groups.  You can now choose which domains/groups to display within HA Menu, drag them to reorder and optionally make them a submenu.
 
 ![alt text](https://github.com/codechimp-org/ha-menu/blob/master/Art/preferences.png "Preferences")
 
@@ -38,10 +40,10 @@ You can create multiple groups and they will be separated within the drop down m
 
 First of all create your group(s) within groups.yaml as per the example.  Note the group entity id is ha_menu in this example.  Validate and Reload Groups within HA (Configuration/Server Controls) to have the group added to HA. If you want multiple groups just repeat the block and rename the entity id/name and change your entity's.
 
-Once you have the group(s) added to HA, within HA Menu go to Preferences and within the Groups field enter the group entity ID's you want to be displayed (ha_menu in this example). If you have created multiple groups you can comma separate their entity ID's e.g. ha_menu,my_automations,living_room
+Once you have the group(s) added to HA, within HA Menu go to Preferences and tick the Groups you want to be displayed.   
 Close preferences to save these settings.
 
-Now when you click on HA Menu again the group's you have setup will be displayed.  The groups are displayed in the order you entered them into preferences, entities within groups are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert, who_cooks in the example).  
+Now when you click on HA Menu again the group's you have setup will be displayed.  Entities within groups are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert, who_cooks in the example).  
 
 Example groups.yaml
 ```
