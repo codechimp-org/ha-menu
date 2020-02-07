@@ -46,7 +46,7 @@ Close preferences to save these settings.
 Now when you click on HA Menu again the group's you have setup will be displayed.  Entities within groups are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert, who_cooks in the example).  
 
 Example groups.yaml
-```
+```yaml
 ha_menu:
   name: HA Menu Switches
   entities:
