@@ -9,6 +9,4 @@ To publish a beta release that you do not want to be shown as available to all u
 You do not have to suffix the app version and if the beta release is suitable for a full release the tag can be edited to remove the beta suffix.
 
 ## Homebrew Cask ##
-Only full releases (not pre or beta) should be pushed as a cask update.
-
-TODO - document cask update
+Full releases (not pre-releases) are automatically updated from the atom feed.  
