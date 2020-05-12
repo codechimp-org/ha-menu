@@ -23,7 +23,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     
     var preferences: Preferences
 
-    let menuItemTypeAbout = 995
+    let menuItemAbout = 995
     let menuItemTypeTopLevel = 996
     let menuItemTypeInfo = 997
     let menuItemTypeError = 999
@@ -83,7 +83,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         menu.addItem(openHaMenu)
         
         let openAbout = NSMenuItem(title: "About HA Menu", action: #selector(openAbout(sender:)), keyEquivalent: "")
-        openAbout.tag = menuItemTypeAbout
+        openAbout.tag = menuItemAbout
         openAbout.target = self
         menu.addItem(openAbout)
         
@@ -400,7 +400,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                         DispatchQueue.main.async {
                             var title: String
                             if beta {
-                                title =  "A new beta version is available"
+                                title = "A new beta version is available"
                             }
                             else
                             {
@@ -412,7 +412,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             menuItem.tag = self.menuItemTypeInfo // Tag defines what type of item it is
                             menuItem.image = NSImage(named: "InfoImage")
 
-                            let position = self.menu.indexOfItem(withTag: self.menuItemTypeAbout) + 1
+                            let position = self.menu.indexOfItem(withTag: self.menuItemAbout) + 1
 
                             self.menu.insertItem(menuItem, at: position)
                         }
