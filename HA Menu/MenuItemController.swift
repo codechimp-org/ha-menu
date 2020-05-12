@@ -23,6 +23,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     
     var preferences: Preferences
 
+    let menuItemTypeAbout = 995
     let menuItemTypeTopLevel = 996
     let menuItemTypeInfo = 997
     let menuItemTypeError = 999
@@ -82,6 +83,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         menu.addItem(openHaMenu)
         
         let openAbout = NSMenuItem(title: "About HA Menu", action: #selector(openAbout(sender:)), keyEquivalent: "")
+        openAbout.tag = menuItemTypeAbout
         openAbout.target = self
         menu.addItem(openAbout)
         
@@ -384,24 +386,35 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     let idArray = latestId.components(separatedBy: "/")
                     let latestVersion = idArray.last
 
+                    var beta = false
                     if (latestVersion?.hasSuffix("beta"))! {
-                        return
+                        beta = true
+                        if (!self.prefs.betaNotifications) {
+                            return
+                        }
                     }
 
                     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
 
                     if (latestVersion != appVersion) {
                         DispatchQueue.main.async {
-                            // Add a seperator before static menu items
-                            self.menu.insertItem(NSMenuItem.separator(), at: 0)
-
-                            let menuItem = NSMenuItem(title: "A new version is available", action: #selector(self.openAppWebsite(sender:)), keyEquivalent: "")
+                            var title: String
+                            if beta {
+                                title =  "A new beta version is available"
+                            }
+                            else
+                            {
+                                title = "A new version is available"
+                            }
+                            let menuItem = NSMenuItem(title: title, action: #selector(self.openAppWebsite(sender:)), keyEquivalent: "")
                             menuItem.target = self
 
                             menuItem.tag = self.menuItemTypeInfo // Tag defines what type of item it is
                             menuItem.image = NSImage(named: "InfoImage")
 
-                            self.menu.insertItem(menuItem, at: 0)
+                            let position = self.menu.indexOfItem(withTag: self.menuItemTypeAbout) + 1
+
+                            self.menu.insertItem(menuItem, at: position)
                         }
                     }
                 }

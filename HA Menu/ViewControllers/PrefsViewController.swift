@@ -15,6 +15,7 @@ class PrefsViewController: NSViewController {
     @IBOutlet weak var textfieldServer: NSTextField!
     @IBOutlet weak var textfieldToken: NSTextField!
     @IBOutlet weak var buttonLogin: NSButton!
+    @IBOutlet weak var buttonBetaNotifications: NSButton!
     @IBOutlet weak var textfieldStatus: NSTextField!
     @IBOutlet weak var tableViewGroups: NSTableView!
 
@@ -107,12 +108,14 @@ class PrefsViewController: NSViewController {
     func showExistingPrefs() {
         textfieldServer.stringValue = prefs.server
         textfieldToken.stringValue = prefs.token
+        buttonBetaNotifications.state = (prefs.betaNotifications == true ? .on : .off)
         buttonLogin.state = (prefs.launch == true ? .on : .off)
     }
 
     func saveNewPrefs() {
         prefs.server = textfieldServer.stringValue
         prefs.token = textfieldToken.stringValue
+        prefs.betaNotifications = (buttonBetaNotifications.state == .on)
         prefs.launch = (buttonLogin.state == .on)
 
         NotificationCenter.default.post(name: Notification.Name(rawValue: "PrefsChanged"),

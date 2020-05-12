@@ -14,6 +14,7 @@
 		491F52B0217CBF5400105921 /* HA_MenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F52AF217CBF5400105921 /* HA_MenuTests.swift */; };
 		491F52BB217CBF5400105921 /* HA_MenuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491F52BA217CBF5400105921 /* HA_MenuUITests.swift */; };
 		49A0190C2389A28C00622E63 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 49A0190B2389A28C00622E63 /* Credits.rtf */; };
+		49A5D39B246AD76100F81FAA /* RELEASING.MD in Resources */ = {isa = PBXBuildFile; fileRef = 49A5D39A246AD76100F81FAA /* RELEASING.MD */; };
 		49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9D8237D75700087F729 /* HaEntity.swift */; };
 		49BDE9DC237DA0FA0087F729 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */; };
 		49BDE9E4237DA1580087F729 /* LauncherAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9E3237DA1580087F729 /* LauncherAppDelegate.swift */; };
@@ -75,6 +76,7 @@
 		491F52C8217CC48900105921 /* HA Menu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "HA Menu.entitlements"; sourceTree = "<group>"; };
 		491F52C9217CCA4000105921 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		49A0190B2389A28C00622E63 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		49A5D39A246AD76100F81FAA /* RELEASING.MD */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = RELEASING.MD; sourceTree = "<group>"; };
 		49BDE9D8237D75700087F729 /* HaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaEntity.swift; sourceTree = "<group>"; };
 		49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		49BDE9E1237DA1580087F729 /* HA Menu Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HA Menu Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -134,6 +136,7 @@
 		491F5290217CBF5200105921 = {
 			isa = PBXGroup;
 			children = (
+				49A5D39A246AD76100F81FAA /* RELEASING.MD */,
 				491F52C9217CCA4000105921 /* README.md */,
 				49E6C92323D99BE800F22973 /* Art */,
 				491F529B217CBF5200105921 /* HA Menu */,
@@ -383,6 +386,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				491F52A1217CBF5400105921 /* Assets.xcassets in Resources */,
+				49A5D39B246AD76100F81FAA /* RELEASING.MD in Resources */,
 				49A0190C2389A28C00622E63 /* Credits.rtf in Resources */,
 				491F52A4217CBF5400105921 /* Main.storyboard in Resources */,
 			);
@@ -615,7 +619,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu/Info.plist";
@@ -623,7 +627,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -638,7 +642,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu/Info.plist";
@@ -646,7 +650,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -743,7 +747,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu Launcher/Info.plist";
@@ -751,7 +755,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -767,7 +771,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu Launcher/Info.plist";
@@ -775,7 +779,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

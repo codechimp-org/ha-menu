@@ -51,6 +51,15 @@ struct Preferences {
         }
     }
 
+    var betaNotifications: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "betaNotifications")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "betaNotifications")
+        }
+    }
+
     var groupList: String {
         get {
             var groupList = UserDefaults.standard.string(forKey: "group") ?? ""
