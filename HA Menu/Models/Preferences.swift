@@ -180,7 +180,7 @@ struct Preferences {
 
                     // Upgrade with any new domains
                     if !domainExists(domain: "scene", prefs: decodedResponse) {
-                        decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: false, enabled: domainScenes, friendlyName: "Scenes"))
+                        decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scenes"))
                     }
 
                     return decodedResponse
@@ -193,17 +193,17 @@ struct Preferences {
 
             if jsonString.isEmpty {
                 // Init Domains
-                decodedResponse.append(PrefMenuItem(entityId: "light", itemType: itemTypes.Domain, subMenu: false, enabled: domainLights, friendlyName: "Lights"))
+                decodedResponse.append(PrefMenuItem(entityId: "light", itemType: itemTypes.Domain, subMenu: true, enabled: domainLights, friendlyName: "Lights"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "switch", itemType: itemTypes.Domain, subMenu: false, enabled: domainSwitches, friendlyName: "Switches"))
+                decodedResponse.append(PrefMenuItem(entityId: "switch", itemType: itemTypes.Domain, subMenu: true, enabled: domainSwitches, friendlyName: "Switches"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "automation", itemType: itemTypes.Domain, subMenu: false, enabled: domainAutomations, friendlyName: "Automations"))
+                decodedResponse.append(PrefMenuItem(entityId: "automation", itemType: itemTypes.Domain, subMenu: true, enabled: domainAutomations, friendlyName: "Automations"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "input_boolean", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputBooleans, friendlyName: "Input Booleans"))
+                decodedResponse.append(PrefMenuItem(entityId: "input_boolean", itemType: itemTypes.Domain, subMenu: true, enabled: domainInputBooleans, friendlyName: "Input Booleans"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "input_select", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputSelects, friendlyName: "Input Selects"))
+                decodedResponse.append(PrefMenuItem(entityId: "input_select", itemType: itemTypes.Domain, subMenu: true, enabled: domainInputSelects, friendlyName: "Input Selects"))
 
-                decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: false, enabled: domainScenes, friendlyName: "Scenes"))
+                decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scenes"))
 
 
                 // Init Groups from old setting
