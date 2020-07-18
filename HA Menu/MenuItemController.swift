@@ -194,6 +194,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             itemType = EntityTypes.inputSelectType
                         case "automation":
                             itemType = EntityTypes.automationType
+                        case "scene":
+                            itemType = EntityTypes.sceneType
                         default:
                             itemType = nil
                         }
@@ -290,13 +292,23 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 subMenu.addItem(optionMenuItem)
             }
         }
+
         else {
             let menuItem = NSMenuItem()
-            menuItem.action = #selector(self.toggleEntityState(_:))
+
+            if haEntity.domainType == EntityDomains.sceneDomain {
+                menuItem.action = #selector(self.turnOnEntity(_:))
+                menuItem.state = NSControl.StateValue.off
+                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
+            }
+            else {
+                menuItem.action = #selector(self.toggleEntityState(_:))
+                menuItem.state = ((haEntity.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
+            }
+
             menuItem.target = self
             menuItem.title = haEntity.friendlyName
             menuItem.keyEquivalent = ""
-            menuItem.state = ((haEntity.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
             menuItem.representedObject = haEntity
             menuItem.tag = haEntity.type.rawValue // Tag defines what type of item it is
             //        menuItem.image = NSImage(named: "StatusBarButtonImage")
@@ -372,6 +384,11 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     @objc func selectInputSelectOption(_ sender: NSMenuItem) {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
         haService.selectInputSelectOption(haEntity: haEntity, option: sender.title)
+    }
+
+    @objc func turnOnEntity(_ sender: NSMenuItem) {
+        let haEntity: HaEntity = sender.representedObject as! HaEntity
+        haService.turnOnEntity(haEntity: haEntity)
     }
 
     func checkForUpdate() {

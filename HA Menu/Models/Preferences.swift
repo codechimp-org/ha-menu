@@ -16,6 +16,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "settingsVersion")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -30,6 +31,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "server")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -39,6 +41,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "token")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -48,6 +51,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "launch")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -57,6 +61,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "betaNotifications")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -85,6 +90,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "group")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -105,6 +111,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_lights")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -114,6 +121,7 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_switches")
+            UserDefaults.standard.synchronize()
         }
     }
 
@@ -147,6 +155,16 @@ struct Preferences {
         }
     }
 
+    var domainScenes: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_scenes")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_scenes")
+            UserDefaults.standard.synchronize()
+        }
+    }
+
     var menuItems: [PrefMenuItem] {
         get {
             var decodedResponse = [PrefMenuItem]()
@@ -159,6 +177,12 @@ struct Preferences {
                 do {
                     let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false)
                     decodedResponse = try JSONDecoder().decode([PrefMenuItem].self, from: jsonData!)
+
+                    // Upgrade with any new domains
+                    if !domainExists(domain: "scene", prefs: decodedResponse) {
+                        decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: false, enabled: domainScenes, friendlyName: "Scenes"))
+                    }
+
                     return decodedResponse
                 }
                 catch {
@@ -178,6 +202,9 @@ struct Preferences {
                 decodedResponse.append(PrefMenuItem(entityId: "input_boolean", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputBooleans, friendlyName: "Input Booleans"))
 
                 decodedResponse.append(PrefMenuItem(entityId: "input_select", itemType: itemTypes.Domain, subMenu: false, enabled: domainInputSelects, friendlyName: "Input Selects"))
+
+                decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: false, enabled: domainScenes, friendlyName: "Scenes"))
+
 
                 // Init Groups from old setting
                 for group in groups {
@@ -201,6 +228,19 @@ struct Preferences {
                 // Error encoding json, don't write new value
             }
         }
+    }
+
+    private func domainExists(domain: String, prefs: [PrefMenuItem]) -> Bool {
+        var foundDomain = false
+
+        for prefMenuItem in prefs {
+            if prefMenuItem.entityId == domain {
+                foundDomain = true
+                break
+            }
+        }
+
+        return foundDomain
     }
 
     func menuItemsWithFriendlyNames(groups: [HaEntity]) -> [String: PrefMenuItem] {

@@ -373,9 +373,9 @@
 			projectRoot = "";
 			targets = (
 				491F5298217CBF5200105921 /* HA Menu */,
+				49BDE9E0237DA1580087F729 /* HA Menu Launcher */,
 				491F52AA217CBF5400105921 /* HA MenuTests */,
 				491F52B5217CBF5400105921 /* HA MenuUITests */,
-				49BDE9E0237DA1580087F729 /* HA Menu Launcher */,
 			);
 		};
 /* End PBXProject section */
@@ -619,7 +619,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu/Info.plist";
@@ -627,7 +627,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.1;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -642,7 +642,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu/Info.plist";
@@ -650,7 +650,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.1;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -747,7 +747,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu Launcher/Info.plist";
@@ -755,7 +755,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.1;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -771,7 +771,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = VZ3Z8BPWPW;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "HA Menu Launcher/Info.plist";
@@ -779,7 +779,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2.1;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu-Launcher";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
