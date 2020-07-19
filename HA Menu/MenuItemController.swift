@@ -37,9 +37,13 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         super.init()
         
         if let statusButton = statusItem.button {
-            let icon = NSImage(named: "StatusBarButtonImage")
-            icon?.isTemplate = true // best for dark mode
-            
+            #if DEBUG
+                let icon = NSImage(named: "StatusBarButtonImageDebug")
+            #else
+                let icon = NSImage(named: "StatusBarButtonImage")
+                icon?.isTemplate = true // best for dark mode
+            #endif
+
             statusButton.image = icon
             //            button.action = #selector(self.statusBarButtonClicked(sender:))
             statusButton.sendAction(on: [.leftMouseUp, .rightMouseUp])

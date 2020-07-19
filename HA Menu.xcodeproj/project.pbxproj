@@ -628,6 +628,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 2.3.0;
+				OTHER_SWIFT_FLAGS = "-D DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.codechimp.HA-Menu";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

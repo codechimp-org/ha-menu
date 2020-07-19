@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "video control play@1x.png",
+      "filename" : "switch@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "video control play@2x.png",
+      "filename" : "switch@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
