@@ -16,6 +16,7 @@ enum EntityTypes: Int, CaseIterable {
     case inputSelectType = 6
     case groupType = 7
     case sceneType = 8
+    case scriptType = 9
     case unknownType = 999
 }
 
@@ -26,6 +27,7 @@ enum EntityDomains: String, CaseIterable {
     case automationDomain = "automation"
     case inputSelectDomain = "input_select"
     case sceneDomain = "scene"
+    case scriptDomain = "script"
     case groupDomain = "group"
     case unknownDomain = "unknown"
 }
@@ -52,6 +54,9 @@ struct HaEntity {
                 return EntityDomains.inputSelectDomain
             case EntityDomains.sceneDomain.rawValue:
                 return EntityDomains.sceneDomain
+            case EntityDomains.scriptDomain.rawValue:
+                return EntityDomains.scriptDomain
+                
             case EntityDomains.groupDomain.rawValue:
                 return EntityDomains.groupDomain
             default:
@@ -81,6 +86,9 @@ struct HaEntity {
                 return EntityTypes.inputSelectType
             case EntityDomains.sceneDomain:
                 return EntityTypes.sceneType
+            case EntityDomains.scriptDomain:
+                  return EntityTypes.scriptType
+
             case EntityDomains.groupDomain:
                 return EntityTypes.groupType
             default:

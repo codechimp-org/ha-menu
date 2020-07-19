@@ -165,6 +165,16 @@ struct Preferences {
         }
     }
 
+    var domainScripts: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_scripts")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_scripts")
+            UserDefaults.standard.synchronize()
+        }
+    }
+
     var menuItems: [PrefMenuItem] {
         get {
             var decodedResponse = [PrefMenuItem]()
@@ -181,6 +191,10 @@ struct Preferences {
                     // Upgrade with any new domains
                     if !domainExists(domain: "scene", prefs: decodedResponse) {
                         decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scenes"))
+                    }
+
+                    if !domainExists(domain: "script", prefs: decodedResponse) {
+                        decodedResponse.append(PrefMenuItem(entityId: "script", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scripts"))
                     }
 
                     return decodedResponse
@@ -205,6 +219,7 @@ struct Preferences {
 
                 decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scenes"))
 
+                decodedResponse.append(PrefMenuItem(entityId: "script", itemType: itemTypes.Domain, subMenu: true, enabled: domainScripts, friendlyName: "Scripts"))
 
                 // Init Groups from old setting
                 for group in groups {

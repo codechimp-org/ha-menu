@@ -54,6 +54,7 @@ extension AppDelegate {
                "domain_inputbooleans": true,
                "domain_inputselects": true,
                "domain_scenes": true,
+               "domain_scripts": true,
                "betaNotifications": false
                ])
 

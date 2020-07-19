@@ -200,6 +200,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             itemType = EntityTypes.automationType
                         case "scene":
                             itemType = EntityTypes.sceneType
+                        case "script":
+                           itemType = EntityTypes.scriptType
+
                         default:
                             itemType = nil
                         }
@@ -301,6 +304,11 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             let menuItem = NSMenuItem()
 
             if haEntity.domainType == EntityDomains.sceneDomain {
+                menuItem.action = #selector(self.turnOnEntity(_:))
+                menuItem.state = NSControl.StateValue.off
+                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
+            }
+            else if haEntity.domainType == EntityDomains.scriptDomain {
                 menuItem.action = #selector(self.turnOnEntity(_:))
                 menuItem.state = NSControl.StateValue.off
                 menuItem.offStateImage = NSImage(named: "PlayButtonImage")
