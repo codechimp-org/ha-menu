@@ -75,7 +75,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
     
     func buildStaticMenu() {
-        
+
+        menu.addItem(NSMenuItem.separator())
+
         let prefMenu = NSMenuItem(title: "Preferences", action: #selector(openPreferences(sender:)), keyEquivalent: ",")
         prefMenu.target = self
         menu.addItem(prefMenu)
@@ -140,9 +142,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 }
 
                 // Add Menu Items
+                var nextRequiresSeparator = true
                 for menuItem in self.menuItems {
                     if menuItem.enabled {
-                        self.addMenuItem(menuItem: menuItem)
+                        nextRequiresSeparator = self.addMenuItem(menuItem: menuItem, requiresSeparator: nextRequiresSeparator)
                     }
                 }
                 completionHandler(.success(true))
@@ -170,11 +173,16 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         }
     }
 
-    func addMenuItem(menuItem: PrefMenuItem) {
+    func addMenuItem(menuItem: PrefMenuItem, requiresSeparator: Bool) -> Bool {
+        var nextRequiresSeparator = false
+
         switch menuItem.itemType {
         case itemTypes.Domain:
             let domainItems = self.haService.filterEntities(entityDomain: menuItem.entityId)
-            self.addMenuItem(menuItem: menuItem, entities: domainItems)
+            self.addMenuItem(menuItem: menuItem, entities: domainItems, requiresSeparator: requiresSeparator)
+
+            nextRequiresSeparator = !menuItem.subMenu
+
         case itemTypes.Group:
             self.haService.getState(entityId: "group.\(menuItem.entityId)") { result in
                 switch result {
@@ -234,7 +242,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
                     entities = entities.reversed()
 
-                    self.addMenuItem(menuItem: menuItem, entities: entities)
+                    self.addMenuItem(menuItem: menuItem, entities: entities, requiresSeparator: requiresSeparator)
+
+                    nextRequiresSeparator = !menuItem.subMenu
 
                     break
                 case .failure( _):
@@ -243,9 +253,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             }
         }
 
+        return nextRequiresSeparator
     }
 
-    func addMenuItem(menuItem: PrefMenuItem, entities: [HaEntity]) {
+    func addMenuItem(menuItem: PrefMenuItem, entities: [HaEntity], requiresSeparator: Bool) {
         DispatchQueue.main.async {
 
             if entities.count == 0 {
@@ -253,7 +264,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             }
 
             // Add a seperator before static menu items/previous group
-            self.menu.insertItem(NSMenuItem.separator(), at: 0)
+            if (requiresSeparator || !menuItem.subMenu) {
+                self.menu.insertItem(NSMenuItem.separator(), at: 0)
+            }
 
             var parent = self.menu
 
