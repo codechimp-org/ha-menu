@@ -17,6 +17,7 @@ enum EntityTypes: Int, CaseIterable {
     case groupType = 7
     case sceneType = 8
     case scriptType = 9
+    case mediaplayerType = 10
     case unknownType = 999
 }
 
@@ -28,6 +29,7 @@ enum EntityDomains: String, CaseIterable {
     case inputSelectDomain = "input_select"
     case sceneDomain = "scene"
     case scriptDomain = "script"
+    case mediaplayerDomain = "media_player"
     case groupDomain = "group"
     case unknownDomain = "unknown"
 }
@@ -56,6 +58,8 @@ struct HaEntity {
                 return EntityDomains.sceneDomain
             case EntityDomains.scriptDomain.rawValue:
                 return EntityDomains.scriptDomain
+            case EntityDomains.mediaplayerDomain.rawValue:
+                return EntityDomains.mediaplayerDomain
                 
             case EntityDomains.groupDomain.rawValue:
                 return EntityDomains.groupDomain
@@ -87,8 +91,9 @@ struct HaEntity {
             case EntityDomains.sceneDomain:
                 return EntityTypes.sceneType
             case EntityDomains.scriptDomain:
-                  return EntityTypes.scriptType
-
+                return EntityTypes.scriptType
+            case EntityDomains.mediaplayerDomain:
+                return EntityTypes.mediaplayerType
             case EntityDomains.groupDomain:
                 return EntityTypes.groupType
             default:

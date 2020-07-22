@@ -175,6 +175,16 @@ struct Preferences {
         }
     }
 
+    var domainMediaPlayers: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_mediaplayers")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_mediaplayers")
+            UserDefaults.standard.synchronize()
+        }
+    }
+
     var menuItems: [PrefMenuItem] {
         get {
             var decodedResponse = [PrefMenuItem]()
@@ -195,6 +205,10 @@ struct Preferences {
 
                     if !domainExists(domain: "script", prefs: decodedResponse) {
                         decodedResponse.append(PrefMenuItem(entityId: "script", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scripts"))
+                    }
+
+                    if !domainExists(domain: "media_player", prefs: decodedResponse) {
+                        decodedResponse.append(PrefMenuItem(entityId: "media_player", itemType: itemTypes.Domain, subMenu: true, enabled: domainMediaPlayers, friendlyName: "Media Players"))
                     }
 
                     return decodedResponse
@@ -220,6 +234,8 @@ struct Preferences {
                 decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scenes"))
 
                 decodedResponse.append(PrefMenuItem(entityId: "script", itemType: itemTypes.Domain, subMenu: true, enabled: domainScripts, friendlyName: "Scripts"))
+
+                decodedResponse.append(PrefMenuItem(entityId: "media_player", itemType: itemTypes.Domain, subMenu: true, enabled: domainMediaPlayers, friendlyName: "Media Players"))
 
                 // Init Groups from old setting
                 for group in groups {

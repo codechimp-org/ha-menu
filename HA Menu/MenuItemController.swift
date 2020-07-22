@@ -17,6 +17,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     var haStates : [HaState]?
     var groups = [HaEntity]()
     var menuItems = [PrefMenuItem]()
+
+    var mediaWindowController: NSWindowController? = nil
+
     
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
     let menu = NSMenu()
@@ -38,10 +41,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         
         if let statusButton = statusItem.button {
             #if DEBUG
-                let icon = NSImage(named: "StatusBarButtonImageDebug")
+            let icon = NSImage(named: "StatusBarButtonImageDebug")
             #else
-                let icon = NSImage(named: "StatusBarButtonImage")
-                icon?.isTemplate = true // best for dark mode
+            let icon = NSImage(named: "StatusBarButtonImage")
+            icon?.isTemplate = true // best for dark mode
             #endif
 
             statusButton.image = icon
@@ -209,8 +212,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                         case "scene":
                             itemType = EntityTypes.sceneType
                         case "script":
-                           itemType = EntityTypes.scriptType
-
+                            itemType = EntityTypes.scriptType
+                        case "media_player":
+                            itemType = EntityTypes.mediaplayerType
                         default:
                             itemType = nil
                         }
@@ -316,17 +320,22 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         else {
             let menuItem = NSMenuItem()
 
-            if haEntity.domainType == EntityDomains.sceneDomain {
+            switch haEntity.domainType {
+
+            case .sceneDomain:
                 menuItem.action = #selector(self.turnOnEntity(_:))
                 menuItem.state = NSControl.StateValue.off
                 menuItem.offStateImage = NSImage(named: "PlayButtonImage")
-            }
-            else if haEntity.domainType == EntityDomains.scriptDomain {
+            case .scriptDomain:
                 menuItem.action = #selector(self.turnOnEntity(_:))
                 menuItem.state = NSControl.StateValue.off
                 menuItem.offStateImage = NSImage(named: "PlayButtonImage")
-            }
-            else {
+            case .mediaplayerDomain:
+                //TODO: create media player window
+                menuItem.action = #selector(self.openMediaPlayer(_:))
+                menuItem.state = NSControl.StateValue.off
+                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
+            default:
                 menuItem.action = #selector(self.toggleEntityState(_:))
                 menuItem.state = ((haEntity.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
             }
@@ -414,6 +423,12 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     @objc func turnOnEntity(_ sender: NSMenuItem) {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
         haService.turnOnEntity(haEntity: haEntity)
+    }
+
+    @objc func openMediaPlayer(_ sender: NSMenuItem) {
+        let haEntity: HaEntity = sender.representedObject as! HaEntity
+
+        MediaWindowStack.shared.createWindow(haEntity: haEntity)
     }
 
     func checkForUpdate() {
