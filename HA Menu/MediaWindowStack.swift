@@ -14,9 +14,15 @@ class MediaWindowStack {
     static var shared = MediaWindowStack()
     public var windows = [String: MediaWindowController]()
 
+    var haSocketService = HaSocketService.shared
+
     private init() {}
 
     func createWindow(haEntity: HaEntity) {
+
+        if windows.count == 0 {
+            haSocketService.connect()
+        }
 
         if windows.keys.contains(haEntity.entityId) {
             windows[haEntity.entityId]?.showWindow(self)
@@ -54,6 +60,11 @@ class MediaWindowStack {
         windows.removeValue(forKey: haEntity.entityId)
 
         if windows.count == 0 {
+
+            haSocketService.unsubscribeStateChanged()
+
+            haSocketService.disconnect()
+
             NSApp.setActivationPolicy(.accessory)
         }
     }

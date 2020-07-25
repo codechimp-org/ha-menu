@@ -8,9 +8,7 @@
 
 import Cocoa
 
-class MediaViewController: NSViewController {
-
-
+class MediaViewController: NSViewController, HaSocketDelegate {
 
     var haRestService = HaRestService.shared
     var haSocketService = HaSocketService.shared
@@ -23,8 +21,13 @@ class MediaViewController: NSViewController {
 
             labelTest.stringValue = haEntity!.friendlyName
 
-
+            haSocketService.registerMediaPlayer(mediaPlayer: self, entityId: haEntity!.entityId)
         }
+    }
+
+    //MARK: HaSocketDelegate
+    func socketReady() {
+        print("Socket ready at player")
     }
 
     //MARK: Properties
@@ -33,16 +36,19 @@ class MediaViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        haSocketService.connect()
-
     }
 
     override func viewWillDisappear() {
+        haSocketService.unregisterMediaPlayer(mediaPlayer: self, entityId: haEntity!.entityId)
 
-        haSocketService.disconnect()
-        
         super.viewWillDisappear()
+    }
+
+    override func viewDidAppear() {
+        super.viewDidAppear()
+
+        // Set always on top
+//        view.window?.level = .floating
     }
 
 
