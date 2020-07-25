@@ -726,13 +726,13 @@
         <!--Media View Controller-->
         <scene sceneID="aHf-gk-fYB">
             <objects>
-                <viewController id="aur-ni-EOv" userLabel="Media View Controller" sceneMemberID="viewController">
+                <viewController id="aur-ni-EOv" userLabel="Media View Controller" customClass="MediaViewController" customModule="HA_Menu" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Aly-oh-21j">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YfV-hK-I89">
-                                <rect key="frame" x="18" y="234" width="37" height="16"/>
+                                <rect key="frame" x="18" y="234" width="444" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Pby-ny-eoE">
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -742,6 +742,9 @@
                             </textField>
                         </subviews>
                     </view>
+                    <connections>
+                        <outlet property="labelTest" destination="YfV-hK-I89" id="LXO-Xr-WYB"/>
+                    </connections>
                 </viewController>
                 <customObject id="utO-gE-084" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>

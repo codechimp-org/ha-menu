@@ -12,7 +12,7 @@ class MediaWindowController: NSWindowController, NSWindowDelegate {
 
     @IBOutlet var mediaWindow: NSWindow!
 
-    var haService = HaService.shared
+    var haRestService = HaRestService.shared
 
     var haEntity: HaEntity? {
         didSet {

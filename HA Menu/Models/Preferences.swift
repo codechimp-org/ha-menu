@@ -35,6 +35,17 @@ struct Preferences {
         }
     }
 
+    var serverWebSocket: String {
+        get {
+            var serverUrl = server
+
+            serverUrl = serverUrl.replacingOccurrences(of: "https://", with: "wss://")
+            serverUrl = serverUrl.replacingOccurrences(of: "http://", with: "ws://")
+
+            return serverUrl + "/api/websocket"
+        }
+    }
+
     var token: String {
         get {
             return UserDefaults.standard.string(forKey: "token") ?? ""

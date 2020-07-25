@@ -17,7 +17,12 @@ class MediaWindowStack {
     private init() {}
 
     func createWindow(haEntity: HaEntity) {
-        var mediaWindowController: MediaWindowController? = nil
+
+        if windows.keys.contains(haEntity.entityId) {
+            windows[haEntity.entityId]?.showWindow(self)
+        }
+        else {
+            var mediaWindowController: MediaWindowController? = nil
 
             let mainStoryBoard = NSStoryboard(name: "Main", bundle: nil)
             if let windowController = mainStoryBoard.instantiateController(withIdentifier: "MediaWindowController") as? NSWindowController {
@@ -25,15 +30,23 @@ class MediaWindowStack {
 
                 mediaWindowController?.haEntity = haEntity
                 windows[haEntity.entityId] = mediaWindowController!
-    //        let settingsController = windowController.window!.contentViewController as! SettingsController
+
+                let mediaViewController = windowController.window!.contentViewController as! MediaViewController
 
                 // make initial settings before showing the window
+                mediaViewController.haEntity = haEntity
+
+                mediaWindowController!.haEntity = haEntity
+
                 mediaWindowController!.showWindow(self)
 
                 if NSApp.activationPolicy() == .accessory {
                     NSApp.setActivationPolicy(.regular)
                 }
             }
+        }
+
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     func closeWindow(haEntity: HaEntity) {

@@ -1,5 +1,5 @@
 //
-//  HaService.swift
+//  HaRestService.swift
 //  HA Menu
 //
 //  Created by Andrew Jackson on 26/01/2020.
@@ -8,12 +8,12 @@
 
 import Foundation
 
-class HaService {
+class HaRestService {
 
-    static var shared = HaService()
+    static var shared = HaRestService()
     private init() {}
 
-    enum HaServiceApiError: LocalizedError {
+    enum HaRestServiceApiError: LocalizedError {
         case URLMissing
         case InvalidURL
         case Unauthorized
@@ -23,7 +23,7 @@ class HaService {
         case UnknownError(message: String)
     }
 
-    enum HaServiceEntityError: Error {
+    enum HaRestServiceEntityError: Error {
         case EntityNotFound
     }
 
@@ -40,7 +40,7 @@ class HaService {
         return request
     }
 
-    func getStates(completionHandler: @escaping (Result<Bool, HaServiceApiError>) -> Void)  {
+    func getStates(completionHandler: @escaping (Result<Bool, HaRestServiceApiError>) -> Void)  {
 
         if (prefs.server.count == 0 ) {
             completionHandler(.failure(.URLMissing))
@@ -88,7 +88,7 @@ class HaService {
         }.resume()
     }
 
-    func getState(entityId: String, completionHandler: @escaping (Result<HaState, HaServiceEntityError>) -> Void) {
+    func getState(entityId: String, completionHandler: @escaping (Result<HaState, HaRestServiceEntityError>) -> Void) {
 
         guard let entity = haStates.first(where: {$0.entityId == entityId}) else {
             completionHandler(.failure(.EntityNotFound))

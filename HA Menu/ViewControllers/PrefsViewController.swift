@@ -10,7 +10,7 @@ import Cocoa
 
 class PrefsViewController: NSViewController {
 
-    var haService = HaService.shared
+    var haRestService = HaRestService.shared
 
     @IBOutlet weak var textfieldServer: NSTextField!
     @IBOutlet weak var textfieldToken: NSTextField!
@@ -55,7 +55,7 @@ class PrefsViewController: NSViewController {
 
         self.menuItems.removeAll()
         
-        haService.getStates() {
+        haRestService.getStates() {
             result in
             switch result {
             case .success( _):
@@ -63,7 +63,7 @@ class PrefsViewController: NSViewController {
                     self.okToSaveMenuItems = true
                     self.textfieldStatus.stringValue = "Connected"
 
-                    self.groups = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue).reversed()
+                    self.groups = self.haRestService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue).reversed()
 
                     let menuItemsWithFriendlyNames = self.prefs.menuItemsWithFriendlyNames(groups: self.groups)
 
@@ -76,14 +76,14 @@ class PrefsViewController: NSViewController {
                     self.tableViewGroups.reloadData()
                 }
 
-            case .failure(let haServiceApiError):
+            case .failure(let haRestServiceApiError):
                 DispatchQueue.main.async {
                     self.okToSaveMenuItems = false
 
                     self.menuItems.removeAll()
                     self.tableViewGroups.reloadData()
 
-                    switch haServiceApiError {
+                    switch haRestServiceApiError {
                     case .URLMissing:
                         self.textfieldStatus.stringValue = "Server URL missing"
                     case .InvalidURL:
@@ -97,7 +97,7 @@ class PrefsViewController: NSViewController {
                     case .JSONDecodeError:
                         self.textfieldStatus.stringValue = "Error Decoding JSON"
                     case .UnknownError:
-                        print(haServiceApiError.localizedDescription)
+                        print(haRestServiceApiError.localizedDescription)
                         self.textfieldStatus.stringValue = "Unknown Error (check your server/port)"
                     }
                 }

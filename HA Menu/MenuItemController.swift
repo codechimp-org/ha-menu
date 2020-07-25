@@ -12,7 +12,7 @@ import FeedKit
 
 final class MenuItemController: NSObject, NSMenuDelegate {
 
-    var haService = HaService.shared
+    var haRestService = HaRestService.shared
     var prefs = Preferences()
     var haStates : [HaState]?
     var groups = [HaEntity]()
@@ -126,15 +126,15 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         }
     }
 
-    func addDynamicMenuItems(completionHandler: @escaping (Result<Bool, HaService.HaServiceApiError>) -> Void) {
-        haService.getStates() {
+    func addDynamicMenuItems(completionHandler: @escaping (Result<Bool, HaRestService.HaRestServiceApiError>) -> Void) {
+        haRestService.getStates() {
             result in
             switch result {
             case .success( _):
 
                 self.menuItems.removeAll()
 
-                self.groups = self.haService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue).reversed()
+                self.groups = self.haRestService.filterEntities(entityDomain: EntityDomains.groupDomain.rawValue).reversed()
 
                 let menuItemsWithFriendlyNames = self.prefs.menuItemsWithFriendlyNames(groups: self.groups)
 
@@ -153,8 +153,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 }
                 completionHandler(.success(true))
 
-            case .failure(let haServiceApiError):
-                switch haServiceApiError {
+            case .failure(let haRestServiceApiError):
+                switch haRestServiceApiError {
                 case .URLMissing:
                     self.addErrorMenuItem(message: "Server URL missing")
                 case .InvalidURL:
@@ -170,7 +170,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 case .UnknownError:
                     self.addErrorMenuItem(message: "Unknown Error (check your server/port)")
                 }
-                completionHandler(.failure(haServiceApiError))
+                completionHandler(.failure(haRestServiceApiError))
                 break
             }
         }
@@ -181,13 +181,13 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
         switch menuItem.itemType {
         case itemTypes.Domain:
-            let domainItems = self.haService.filterEntities(entityDomain: menuItem.entityId)
+            let domainItems = self.haRestService.filterEntities(entityDomain: menuItem.entityId)
             self.addMenuItem(menuItem: menuItem, entities: domainItems, requiresSeparator: requiresSeparator)
 
             nextRequiresSeparator = !menuItem.subMenu
 
         case itemTypes.Group:
-            self.haService.getState(entityId: "group.\(menuItem.entityId)") { result in
+            self.haRestService.getState(entityId: "group.\(menuItem.entityId)") { result in
                 switch result {
                 case .success(let group):
                     // For each entity, get it's attributes and if available add to array
@@ -221,7 +221,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
                         if itemType != nil {
 
-                            self.haService.getState(entityId: entityId) { result in
+                            self.haRestService.getState(entityId: entityId) { result in
                                 switch result {
                                 case .success(let entity):
                                     var options = [String]()
@@ -412,17 +412,17 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     @objc func toggleEntityState(_ sender: NSMenuItem) {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
-        haService.toggleEntityState(haEntity: haEntity)
+        haRestService.toggleEntityState(haEntity: haEntity)
     }
 
     @objc func selectInputSelectOption(_ sender: NSMenuItem) {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
-        haService.selectInputSelectOption(haEntity: haEntity, option: sender.title)
+        haRestService.selectInputSelectOption(haEntity: haEntity, option: sender.title)
     }
 
     @objc func turnOnEntity(_ sender: NSMenuItem) {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
-        haService.turnOnEntity(haEntity: haEntity)
+        haRestService.turnOnEntity(haEntity: haEntity)
     }
 
     @objc func openMediaPlayer(_ sender: NSMenuItem) {
