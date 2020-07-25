@@ -34,6 +34,8 @@ class HaSocketService: WebSocketDelegate {
         multicast.add(delegate: mediaPlayer)
         entityIds.append(entityId)
 
+        print("MediaPlayer Registered: \(entityId)")
+
         if isConnected {
             if isAuthenticated {
                 if entityIds.count > 0 {
@@ -48,6 +50,8 @@ class HaSocketService: WebSocketDelegate {
     func unregisterMediaPlayer(mediaPlayer: HaSocketDelegate, entityId: String) {
         multicast.remove(delegate: mediaPlayer)
         entityIds.removeAll(where: { $0 == entityId })
+
+        print("MediaPlayer Unregistered: \(entityId)")
 
         if multicast.count == 0 {
             unsubscribeStateChanged()
