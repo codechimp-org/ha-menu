@@ -17,6 +17,10 @@ struct HaEvent : Decodable {
     let oldState: HaEventStateMedia
     let newState: HaEventStateMedia
 
+    var isImageChanged: Bool {
+        return oldState.entityPicture != newState.entityPicture
+    }
+
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case type = "type"
@@ -39,7 +43,6 @@ struct HaEvent : Decodable {
         entityId = ""
         oldState = HaEventStateMedia()
         newState = HaEventStateMedia()
-
     }
 
     init(from decoder: Decoder) throws {
@@ -57,16 +60,21 @@ struct HaEvent : Decodable {
                 self.entityId = ""
             }
 
+            if entityId.starts(with: "media_player.") {
+                if let oldState = try data.decodeIfPresent(HaEventStateMedia.self, forKey: .oldState) {
+                    self.oldState = oldState
+                } else {
+                    self.oldState = HaEventStateMedia()
+                }
 
-            if let oldState = try data.decodeIfPresent(HaEventStateMedia.self, forKey: .oldState) {
-                self.oldState = oldState
-            } else {
-                self.oldState = HaEventStateMedia()
+                if let newState = try data.decodeIfPresent(HaEventStateMedia.self, forKey: .newState) {
+                    self.newState = newState
+                } else {
+                    self.newState = HaEventStateMedia()
+                }
             }
-
-            if let newState = try data.decodeIfPresent(HaEventStateMedia.self, forKey: .newState) {
-                self.newState = newState
-            } else {
+            else {
+                self.oldState = HaEventStateMedia()
                 self.newState = HaEventStateMedia()
             }
         } else {

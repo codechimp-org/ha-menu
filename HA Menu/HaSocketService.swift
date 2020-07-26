@@ -9,8 +9,9 @@
 import Foundation
 import Starscream
 
-public protocol HaSocketDelegate: class {
+protocol HaSocketDelegate: class {
     func socketReady()
+    func mediaStateChanged(event: HaEvent)
 }
 
 class HaSocketService: WebSocketDelegate {
@@ -203,9 +204,7 @@ class HaSocketService: WebSocketDelegate {
             let event = try JSONDecoder().decode(HaEvent.self, from: data)
 
             if event.entityId.starts(with: "media_player.") {
-
-                print("\(event.newState.friendlyName) - \(event.newState.mediaArtist) - \(event.newState.state)")
-
+                multicast.invoke(invocation: { $0.mediaStateChanged(event: event) })
             }
 
         }

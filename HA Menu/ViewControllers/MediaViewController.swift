@@ -13,6 +13,8 @@ class MediaViewController: NSViewController, HaSocketDelegate {
     var haRestService = HaRestService.shared
     var haSocketService = HaSocketService.shared
 
+    var imageLoaded = false
+
     var prefs = Preferences()
 
     var haEntity: HaEntity? {
@@ -28,9 +30,28 @@ class MediaViewController: NSViewController, HaSocketDelegate {
         print("Socket ready at player")
     }
 
+    func mediaStateChanged(event: HaEvent) {
+        if event.entityId == haEntity?.entityId {
+            labelTest.stringValue = "\(event.newState.mediaArtist) - \(event.newState.mediaTitle) - \(event.newState.state)"
+
+
+            if !imageLoaded || event.isImageChanged {
+                guard let url = URL(string: prefs.server + event.newState.entityPicture) else {
+                    return
+                }
+
+                print("Image Load: \(url)")
+                imageArt.load(url: url)
+                imageLoaded = true
+            }
+        }
+
+    }
+
     //MARK: Properties
 
     @IBOutlet weak var labelTest: NSTextField!
+    @IBOutlet weak var imageArt: NSImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,14 +73,14 @@ class MediaViewController: NSViewController, HaSocketDelegate {
         }
 
         // Set always on top
-//        view.window?.level = .floating
+        //        view.window?.level = .floating
     }
 
 
     @objc func onWakeNote(note: NSNotification) {
         if let haEntity = haEntity {
-             haSocketService.registerMediaPlayer(mediaPlayer: self, entityId: haEntity.entityId)
-         }
+            haSocketService.registerMediaPlayer(mediaPlayer: self, entityId: haEntity.entityId)
+        }
     }
 
     @objc func onSleepNote(note: NSNotification) {
@@ -77,3 +98,19 @@ class MediaViewController: NSViewController, HaSocketDelegate {
     }
 
 }
+
+extension NSImageView {
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = NSImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
+        }
+    }
+}
+
+

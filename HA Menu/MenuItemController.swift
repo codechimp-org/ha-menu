@@ -325,16 +325,18 @@ final class MenuItemController: NSObject, NSMenuDelegate {
             case .sceneDomain:
                 menuItem.action = #selector(self.turnOnEntity(_:))
                 menuItem.state = NSControl.StateValue.off
-                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
+                menuItem.image = NSImage(named: "PlayButtonImage")
+//                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
             case .scriptDomain:
                 menuItem.action = #selector(self.turnOnEntity(_:))
                 menuItem.state = NSControl.StateValue.off
-                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
+                menuItem.image = NSImage(named: "PlayButtonImage")
+//                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
             case .mediaplayerDomain:
-                //TODO: create media player window
                 menuItem.action = #selector(self.openMediaPlayer(_:))
                 menuItem.state = NSControl.StateValue.off
-                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
+                menuItem.image = NSImage(named: "MediaButtonImage")
+//                menuItem.offStateImage = NSImage(named: "MediaButtonImage")
             default:
                 menuItem.action = #selector(self.toggleEntityState(_:))
                 menuItem.state = ((haEntity.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
