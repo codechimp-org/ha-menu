@@ -34,6 +34,7 @@ struct HaStateAttributes : Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
 
         let attributes = try values.nestedContainer(keyedBy: AttributeKeys.self, forKey: .attributes)
+        
         if let entityIds = try attributes.decodeIfPresent([String].self, forKey: .entityIds) {
             self.entityIds = entityIds
         } else {

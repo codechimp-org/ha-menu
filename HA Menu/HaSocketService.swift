@@ -36,12 +36,17 @@ class HaSocketService: WebSocketDelegate {
 
         print("MediaPlayer Registered: \(entityId)")
 
-        if isConnected {
-            if isAuthenticated {
-                if entityIds.count > 0 {
-                    if !isSubscribedStateChanged {
-                        subscribeStateChanged()
-                    }
+        if !isConnected {
+            isSubscribedStateChanged = false
+            
+            connect()
+            return
+        }
+
+        if isAuthenticated {
+            if entityIds.count > 0 {
+                if !isSubscribedStateChanged {
+                    subscribeStateChanged()
                 }
             }
         }
@@ -112,7 +117,8 @@ class HaSocketService: WebSocketDelegate {
             isConnected = false
             print("websocket is disconnected: \(reason) with code: \(code)")
         case .text(let string):
-            print("Received text: \(string)")
+
+//            print("Received text: \(string)")
 
             guard let data = string.data(using: .utf16) else {
                 return
@@ -146,7 +152,10 @@ class HaSocketService: WebSocketDelegate {
 
                         case HaSocketMessageTypes.result.rawValue:
                             let result = try JSONDecoder().decode(HaSocketMessageResult.self, from: data)
-                            print(result.id)
+                            print("Result \(result.id): \(result.success)")
+
+                        case HaSocketMessageTypes.event.rawValue:
+                            processEvent(data: data)
 
                         default:
                             print("Unknown message type \(type)")
@@ -186,6 +195,22 @@ class HaSocketService: WebSocketDelegate {
             isConnected = false
             print(error.debugDescription)
 
+        }
+    }
+
+    func processEvent(data: Data) {
+        do {
+            let event = try JSONDecoder().decode(HaEvent.self, from: data)
+
+            if event.entityId.starts(with: "media_player.") {
+
+                print("\(event.newState.friendlyName) - \(event.newState.mediaArtist) - \(event.newState.state)")
+
+            }
+
+        }
+        catch {
+            print("Failed to process event")
         }
     }
 

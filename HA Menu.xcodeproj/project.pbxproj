@@ -22,6 +22,8 @@
 		49BB1EBF24CC46A50041D062 /* HaSocketService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB1EBE24CC46A50041D062 /* HaSocketService.swift */; };
 		49BB1EC124CC49EF0041D062 /* HaSocketMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB1EC024CC49EF0041D062 /* HaSocketMessages.swift */; };
 		49BB1EC324CC71B00041D062 /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB1EC224CC71B00041D062 /* MulticastDelegate.swift */; };
+		49BB1EC624CD84A90041D062 /* HaEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB1EC524CD84A90041D062 /* HaEvent.swift */; };
+		49BB1ECA24CD87500041D062 /* HaEventStateMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BB1EC924CD87500041D062 /* HaEventStateMedia.swift */; };
 		49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9D8237D75700087F729 /* HaEntity.swift */; };
 		49BDE9DC237DA0FA0087F729 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */; };
 		49BDE9E4237DA1580087F729 /* LauncherAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9E3237DA1580087F729 /* LauncherAppDelegate.swift */; };
@@ -90,6 +92,8 @@
 		49BB1EBE24CC46A50041D062 /* HaSocketService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaSocketService.swift; sourceTree = "<group>"; };
 		49BB1EC024CC49EF0041D062 /* HaSocketMessages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaSocketMessages.swift; sourceTree = "<group>"; };
 		49BB1EC224CC71B00041D062 /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
+		49BB1EC524CD84A90041D062 /* HaEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaEvent.swift; sourceTree = "<group>"; };
+		49BB1EC924CD87500041D062 /* HaEventStateMedia.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaEventStateMedia.swift; sourceTree = "<group>"; };
 		49BDE9D8237D75700087F729 /* HaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaEntity.swift; sourceTree = "<group>"; };
 		49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		49BDE9E1237DA1580087F729 /* HA Menu Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HA Menu Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,10 +221,12 @@
 			children = (
 				49E61064218F605000EFA408 /* Preferences.swift */,
 				49E6C92A23E07EE300F22973 /* PrefMenuItem.swift */,
-				49E6106621908BC100EFA408 /* HaState.swift */,
-				49BB1EC024CC49EF0041D062 /* HaSocketMessages.swift */,
-				49E6106821908D1400EFA408 /* HaStateAttributes.swift */,
 				49BDE9D8237D75700087F729 /* HaEntity.swift */,
+				49E6106621908BC100EFA408 /* HaState.swift */,
+				49E6106821908D1400EFA408 /* HaStateAttributes.swift */,
+				49BB1EC024CC49EF0041D062 /* HaSocketMessages.swift */,
+				49BB1EC524CD84A90041D062 /* HaEvent.swift */,
+				49BB1EC924CD87500041D062 /* HaEventStateMedia.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -445,6 +451,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49E61060218F4A2A00EFA408 /* StatusBarViewController.swift in Sources */,
+				49BB1EC624CD84A90041D062 /* HaEvent.swift in Sources */,
 				49E6C92923DDE98A00F22973 /* HaRestService.swift in Sources */,
 				491F529D217CBF5200105921 /* AppDelegate.swift in Sources */,
 				49BB1EC324CC71B00041D062 /* MulticastDelegate.swift in Sources */,
@@ -456,6 +463,7 @@
 				49BB1EBF24CC46A50041D062 /* HaSocketService.swift in Sources */,
 				49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */,
 				49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */,
+				49BB1ECA24CD87500041D062 /* HaEventStateMedia.swift in Sources */,
 				49E6106921908D1400EFA408 /* HaStateAttributes.swift in Sources */,
 				4912F29324C7220100EA6093 /* MediaWindowController.swift in Sources */,
 				49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */,

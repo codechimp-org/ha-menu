@@ -86,16 +86,13 @@ struct HaSocketMessageResult: Decodable {
 
 struct HaSocketMessageEvent: Decodable {
     let id: Int
-    let event: String
-    let eventType: String
+    let event: HaEvent
     let timeFired: String
     let origin: String
-
 
     enum CodingKeys: String, CodingKey {
         case id = "id"
         case event = "event"
-        case eventType = "event_type"
         case timeFired = "time_fired"
         case origin = "origin"
     }
@@ -105,17 +102,14 @@ struct HaSocketMessageEvent: Decodable {
 
         self.id = try values.decode(Int.self, forKey: .id)
 
-        let event = try values.decodeIfPresent(String.self, forKey: .event)
-        self.event = event ?? ""
-
-        let eventType = try values.decodeIfPresent(String.self, forKey: .eventType)
-        self.eventType = eventType ?? ""
-
         let timeFired = try values.decodeIfPresent(String.self, forKey: .timeFired)
         self.timeFired = timeFired ?? ""
 
         let origin = try values.decodeIfPresent(String.self, forKey: .origin)
         self.origin = origin ?? ""
+
+        let event = try values.decodeIfPresent(HaEvent.self, forKey: .event)
+        self.event = event ?? HaEvent()
     }
 }
 

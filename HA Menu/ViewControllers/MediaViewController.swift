@@ -17,8 +17,6 @@ class MediaViewController: NSViewController, HaSocketDelegate {
 
     var haEntity: HaEntity? {
         didSet {
-            // TODO: init socket
-
             labelTest.stringValue = haEntity!.friendlyName
 
             haSocketService.registerMediaPlayer(mediaPlayer: self, entityId: haEntity!.entityId)
@@ -47,9 +45,35 @@ class MediaViewController: NSViewController, HaSocketDelegate {
     override func viewDidAppear() {
         super.viewDidAppear()
 
+        fileSleepNotifications()
+
+        if let haEntity = haEntity {
+            haSocketService.registerMediaPlayer(mediaPlayer: self, entityId: haEntity.entityId)
+        }
+
         // Set always on top
 //        view.window?.level = .floating
     }
 
+
+    @objc func onWakeNote(note: NSNotification) {
+        if let haEntity = haEntity {
+             haSocketService.registerMediaPlayer(mediaPlayer: self, entityId: haEntity.entityId)
+         }
+    }
+
+    @objc func onSleepNote(note: NSNotification) {
+        haSocketService.unregisterMediaPlayer(mediaPlayer: self, entityId: haEntity!.entityId)
+    }
+
+    func fileSleepNotifications() {
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self, selector: #selector(onWakeNote(note:)),
+            name: NSWorkspace.didWakeNotification, object: nil)
+
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self, selector: #selector(onSleepNote(note:)),
+            name: NSWorkspace.willSleepNotification, object: nil)
+    }
 
 }
