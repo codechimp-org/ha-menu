@@ -38,10 +38,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         
         if let statusButton = statusItem.button {
             #if DEBUG
-                let icon = NSImage(named: "StatusBarButtonImageDebug")
+            let icon = NSImage(named: "StatusBarButtonImageDebug")
             #else
-                let icon = NSImage(named: "StatusBarButtonImage")
-                icon?.isTemplate = true // best for dark mode
+            let icon = NSImage(named: "StatusBarButtonImage")
+            icon?.isTemplate = true // best for dark mode
             #endif
 
             statusButton.image = icon
@@ -103,8 +103,35 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
 
     @objc func openHA(sender: NSMenuItem) {
-        NSWorkspace.shared.open(NSURL(string: prefs.server)! as URL)
+
+        if #available(OSX 10.15, *) {
+            let url = NSURL(fileURLWithPath: "/Applications/Home Assistant.app", isDirectory: true) as URL
+
+            let path = "/bin"
+            let configuration = NSWorkspace.OpenConfiguration()
+            configuration.arguments = [path]
+            configuration.promptsUserIfNeeded = false
+
+            NSWorkspace.shared.openApplication(at: url,
+                                               configuration: configuration) { (app, error) in
+                                                if error != nil {
+                                                    // Fallback to opening website
+                                                    NSWorkspace.shared.open(NSURL(string: self.prefs.server)! as URL)
+                                                }
+            }
+
+        } else {
+            // Fallback on earlier versions
+            if !NSWorkspace.shared.launchApplication("Home Assistant") {
+                // Fallback to opening website
+                NSWorkspace.shared.open(NSURL(string: self.prefs.server)! as URL)
+            }
+
+        }
+
     }
+
+
     
     @objc func openAbout(sender: NSMenuItem) {
         let options = [String: Any]()
@@ -209,7 +236,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                         case "scene":
                             itemType = EntityTypes.sceneType
                         case "script":
-                           itemType = EntityTypes.scriptType
+                            itemType = EntityTypes.scriptType
 
                         default:
                             itemType = nil
