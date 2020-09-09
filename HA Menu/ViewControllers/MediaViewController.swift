@@ -55,6 +55,8 @@ class MediaViewController: NSViewController, HaSocketDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        imageArt.imageScaling = .scaleProportionallyUpOrDown
     }
 
     override func viewWillDisappear() {
