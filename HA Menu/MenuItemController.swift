@@ -35,6 +35,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         preferences = Preferences()
         
         super.init()
+
+        statusItem.autosaveName = "org.codechimp.hamenu.menu"
         
         if let statusButton = statusItem.button {
             #if DEBUG
