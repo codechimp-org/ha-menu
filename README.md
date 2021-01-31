@@ -17,7 +17,9 @@ Get the latest HA.Menu.zip from [Releases](https://github.com/codechimp-org/ha-m
 Unzip and copy the HA Menu app to your Applications folder
 
 **Homebrew Cask**  
-```brew cask install ha-menu```
+```brew cask install ha-menu```  
+Or if you are on BigSur  
+```brew install --cask ha-menu```
 
 ## Configuration
 You will have needed to enable Allow app's downloaded from App Store and identified developers enabled in Security & Privacy Settings to run.  
