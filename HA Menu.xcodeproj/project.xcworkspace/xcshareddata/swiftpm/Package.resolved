@@ -9,6 +9,15 @@
           "revision": "a74fcfbfb2dc54f1f8fa3c6848ae1efe697e0ebf",
           "version": "9.0.0"
         }
+      },
+      {
+        "package": "HotKey",
+        "repositoryURL": "https://github.com/soffes/HotKey",
+        "state": {
+          "branch": null,
+          "revision": "c13662730cb5bc28de4a799854bbb018a90649bf",
+          "version": "0.1.3"
+        }
       }
     ]
   },
