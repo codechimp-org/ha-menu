@@ -16,6 +16,8 @@
 		49A0190C2389A28C00622E63 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 49A0190B2389A28C00622E63 /* Credits.rtf */; };
 		49A5D39B246AD76100F81FAA /* RELEASING.md in Resources */ = {isa = PBXBuildFile; fileRef = 49A5D39A246AD76100F81FAA /* RELEASING.md */; };
 		49B4C10625EA758D002AD497 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 49B4C10525EA758D002AD497 /* HotKey */; };
+		49B4C10C25EA8A80002AD497 /* GlobalKeybindPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C10B25EA8A80002AD497 /* GlobalKeybindPreferences.swift */; };
+		49B4C11225EA8CC1002AD497 /* PrefGlobalShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C11125EA8CC1002AD497 /* PrefGlobalShortcut.swift */; };
 		49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9D8237D75700087F729 /* HaEntity.swift */; };
 		49BDE9DC237DA0FA0087F729 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */; };
 		49BDE9E4237DA1580087F729 /* LauncherAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9E3237DA1580087F729 /* LauncherAppDelegate.swift */; };
@@ -78,6 +80,8 @@
 		491F52C9217CCA4000105921 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		49A0190B2389A28C00622E63 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		49A5D39A246AD76100F81FAA /* RELEASING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = RELEASING.md; sourceTree = "<group>"; };
+		49B4C10B25EA8A80002AD497 /* GlobalKeybindPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreferences.swift; sourceTree = "<group>"; };
+		49B4C11125EA8CC1002AD497 /* PrefGlobalShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefGlobalShortcut.swift; sourceTree = "<group>"; };
 		49BDE9D8237D75700087F729 /* HaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaEntity.swift; sourceTree = "<group>"; };
 		49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		49BDE9E1237DA1580087F729 /* HA Menu Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HA Menu Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -169,6 +173,7 @@
 				491F52C8217CC48900105921 /* HA Menu.entitlements */,
 				491F529C217CBF5200105921 /* AppDelegate.swift */,
 				49E6106E21932B6600EFA408 /* MenuItemController.swift */,
+				49B4C10B25EA8A80002AD497 /* GlobalKeybindPreferences.swift */,
 				49A0190B2389A28C00622E63 /* Credits.rtf */,
 				491F52A0217CBF5400105921 /* Assets.xcassets */,
 				491F52A2217CBF5400105921 /* Main.storyboard */,
@@ -200,6 +205,7 @@
 			children = (
 				49E61064218F605000EFA408 /* Preferences.swift */,
 				49E6C92A23E07EE300F22973 /* PrefMenuItem.swift */,
+				49B4C11125EA8CC1002AD497 /* PrefGlobalShortcut.swift */,
 				49E6C92823DDE98A00F22973 /* HaService.swift */,
 				49E6106621908BC100EFA408 /* HaState.swift */,
 				49E6106821908D1400EFA408 /* HaStateAttributes.swift */,
@@ -426,6 +432,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49B4C11225EA8CC1002AD497 /* PrefGlobalShortcut.swift in Sources */,
 				49E61060218F4A2A00EFA408 /* StatusBarViewController.swift in Sources */,
 				49E6C92923DDE98A00F22973 /* HaService.swift in Sources */,
 				491F529D217CBF5200105921 /* AppDelegate.swift in Sources */,
@@ -436,6 +443,7 @@
 				49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */,
 				49E6106921908D1400EFA408 /* HaStateAttributes.swift in Sources */,
 				49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */,
+				49B4C10C25EA8A80002AD497 /* GlobalKeybindPreferences.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

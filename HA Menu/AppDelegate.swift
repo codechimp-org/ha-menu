@@ -68,6 +68,7 @@ extension AppDelegate {
 
     func updateFromPrefs() {
         SMLoginItemSetEnabled(launcherAppId as CFString, prefs.launch)
+//        RegisterShortcutKeys()
     }
 
 }

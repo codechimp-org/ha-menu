@@ -305,4 +305,41 @@ struct Preferences {
         return nil
     }
 
+    var globalShortcuts: [PrefGlobalShortcut] {
+        get {
+            var decodedResponse = [PrefGlobalShortcut]()
+
+            // Check if string empty
+            var jsonString = UserDefaults.standard.string(forKey: "global_shortcuts") ?? ""
+
+            if !jsonString.isEmpty {
+                // Got JSON
+                do {
+                    let jsonData = jsonString.data(using: String.Encoding.utf8, allowLossyConversion: false)
+                    decodedResponse = try JSONDecoder().decode([PrefGlobalShortcut].self, from: jsonData!)
+
+                    return decodedResponse
+                }
+                catch {
+                    // Something odd with json, blank it out and default
+                    jsonString = ""
+                }
+            }
+
+            return decodedResponse
+        }
+        set {
+            do {
+                let data = try JSONEncoder().encode(newValue)
+                let dataString = String(data: data, encoding: .utf8)!
+                UserDefaults.standard.set(dataString, forKey: "global_shortcuts")
+
+                settingsVersion = 2
+            }
+            catch {
+                // Error encoding json, don't write new value
+            }
+        }
+    }
+
 }
