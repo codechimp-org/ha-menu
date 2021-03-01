@@ -40,13 +40,13 @@ class PrefsViewController: NSViewController {
                 characters: "H",
                 keyCode: 0
             )
-            shortcutsTable.shortcuts.append(PrefGlobalShortcut(entityId: "switch.test", shortcut: newShortcut))
+            shortcuts.append(PrefGlobalShortcut(entityId: "switch.test", shortcut: newShortcut))
             tableViewShortcuts.beginUpdates()
-            tableViewShortcuts.insertRows(at: IndexSet(integer: shortcutsTable.shortcuts.count - 1), withAnimation: .effectFade)
+            tableViewShortcuts.insertRows(at: IndexSet(integer: self.shortcuts.count - 1), withAnimation: .effectFade)
             tableViewShortcuts.endUpdates()
 
         case 1:
-            shortcutsTable.removeSelectedRows()
+            removeSelectedRows()
         default: break;
         }
     }
@@ -55,7 +55,10 @@ class PrefsViewController: NSViewController {
     var groups = [HaEntity]()
     var okToSaveMenuItems = false
     var groupsTable = GroupsTable()
-    var shortcutsTable = ShortcutsTable()
+    
+    public var shortcuts = [PrefGlobalShortcut]()
+    private var itemSelected: Int = -1
+
 
 
     override func viewDidLoad() {
@@ -67,13 +70,14 @@ class PrefsViewController: NSViewController {
         tableViewGroups.registerForDraggedTypes([groupsTable.dragDropType])
         tableViewGroups.target = groupsTable
 
-        tableViewShortcuts.delegate = shortcutsTable
-        tableViewShortcuts.dataSource = shortcutsTable
-        tableViewShortcuts.target = shortcutsTable
-        
+        tableViewShortcuts.delegate = self
+        tableViewShortcuts.dataSource = self
+        tableViewShortcuts.target = self
+            
         connect()
     }
 
+        
     override func viewWillDisappear() {
         saveNewPrefs()
         saveNewMenuItems()
@@ -141,7 +145,7 @@ class PrefsViewController: NSViewController {
         textfieldToken.stringValue = prefs.token
         buttonBetaNotifications.state = (prefs.betaNotifications == true ? .on : .off)
         buttonLogin.state = (prefs.launch == true ? .on : .off)
-        shortcutsTable.shortcuts = prefs.globalShortcuts
+        self.shortcuts = prefs.globalShortcuts
     }
 
     func saveNewPrefs() {
@@ -149,7 +153,7 @@ class PrefsViewController: NSViewController {
         prefs.token = textfieldToken.stringValue
         prefs.betaNotifications = (buttonBetaNotifications.state == .on)
         prefs.launch = (buttonLogin.state == .on)
-        prefs.globalShortcuts = shortcutsTable.shortcuts
+        prefs.globalShortcuts = self.shortcuts
 
         NotificationCenter.default.post(name: Notification.Name(rawValue: "PrefsChanged"),
                                         object: nil)
@@ -267,10 +271,8 @@ class GroupsTable: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
 
 }
 
-class ShortcutsTable: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
+extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
         
-    public var shortcuts = [PrefGlobalShortcut]()
-    private var itemSelected: Int = -1
     
     public func numberOfRows(in tableView: NSTableView) -> Int {
         return self.shortcuts.count
@@ -296,24 +298,25 @@ class ShortcutsTable: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
 
         return nil
     }
-    
+   
     func tableViewSelectionDidChange(_ notification: Notification) {
-        let selected = selectedRowIndexes.map { Int($0) }
-        print(selected)
+        print(tableViewShortcuts.numberOfSelectedRows)
+        print(tableViewShortcuts.selectedRow)
     }
     
     func removeSelectedRows() {
-        let toDelete = self.clickedRow
+            
+        let toDelete = tableViewShortcuts.clickedRow
         print(toDelete)
         
-        if self.selectedRowIndexes.count > 0 {
-            self.selectedRowIndexes.forEach { row in
+        if tableViewShortcuts.selectedRowIndexes.count > 0 {
+            tableViewShortcuts.selectedRowIndexes.forEach { row in
                 print(row)
             }
 //            self.shortcuts.remove(at: itemSelected)
-            beginUpdates()
-            removeRows(at: self.selectedRowIndexes, withAnimation: .effectFade)
-            endUpdates()
+            tableViewShortcuts.beginUpdates()
+            tableViewShortcuts.removeRows(at: tableViewShortcuts.selectedRowIndexes, withAnimation: .effectFade)
+            tableViewShortcuts.endUpdates()
         }
 
         
