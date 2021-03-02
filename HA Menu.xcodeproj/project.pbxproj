@@ -18,6 +18,7 @@
 		49B4C10625EA758D002AD497 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 49B4C10525EA758D002AD497 /* HotKey */; };
 		49B4C10C25EA8A80002AD497 /* GlobalKeybindPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C10B25EA8A80002AD497 /* GlobalKeybindPreferences.swift */; };
 		49B4C11225EA8CC1002AD497 /* PrefGlobalShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C11125EA8CC1002AD497 /* PrefGlobalShortcut.swift */; };
+		49B4C12825ED5320002AD497 /* ShortcutsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C12725ED5320002AD497 /* ShortcutsViewController.swift */; };
 		49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9D8237D75700087F729 /* HaEntity.swift */; };
 		49BDE9DC237DA0FA0087F729 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */; };
 		49BDE9E4237DA1580087F729 /* LauncherAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9E3237DA1580087F729 /* LauncherAppDelegate.swift */; };
@@ -82,6 +83,7 @@
 		49A5D39A246AD76100F81FAA /* RELEASING.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = RELEASING.md; sourceTree = "<group>"; };
 		49B4C10B25EA8A80002AD497 /* GlobalKeybindPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreferences.swift; sourceTree = "<group>"; };
 		49B4C11125EA8CC1002AD497 /* PrefGlobalShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefGlobalShortcut.swift; sourceTree = "<group>"; };
+		49B4C12725ED5320002AD497 /* ShortcutsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsViewController.swift; sourceTree = "<group>"; };
 		49BDE9D8237D75700087F729 /* HaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaEntity.swift; sourceTree = "<group>"; };
 		49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		49BDE9E1237DA1580087F729 /* HA Menu Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HA Menu Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -239,6 +241,7 @@
 			children = (
 				49E6105F218F4A2A00EFA408 /* StatusBarViewController.swift */,
 				49E61062218F5FF400EFA408 /* PrefsViewController.swift */,
+				49B4C12725ED5320002AD497 /* ShortcutsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -441,6 +444,7 @@
 				49E6106721908BC100EFA408 /* HaState.swift in Sources */,
 				49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */,
 				49E61063218F5FF400EFA408 /* PrefsViewController.swift in Sources */,
+				49B4C12825ED5320002AD497 /* ShortcutsViewController.swift in Sources */,
 				49E6106921908D1400EFA408 /* HaStateAttributes.swift in Sources */,
 				49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */,
 				49B4C10C25EA8A80002AD497 /* GlobalKeybindPreferences.swift in Sources */,

@@ -20,59 +20,41 @@ class PrefsViewController: NSViewController {
     @IBOutlet weak var tableViewGroups: NSTableView!
     @IBOutlet weak var segementedControlShortcuts: NSSegmentedControl!
     @IBOutlet weak var tableViewShortcuts: NSTableView!
+    @IBOutlet weak var shortcutsViewContainer: ShortcutsViewController!
     
     @IBAction func buttonCheckConnection(_ sender: NSButton) {
         connect()
     }
 
-    @IBAction func segementedControlShortcutsPressed(_ sender: NSSegmentedControl) {
-        
-        switch segementedControlShortcuts.selectedSegment {
-        case 0:
-            let newShortcut = GlobalKeybindPreferences.init(
-                function: false,
-                control: false,
-                command: true,
-                shift: true,
-                option: true,
-                capsLock: false,
-                carbonFlags: 0,
-                characters: "H",
-                keyCode: 0
-            )
-            shortcuts.append(PrefGlobalShortcut(entityId: "switch.test", shortcut: newShortcut))
-            tableViewShortcuts.beginUpdates()
-            tableViewShortcuts.insertRows(at: IndexSet(integer: self.shortcuts.count - 1), withAnimation: .effectFade)
-            tableViewShortcuts.endUpdates()
-
-        case 1:
-            removeSelectedRows()
-        default: break;
-        }
-    }
-    
+    var shortcutsViewController: ShortcutsViewController!
     var prefs = Preferences()
     var groups = [HaEntity]()
     var okToSaveMenuItems = false
-    var groupsTable = GroupsTable()
+    public var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
+    public var menuItems = [PrefMenuItem]()
     
     public var shortcuts = [PrefGlobalShortcut]()
     private var itemSelected: Int = -1
 
-
+//    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
+//        if segue.identifier == "embedShortutsSegue" {
+//          if let childVC = segue.destination as? ShortcutsViewController {
+//            //Some property on ChildVC that needs to be set
+//            childVC.dataSource = self
+//          }
+//        }
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+                        
         showExistingPrefs()
 
-        tableViewGroups.delegate = groupsTable
-        tableViewGroups.dataSource = groupsTable
-        tableViewGroups.registerForDraggedTypes([groupsTable.dragDropType])
-        tableViewGroups.target = groupsTable
+        tableViewGroups.delegate = self
+        tableViewGroups.dataSource = self
+        tableViewGroups.registerForDraggedTypes([dragDropType])
+        tableViewGroups.target = self
 
-        tableViewShortcuts.delegate = self
-        tableViewShortcuts.dataSource = self
-        tableViewShortcuts.target = self
             
         connect()
     }
@@ -88,7 +70,7 @@ class PrefsViewController: NSViewController {
     func connect() {
         saveNewPrefs()
 
-        groupsTable.menuItems.removeAll()
+        self.menuItems.removeAll()
         
         haService.getStates() {
             result in
@@ -105,7 +87,7 @@ class PrefsViewController: NSViewController {
                     let sortedMenuItemsWithFriendlyNames = menuItemsWithFriendlyNames.sorted { $0.value.index < $1.value.index }
 
                     for (_, value) in sortedMenuItemsWithFriendlyNames {
-                        self.groupsTable.menuItems.append(value)
+                        self.menuItems.append(value)
                     }
 
                     self.tableViewGroups.reloadData()
@@ -115,7 +97,7 @@ class PrefsViewController: NSViewController {
                 DispatchQueue.main.async {
                     self.okToSaveMenuItems = false
 
-                    self.groupsTable.menuItems.removeAll()
+                    self.menuItems.removeAll()
                     self.tableViewGroups.reloadData()
 
                     switch haServiceApiError {
@@ -161,17 +143,13 @@ class PrefsViewController: NSViewController {
 
     func saveNewMenuItems() {
         if okToSaveMenuItems {
-            prefs.menuItems = groupsTable.menuItems
+            prefs.menuItems = self.menuItems
         }
     }
     
 }
 
-class GroupsTable: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
-    
-    public var dragDropType = NSPasteboard.PasteboardType(rawValue: "private.table-row")
-    
-    public var menuItems = [PrefMenuItem]()
+extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
 
     public func numberOfRows(in tableView: NSTableView) -> Int {
         return self.menuItems.count
@@ -268,88 +246,5 @@ class GroupsTable: NSTableView, NSTableViewDelegate, NSTableViewDataSource {
         tableView.reloadData()
         return true
     }
-
-}
-
-extension PrefsViewController: NSTableViewDelegate, NSTableViewDataSource {
-        
-    
-    public func numberOfRows(in tableView: NSTableView) -> Int {
-        return self.shortcuts.count
-    }
-
-    private func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> PrefGlobalShortcut? {
-        return self.shortcuts[row]
-    }
-
-    
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?
-        , row: Int) -> Any? {
-
-        if tableColumn == tableView.tableColumns[0] {
-            let item = self.shortcuts[row]
-            return item.entityId
-        }
-
-        if tableColumn == tableView.tableColumns[1] {
-            let item = self.shortcuts[row]
-            return item.shortcut.description
-        }
-
-        return nil
-    }
-   
-    func tableViewSelectionDidChange(_ notification: Notification) {
-        print(tableViewShortcuts.numberOfSelectedRows)
-        print(tableViewShortcuts.selectedRow)
-    }
-    
-    func removeSelectedRows() {
-            
-        let toDelete = tableViewShortcuts.clickedRow
-        print(toDelete)
-        
-        if tableViewShortcuts.selectedRowIndexes.count > 0 {
-            tableViewShortcuts.selectedRowIndexes.forEach { row in
-                print(row)
-            }
-//            self.shortcuts.remove(at: itemSelected)
-            tableViewShortcuts.beginUpdates()
-            tableViewShortcuts.removeRows(at: tableViewShortcuts.selectedRowIndexes, withAnimation: .effectFade)
-            tableViewShortcuts.endUpdates()
-        }
-
-        
-//        if let itemsSelected = itemsSelected {
-//            itemsSelected.forEach { (i) in
-//                self.shortcuts.remove(at: i)
-//            }
-//            beginUpdates()
-//            removeRows(at: itemsSelected, withAnimation: .effectFade)
-//            endUpdates()
-//        }
-        
-    }
-
-
-//    func tableView(_ tableView: NSTableView, setObjectValue object: Any?
-//        , for tableColumn: NSTableColumn?, row: Int) {
-//
-//        if tableColumn == tableView.tableColumns[0] {
-//            if (object! as AnyObject).intValue == 1 {
-//                self.shortcuts[row].enabled = true
-//            } else {
-//                self.shortcuts[row].enabled = false
-//            }
-//        }
-//
-//        if tableColumn == tableView.tableColumns[2] {
-//            if (object! as AnyObject).intValue == 1 {
-//                self.shortcuts[row].subMenu = true
-//            } else {
-//                self.shortcuts[row].subMenu = false
-//            }
-//        }
-//    }
 
 }
