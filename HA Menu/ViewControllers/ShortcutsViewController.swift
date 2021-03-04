@@ -106,5 +106,12 @@ extension ShortcutsViewController: NSTableViewDelegate, NSTableViewDataSource {
         tableViewShortcuts.removeRows(at: tableViewShortcuts.selectedRowIndexes, withAnimation: .effectFade)
         tableViewShortcuts.endUpdates()
     }
+    
+    func tableView(_ tableView: NSTableView, setObjectValue object: Any?, for tableColumn: NSTableColumn?, row: Int) {
+        
+        if tableColumn == tableView.tableColumns[0] {
+            self.shortcuts[row].entityId = object as! String
+        }
+    }
 
 }

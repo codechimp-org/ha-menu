@@ -36,15 +36,6 @@ class PrefsViewController: NSViewController {
     public var shortcuts = [PrefGlobalShortcut]()
     private var itemSelected: Int = -1
 
-//    override func prepare(for segue: NSStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "embedShortutsSegue" {
-//          if let childVC = segue.destination as? ShortcutsViewController {
-//            //Some property on ChildVC that needs to be set
-//            childVC.dataSource = self
-//          }
-//        }
-//    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
                         
@@ -55,7 +46,6 @@ class PrefsViewController: NSViewController {
         tableViewGroups.registerForDraggedTypes([dragDropType])
         tableViewGroups.target = self
 
-            
         connect()
     }
 
