@@ -19,6 +19,7 @@
 		49B4C10C25EA8A80002AD497 /* GlobalKeybindPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C10B25EA8A80002AD497 /* GlobalKeybindPreferences.swift */; };
 		49B4C11225EA8CC1002AD497 /* PrefGlobalShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C11125EA8CC1002AD497 /* PrefGlobalShortcut.swift */; };
 		49B4C12825ED5320002AD497 /* ShortcutsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C12725ED5320002AD497 /* ShortcutsViewController.swift */; };
+		49B4C12E25F3C7F2002AD497 /* ShortcutTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B4C12D25F3C7F2002AD497 /* ShortcutTextFieldCell.swift */; };
 		49BDE9D9237D75700087F729 /* HaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9D8237D75700087F729 /* HaEntity.swift */; };
 		49BDE9DC237DA0FA0087F729 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */; };
 		49BDE9E4237DA1580087F729 /* LauncherAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BDE9E3237DA1580087F729 /* LauncherAppDelegate.swift */; };
@@ -84,6 +85,7 @@
 		49B4C10B25EA8A80002AD497 /* GlobalKeybindPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalKeybindPreferences.swift; sourceTree = "<group>"; };
 		49B4C11125EA8CC1002AD497 /* PrefGlobalShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefGlobalShortcut.swift; sourceTree = "<group>"; };
 		49B4C12725ED5320002AD497 /* ShortcutsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsViewController.swift; sourceTree = "<group>"; };
+		49B4C12D25F3C7F2002AD497 /* ShortcutTextFieldCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ShortcutTextFieldCell.swift; path = "HA Menu/ShortcutTextFieldCell.swift"; sourceTree = SOURCE_ROOT; };
 		49BDE9D8237D75700087F729 /* HaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaEntity.swift; sourceTree = "<group>"; };
 		49BDE9DB237DA0FA0087F729 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		49BDE9E1237DA1580087F729 /* HA Menu Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HA Menu Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -174,6 +176,7 @@
 				4950677E217DD2BD008DEF88 /* Models */,
 				491F52C8217CC48900105921 /* HA Menu.entitlements */,
 				491F529C217CBF5200105921 /* AppDelegate.swift */,
+				49B4C12D25F3C7F2002AD497 /* ShortcutTextFieldCell.swift */,
 				49E6106E21932B6600EFA408 /* MenuItemController.swift */,
 				49B4C10B25EA8A80002AD497 /* GlobalKeybindPreferences.swift */,
 				49A0190B2389A28C00622E63 /* Credits.rtf */,
@@ -448,6 +451,7 @@
 				49E6106921908D1400EFA408 /* HaStateAttributes.swift in Sources */,
 				49E6106F21932B6600EFA408 /* MenuItemController.swift in Sources */,
 				49B4C10C25EA8A80002AD497 /* GlobalKeybindPreferences.swift in Sources */,
+				49B4C12E25F3C7F2002AD497 /* ShortcutTextFieldCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

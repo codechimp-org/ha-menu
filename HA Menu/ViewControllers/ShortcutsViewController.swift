@@ -7,9 +7,10 @@
 //
 
 import Cocoa
+import Carbon.HIToolbox
 
 class ShortcutsViewController: NSViewController {
-
+    
     @IBOutlet weak var tableViewShortcuts: NSTableView!
     @IBOutlet weak var segementedControlShortcuts: NSSegmentedControl!
     
@@ -31,7 +32,7 @@ class ShortcutsViewController: NSViewController {
             tableViewShortcuts.beginUpdates()
             tableViewShortcuts.insertRows(at: IndexSet(integer: self.shortcuts.count - 1), withAnimation: .effectFade)
             tableViewShortcuts.endUpdates()
-
+            
         case 1:
             removeSelectedRows()
         default: break;
@@ -44,6 +45,7 @@ class ShortcutsViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.shortcuts = prefs.globalShortcuts
         
         tableViewShortcuts.delegate = self
@@ -52,8 +54,7 @@ class ShortcutsViewController: NSViewController {
         
         setRemoveButtonState()
     }
-
-        
+    
     override func viewWillDisappear() {
         prefs.globalShortcuts = self.shortcuts
         super.viewWillDisappear()
@@ -62,7 +63,6 @@ class ShortcutsViewController: NSViewController {
     private func setRemoveButtonState() {
         self.segementedControlShortcuts.setEnabled(itemSelected >= 0, forSegment: 1)
     }
-    
 }
 
 extension ShortcutsViewController: NSTableViewDelegate, NSTableViewDataSource {
@@ -70,28 +70,28 @@ extension ShortcutsViewController: NSTableViewDelegate, NSTableViewDataSource {
     public func numberOfRows(in tableView: NSTableView) -> Int {
         return self.shortcuts.count
     }
-
+    
     private func tableView(_ tableView: NSTableView, typeSelectStringFor tableColumn: NSTableColumn?, row: Int) -> PrefGlobalShortcut? {
         return self.shortcuts[row]
     }
-
+    
     
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?
-        , row: Int) -> Any? {
-
+                   , row: Int) -> Any? {
+        
         if tableColumn == tableView.tableColumns[0] {
             let item = self.shortcuts[row]
             return item.entityId
         }
-
+        
         if tableColumn == tableView.tableColumns[1] {
             let item = self.shortcuts[row]
             return item.shortcut.description
         }
-
+        
         return nil
     }
-   
+    
     func tableViewSelectionDidChange(_ notification: Notification) {
         itemSelected = tableViewShortcuts.selectedRow
         
@@ -100,7 +100,7 @@ extension ShortcutsViewController: NSTableViewDelegate, NSTableViewDataSource {
     
     func removeSelectedRows() {
         guard itemSelected >= 0 else { return }
-
+        
         self.shortcuts.remove(at: itemSelected)
         tableViewShortcuts.beginUpdates()
         tableViewShortcuts.removeRows(at: tableViewShortcuts.selectedRowIndexes, withAnimation: .effectFade)
@@ -112,6 +112,11 @@ extension ShortcutsViewController: NSTableViewDelegate, NSTableViewDataSource {
         if tableColumn == tableView.tableColumns[0] {
             self.shortcuts[row].entityId = object as! String
         }
+        
+        if tableColumn == tableView.tableColumns[1] {
+            // This is where I need to use my object
+            self.shortcuts[row].shortcut = object as! GlobalKeybindPreferences
+        }
     }
-
+    
 }
