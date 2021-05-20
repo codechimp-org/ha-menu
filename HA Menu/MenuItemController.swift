@@ -239,6 +239,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             itemType = EntityTypes.sceneType
                         case "script":
                             itemType = EntityTypes.scriptType
+                        case "sensor":
+                            itemType = EntityTypes.sensorType
 
                         default:
                             itemType = nil
@@ -250,15 +252,20 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                                 switch result {
                                 case .success(let entity):
                                     var options = [String]()
+                                    var unitOfMeasurement = ""
 
                                     if itemType == EntityTypes.inputSelectType {
                                         options = entity.attributes.options
                                     }
 
+                                    if itemType == EntityTypes.sensorType {
+                                        unitOfMeasurement = entity.attributes.unitOfMeasurement
+                                    }
+                                    
                                     // Do not add unavailable state entities
                                     if (entity.state != "unavailable") {
 
-                                        let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), options: options)
+                                        let haEntity: HaEntity = HaEntity(entityId: entityId, friendlyName: (entity.attributes.friendlyName), state: (entity.state), unitOfMeasurement: unitOfMeasurement, options: options)
 
                                         entities.append(haEntity)
                                     }
@@ -345,6 +352,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         else {
             let menuItem = NSMenuItem()
 
+            menuItem.title = haEntity.friendlyName
+            
             if haEntity.domainType == EntityDomains.sceneDomain {
                 menuItem.action = #selector(self.turnOnEntity(_:))
                 menuItem.state = NSControl.StateValue.off
@@ -355,13 +364,18 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 menuItem.state = NSControl.StateValue.off
                 menuItem.offStateImage = NSImage(named: "PlayButtonImage")
             }
+            else if haEntity.domainType == EntityDomains.sensorDomain {
+                menuItem.title = haEntity.friendlyName + ": " + haEntity.state + haEntity.unitOfMeasurement
+                menuItem.action = #selector(self.doNothing(_:))
+                menuItem.state = NSControl.StateValue.off
+                menuItem.offStateImage = NSImage(named: "BulletImage")
+            }
             else {
                 menuItem.action = #selector(self.toggleEntityState(_:))
                 menuItem.state = ((haEntity.state == "on") ? NSControl.StateValue.on : NSControl.StateValue.off)
             }
 
             menuItem.target = self
-            menuItem.title = haEntity.friendlyName
             menuItem.keyEquivalent = ""
             menuItem.representedObject = haEntity
             menuItem.tag = haEntity.type.rawValue // Tag defines what type of item it is
@@ -430,6 +444,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         }
     }
 
+    @objc func doNothing(_ sender: NSMenuItem) {
+        // fake menu responder
+    }
+    
     @objc func toggleEntityState(_ sender: NSMenuItem) {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
         haService.toggleEntityState(haEntity: haEntity)

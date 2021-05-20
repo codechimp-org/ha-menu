@@ -12,6 +12,7 @@ struct HaStateAttributes : Decodable {
 
     let entityIds: [String]
     var friendlyName: String // Allow rewriting to entityId when decoded
+    let unitOfMeasurement: String
     let options: [String]
 
     enum CodingKeys: String, CodingKey {
@@ -21,12 +22,14 @@ struct HaStateAttributes : Decodable {
     enum AttributeKeys: String, CodingKey {
         case entityIds = "entity_id"
         case friendlyName = "friendly_name"
+        case unitOfMeasurement = "unit_of_measurement"
         case options = "options"
     }
 
     init() {
         entityIds = [String]()
         friendlyName = ""
+        unitOfMeasurement = ""
         options = [String]()
     }
 
@@ -44,6 +47,12 @@ struct HaStateAttributes : Decodable {
             self.friendlyName = friendlyName
         } else {
             self.friendlyName = ""
+        }
+        
+        if let unitOfMeasurement = try attributes.decodeIfPresent(String.self, forKey: .unitOfMeasurement) {
+            self.unitOfMeasurement = unitOfMeasurement
+        } else {
+            self.unitOfMeasurement = ""
         }
 
         if let options = try attributes.decodeIfPresent([String].self, forKey: .options) {

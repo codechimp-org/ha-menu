@@ -106,7 +106,7 @@ class HaService {
                 // Do not add unavailable state entities
                 if (haState.state != "unavailable") {
 
-                    let haEntity: HaEntity = HaEntity(entityId: haState.entityId, friendlyName: (haState.attributes.friendlyName), state: (haState.state), options: haState.attributes.options)
+                    let haEntity: HaEntity = HaEntity(entityId: haState.entityId, friendlyName: (haState.attributes.friendlyName), state: (haState.state), unitOfMeasurement: haState.attributes.unitOfMeasurement, options: haState.attributes.options)
 
                     entities.append(haEntity)
                 }

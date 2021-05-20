@@ -6,7 +6,8 @@ Currently HA Menu supports
 * Turning available switches, lights, automations and input_boolean's on and off
 * Activating scenes and scripts
 * input_select option menus  
-  
+* Viewing sensor values (Sensors have to be specifically added to a group)  
+
 HA Menu supports MacOS 10.13 (High Sierra) and later.
 
 ![alt text](Art/menu.png "HA Menu")
@@ -48,7 +49,9 @@ First of all create your group(s) within groups.yaml as per the example.  Note t
 Once you have the group(s) added to HA, within HA Menu go to Preferences and tick the Groups you want to be displayed.   
 Close preferences to save these settings.
 
-Now when you click on HA Menu again the group's you have setup will be displayed.  Entities within groups are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert, who_cooks in the example).  
+Now when you click on HA Menu again the group's you have setup will be displayed.  Entities within groups are displayed in the order they are added within the group (printer, lego_lights, desk_lamp, notifications, entry_alert, who_cooks, outside_temperature in the example).  
+
+Where sensors are included they will be displayed with a bullet in the menu, and show the friendly name, state/value and unit of measurement. Clicking on a sensor does not perform any action.   
 
 Example groups.yaml
 ```yaml
@@ -61,6 +64,7 @@ ha_menu:
     - input_boolean.notifications
     - automation.entry_alert
     - input_select.who_cooks
+    - sensor.outside_temperature
 ```
 
 ## Say Thanks
