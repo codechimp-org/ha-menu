@@ -8,6 +8,7 @@
 
 import Cocoa
 import Carbon.HIToolbox
+import MASShortcut
 
 class ShortcutsViewController: NSViewController {
     

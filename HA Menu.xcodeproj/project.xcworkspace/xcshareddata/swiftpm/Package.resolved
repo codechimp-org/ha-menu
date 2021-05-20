@@ -18,6 +18,15 @@
           "revision": "c13662730cb5bc28de4a799854bbb018a90649bf",
           "version": "0.1.3"
         }
+      },
+      {
+        "package": "MASShortcut",
+        "repositoryURL": "https://github.com/rampatra/MASShortcut",
+        "state": {
+          "branch": null,
+          "revision": "883265c7f54368b45b282723ae7c4f2d5e68ab49",
+          "version": "2.4.1"
+        }
       }
     ]
   },

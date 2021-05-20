@@ -8,6 +8,7 @@
 
 import Cocoa
 import ServiceManagement
+import MASShortcut
 
 let launcherAppId = "org.codechimp.HA-Menu-Launcher"
 
