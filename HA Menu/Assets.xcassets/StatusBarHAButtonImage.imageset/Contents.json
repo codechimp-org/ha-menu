@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "switch@1x.png",
+      "filename" : "haicon@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "switch@2x.png",
+      "filename" : "haicon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "switch.svg.png",
+      "filename" : "haicon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

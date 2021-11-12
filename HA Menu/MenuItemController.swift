@@ -40,9 +40,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         
         if let statusButton = statusItem.button {
             #if DEBUG
-            let icon = NSImage(named: "StatusBarButtonImageDebug")
+            let icon = NSImage(named: "StatusBarHAButtonImageDebug")
             #else
-            let icon = NSImage(named: "StatusBarButtonImage")
+            let icon = NSImage(named: "StatusBarHAButtonImage")
             icon?.isTemplate = true // best for dark mode
             #endif
 
