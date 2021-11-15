@@ -475,6 +475,11 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     let idArray = latestId.components(separatedBy: "/")
                     let latestVersion = idArray.last
 
+                    // Do nothing with final builds, they are pulled manually when required
+                    if (latestVersion?.hasSuffix("final"))! {
+                        return
+                    }
+
                     var beta = false
                     if (latestVersion?.hasSuffix("beta"))! {
                         beta = true
