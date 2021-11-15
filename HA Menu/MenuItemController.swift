@@ -63,12 +63,14 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
         self.addDynamicMenuItems(){
             result in
-            switch result {
-            case .success( _):
-                self.checkForUpdate()
-            case .failure( _):
-                break
-            }
+            
+            // DO NOTHING, this is a final version and we don't want to check for updates.
+//            switch result {
+//            case .success( _):
+//                self.checkForUpdate()
+//            case .failure( _):
+//                break
+//            }
         }
     }
 
