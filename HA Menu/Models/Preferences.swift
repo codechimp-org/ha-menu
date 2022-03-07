@@ -174,6 +174,16 @@ struct Preferences {
             UserDefaults.standard.synchronize()
         }
     }
+    
+    var domainCovers: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_covers")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_covers")
+            UserDefaults.standard.synchronize()
+        }
+    }
 
     var menuItems: [PrefMenuItem] {
         get {
@@ -195,6 +205,10 @@ struct Preferences {
 
                     if !domainExists(domain: "script", prefs: decodedResponse) {
                         decodedResponse.append(PrefMenuItem(entityId: "script", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scripts"))
+                    }
+                    
+                    if !domainExists(domain: "cover", prefs: decodedResponse) {
+                        decodedResponse.append(PrefMenuItem(entityId: "cover", itemType: itemTypes.Domain, subMenu: true, enabled: domainCovers, friendlyName: "Covers"))
                     }
 
                     return decodedResponse
@@ -220,6 +234,8 @@ struct Preferences {
                 decodedResponse.append(PrefMenuItem(entityId: "scene", itemType: itemTypes.Domain, subMenu: true, enabled: domainScenes, friendlyName: "Scenes"))
 
                 decodedResponse.append(PrefMenuItem(entityId: "script", itemType: itemTypes.Domain, subMenu: true, enabled: domainScripts, friendlyName: "Scripts"))
+                
+                decodedResponse.append(PrefMenuItem(entityId: "cover", itemType: itemTypes.Domain, subMenu: true, enabled: domainCovers, friendlyName: "Covers"))
 
                 // Init Groups from old setting
                 for group in groups {

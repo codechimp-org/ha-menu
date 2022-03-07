@@ -18,6 +18,7 @@ enum EntityTypes: Int, CaseIterable {
     case sceneType = 8
     case scriptType = 9
     case sensorType = 10
+    case coverType = 11
     case unknownType = 999
 }
 
@@ -31,6 +32,7 @@ enum EntityDomains: String, CaseIterable {
     case scriptDomain = "script"
     case groupDomain = "group"
     case sensorDomain = "sensor"
+    case coverDomain = "cover"
     case unknownDomain = "unknown"
 }
 
@@ -61,6 +63,8 @@ struct HaEntity {
                 return EntityDomains.scriptDomain
             case EntityDomains.sensorDomain.rawValue:
                 return EntityDomains.sensorDomain
+            case EntityDomains.coverDomain.rawValue:
+                return EntityDomains.coverDomain
                 
             case EntityDomains.groupDomain.rawValue:
                 return EntityDomains.groupDomain
@@ -95,6 +99,8 @@ struct HaEntity {
                   return EntityTypes.scriptType
             case EntityDomains.sensorDomain:
                 return EntityTypes.sensorType
+            case EntityDomains.coverDomain:
+                return EntityTypes.coverType
 
             case EntityDomains.groupDomain:
                 return EntityTypes.groupType

@@ -241,7 +241,9 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             itemType = EntityTypes.scriptType
                         case "sensor":
                             itemType = EntityTypes.sensorType
-
+                        case "cover":
+                            itemType = EntityTypes.coverType
+                            
                         default:
                             itemType = nil
                         }
@@ -369,6 +371,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 menuItem.action = #selector(self.doNothing(_:))
                 menuItem.state = NSControl.StateValue.off
                 menuItem.offStateImage = NSImage(named: "BulletImage")
+            }
+            else if haEntity.domainType == EntityDomains.coverDomain {
+                menuItem.action = #selector(self.toggleEntityState(_:))
+                menuItem.state = ((haEntity.state == "open" || haEntity.state == "opening") ? NSControl.StateValue.on : NSControl.StateValue.off)
             }
             else {
                 menuItem.action = #selector(self.toggleEntityState(_:))
