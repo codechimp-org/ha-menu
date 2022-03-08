@@ -6,6 +6,7 @@ Currently HA Menu supports
 * Turning available switches, lights, automations and input_boolean's on and off
 * Activating scenes and scripts
 * input_select option menus  
+* Opening and Closing Covers
 * Viewing sensor values (Sensors have to be specifically added to a group)  
 
 HA Menu supports MacOS 10.13 (High Sierra) and later.
