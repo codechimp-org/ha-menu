@@ -479,19 +479,22 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
                 if let latestId = (feed.atomFeed?.entries?.first?.id!) {
                     let idArray = latestId.components(separatedBy: "/")
-                    let latestVersion = idArray.last
+                    var latestVersion = idArray.last
 
                     // Do nothing with final builds, they are pulled manually when required
                     if (latestVersion?.hasSuffix("final"))! {
                         return
                     }
 
+                    // If the version has suffix of beta, strip suffix for later comparison and flag as beta
                     var beta = false
                     if (latestVersion?.hasSuffix("beta"))! {
                         beta = true
                         if (!self.prefs.betaNotifications) {
                             return
                         }
+
+                        latestVersion = String(latestVersion!.dropLast(4))
                     }
 
                     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
