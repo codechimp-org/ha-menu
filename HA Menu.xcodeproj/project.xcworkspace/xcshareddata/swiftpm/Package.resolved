@@ -1,16 +1,14 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "FeedKit",
-        "repositoryURL": "https://github.com/nmdias/FeedKit.git",
-        "state": {
-          "branch": null,
-          "revision": "a74fcfbfb2dc54f1f8fa3c6848ae1efe697e0ebf",
-          "version": "9.0.0"
-        }
+  "pins" : [
+    {
+      "identity" : "feedkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/nmdias/FeedKit",
+      "state" : {
+        "branch" : "master",
+        "revision" : "6b03f2e9c18c578fe577c434784772efcfd34a9e"
       }
-    ]
-  },
-  "version": 1
+    }
+  ],
+  "version" : 2
 }
