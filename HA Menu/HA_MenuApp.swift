@@ -10,7 +10,7 @@ import SwiftUI
 
 @main
 struct HA_MenuApp: App {
-    
+    @Environment(\.scenePhase) var scenePhase
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     
     var body: some Scene {
@@ -25,8 +25,26 @@ struct HA_MenuApp: App {
         
         WindowGroup {
             ContentView()
+                .frame(minWidth: 500, minHeight: 300)
+                .onReceive(NotificationCenter.default.publisher(for: NSApplication.willUpdateNotification), perform: { _ in
+                                    hideButtons()
+                                })
+                .onAppear() {
+                    // Disable the menu
+                }
+                .onDisappear() {
+                    // Re-enable the menu
+                }
         }
         .handlesExternalEvents(matching: ["preferencesScene"])
+    }
+    
+    func hideButtons() {
+        for window in NSApplication.shared.windows {
+//            window.standardWindowButton(NSWindow.ButtonType.zoomButton)?.isEnabled = false
+            window.standardWindowButton(NSWindow.ButtonType.miniaturizeButton)?.isEnabled = false
+
+        }
     }
 }
 

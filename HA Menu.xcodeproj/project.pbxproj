@@ -15,7 +15,6 @@
 		49E4CB1B2827ED3A00980582 /* HA_MenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E4CB1A2827ED3A00980582 /* HA_MenuTests.swift */; };
 		49E4CB252827ED3A00980582 /* HA_MenuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E4CB242827ED3A00980582 /* HA_MenuUITests.swift */; };
 		49E4CB272827ED3A00980582 /* HA_MenuUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E4CB262827ED3A00980582 /* HA_MenuUITestsLaunchTests.swift */; };
-		49E4CB342827F04100980582 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E4CB332827F04100980582 /* MainMenu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +47,6 @@
 		49E4CB202827ED3A00980582 /* HA MenuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "HA MenuUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E4CB242827ED3A00980582 /* HA_MenuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HA_MenuUITests.swift; sourceTree = "<group>"; };
 		49E4CB262827ED3A00980582 /* HA_MenuUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HA_MenuUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		49E4CB332827F04100980582 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +98,6 @@
 			isa = PBXGroup;
 			children = (
 				49E4CB082827ED3900980582 /* HA_MenuApp.swift */,
-				49E4CB332827F04100980582 /* MainMenu.swift */,
 				49E4CB0A2827ED3900980582 /* ContentView.swift */,
 				49E4CB0C2827ED3A00980582 /* Assets.xcassets */,
 				4967A470282810F100606559 /* Credits.rtf */,
@@ -267,7 +264,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				49E4CB0B2827ED3900980582 /* ContentView.swift in Sources */,
-				49E4CB342827F04100980582 /* MainMenu.swift in Sources */,
 				49E4CB092827ED3900980582 /* HA_MenuApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
