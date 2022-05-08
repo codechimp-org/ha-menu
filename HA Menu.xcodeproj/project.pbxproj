@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4967A471282810F100606559 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4967A470282810F100606559 /* Credits.rtf */; };
 		49E4CB092827ED3900980582 /* HA_MenuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E4CB082827ED3900980582 /* HA_MenuApp.swift */; };
 		49E4CB0B2827ED3900980582 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E4CB0A2827ED3900980582 /* ContentView.swift */; };
 		49E4CB0D2827ED3A00980582 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 49E4CB0C2827ED3A00980582 /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4967A470282810F100606559 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		49E4CB052827ED3900980582 /* HA Menu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "HA Menu.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49E4CB082827ED3900980582 /* HA_MenuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HA_MenuApp.swift; sourceTree = "<group>"; };
 		49E4CB0A2827ED3900980582 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				49E4CB332827F04100980582 /* MainMenu.swift */,
 				49E4CB0A2827ED3900980582 /* ContentView.swift */,
 				49E4CB0C2827ED3A00980582 /* Assets.xcassets */,
+				4967A470282810F100606559 /* Credits.rtf */,
 				49E4CB112827ED3A00980582 /* HA_Menu.entitlements */,
 				49E4CB0E2827ED3A00980582 /* Preview Content */,
 			);
@@ -237,6 +240,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				49E4CB102827ED3A00980582 /* Preview Assets.xcassets in Resources */,
+				4967A471282810F100606559 /* Credits.rtf in Resources */,
 				49E4CB0D2827ED3A00980582 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,8 +432,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_FILE = "HA Menu/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "HA Menu";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 CodeChimp. All rights reserved.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -460,8 +464,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "$(PRODUCT_NAME)";
+				INFOPLIST_FILE = "HA Menu/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "HA Menu";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2022 CodeChimp. All rights reserved.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
