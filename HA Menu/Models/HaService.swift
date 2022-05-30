@@ -167,6 +167,23 @@ class HaService {
 
         task.resume()
     }
+    
+    func pressEntity(haEntity: HaEntity) {
+        let params = ["entity_id": haEntity.entityId]
+        let urlString = "\(prefs.server)/api/services/\(haEntity.domain)/press"
+
+        var request = createAuthURLRequest(url: URL(string: urlString)!)
+
+        request.httpMethod = "POST"
+        request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+
+        let session = URLSession.shared
+        let task = session.dataTask(with: request, completionHandler: { data, response, error -> Void in
+            print(String(data: data!, encoding: String.Encoding.utf8)!)
+        })
+
+        task.resume()
+    }
 
     
 }

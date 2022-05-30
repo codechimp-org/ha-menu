@@ -243,6 +243,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                             itemType = EntityTypes.sensorType
                         case "cover":
                             itemType = EntityTypes.coverType
+                        case "button":
+                            itemType = EntityTypes.buttonType
+                        case "input_button":
+                            itemType = EntityTypes.inputButtonType
                             
                         default:
                             itemType = nil
@@ -366,6 +370,16 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                 menuItem.state = NSControl.StateValue.off
                 menuItem.offStateImage = NSImage(named: "PlayButtonImage")
             }
+            else if haEntity.domainType == EntityDomains.buttonDomain {
+                menuItem.action = #selector(self.pressEntity(_:))
+                menuItem.state = NSControl.StateValue.off
+                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
+            }
+            else if haEntity.domainType == EntityDomains.inputButtonDomain {
+                menuItem.action = #selector(self.pressEntity(_:))
+                menuItem.state = NSControl.StateValue.off
+                menuItem.offStateImage = NSImage(named: "PlayButtonImage")
+            }
             else if haEntity.domainType == EntityDomains.sensorDomain {
                 menuItem.title = haEntity.friendlyName + ": " + haEntity.state + haEntity.unitOfMeasurement
                 menuItem.action = #selector(self.doNothing(_:))
@@ -468,7 +482,12 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         let haEntity: HaEntity = sender.representedObject as! HaEntity
         haService.turnOnEntity(haEntity: haEntity)
     }
-
+    
+    @objc func pressEntity(_ sender: NSMenuItem) {
+        let haEntity: HaEntity = sender.representedObject as! HaEntity
+        haService.pressEntity(haEntity: haEntity)
+    }
+    
     func checkForUpdate() {
         let parser = FeedParser(URL: releasesFeedURL)
 

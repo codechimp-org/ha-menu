@@ -184,6 +184,26 @@ struct Preferences {
             UserDefaults.standard.synchronize()
         }
     }
+    
+    var domainButtons: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_buttons")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_buttons")
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
+    var domainInputButtons: Bool {
+        get {
+            return UserDefaults.standard.bool(forKey: "domain_inputbuttons")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "domain_inputbuttons")
+            UserDefaults.standard.synchronize()
+        }
+    }
 
     var menuItems: [PrefMenuItem] {
         get {
@@ -211,6 +231,14 @@ struct Preferences {
                         decodedResponse.append(PrefMenuItem(entityId: "cover", itemType: itemTypes.Domain, subMenu: true, enabled: domainCovers, friendlyName: "Covers"))
                     }
 
+                    if !domainExists(domain: "button", prefs: decodedResponse) {
+                        decodedResponse.append(PrefMenuItem(entityId: "button", itemType: itemTypes.Domain, subMenu: true, enabled: domainButtons, friendlyName: "Buttons"))
+                    }
+                    
+                    if !domainExists(domain: "input_button", prefs: decodedResponse) {
+                        decodedResponse.append(PrefMenuItem(entityId: "input_button", itemType: itemTypes.Domain, subMenu: true, enabled: domainButtons, friendlyName: "Input Buttons"))
+                    }
+                    
                     return decodedResponse
                 }
                 catch {
@@ -237,6 +265,10 @@ struct Preferences {
                 
                 decodedResponse.append(PrefMenuItem(entityId: "cover", itemType: itemTypes.Domain, subMenu: true, enabled: domainCovers, friendlyName: "Covers"))
 
+                decodedResponse.append(PrefMenuItem(entityId: "button", itemType: itemTypes.Domain, subMenu: true, enabled: domainButtons, friendlyName: "Buttons"))
+                
+                decodedResponse.append(PrefMenuItem(entityId: "input_button", itemType: itemTypes.Domain, subMenu: true, enabled: domainInputButtons, friendlyName: "Input Buttons"))
+                
                 // Init Groups from old setting
                 for group in groups {
                     decodedResponse.append(PrefMenuItem(entityId: group, itemType: itemTypes.Group, subMenu: false, enabled: true, friendlyName: ""))
