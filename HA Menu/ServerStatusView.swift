@@ -23,9 +23,9 @@ struct ServerStatusView: View {
         .padding()
         .overlay(
                 RoundedRectangle(cornerRadius: 5)
-                    .stroke(.gray, lineWidth: 1)
+                    .stroke(Color("BorderColor"), lineWidth: 1)
         )
-        .background(Color("DarkSystem"))
+        .background(Color("PanelColor"))
     }
 }
 

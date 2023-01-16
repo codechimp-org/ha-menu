@@ -22,6 +22,13 @@ struct ContentView: View {
             ServerStatusView()
             
             ServerStatusView()
+            
+            HStack {
+                Spacer()
+                Button("Add Server...") {
+                    
+                }
+            }
 //            VStack(alignment: .leading) {
 //                HStack {
 //                    Text("Server")
