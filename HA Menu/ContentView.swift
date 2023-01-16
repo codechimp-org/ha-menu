@@ -14,37 +14,45 @@ struct ContentView: View {
     @State var input: String = ""
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("Server")
-                        .frame(width: 50, alignment: .leading)
-                    TextField("", text: $server)
-                }
-                
-                HStack(alignment: .top) {
-                    Text("Token")
-                        .frame(width: 50, alignment: .leading)
-                    TextField("", text: $token)
-                        .frame(height: 100)
-                    
-                }
-            }
-            .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
+        VStack(alignment: .leading){
+            Text("Servers")
+                .font(.title2)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
-            HStack {
-                TextField("", text: $input)
-                    .textFieldStyle(.roundedBorder)
-                
-                Button("Add Entity") {
-                    print("add entity")
-                }
-                .padding(.leading, 5)
-            }
-            .padding(EdgeInsets(top: 0, leading: 10, bottom: 5, trailing: 10))
+            ServerStatusView()
+            
+            ServerStatusView()
+//            VStack(alignment: .leading) {
+//                HStack {
+//                    Text("Server")
+//                        .frame(width: 50, alignment: .leading)
+//                    TextField("", text: $server)
+//                }
+//
+//                HStack(alignment: .top) {
+//                    Text("Token")
+//                        .frame(width: 50, alignment: .leading)
+//                    TextField("", text: $token)
+//                        .frame(height: 100)
+//
+//                }
+//            }
+//            .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
+//
+//            HStack {
+//                TextField("", text: $input)
+//                    .textFieldStyle(.roundedBorder)
+//
+//                Button("Add Entity") {
+//                    print("add entity")
+//                }
+//                .padding(.leading, 5)
+//            }
+//            .padding(EdgeInsets(top: 0, leading: 10, bottom: 5, trailing: 10))
             
             Spacer()
         }
+        .padding(.all)
     }
 }
 

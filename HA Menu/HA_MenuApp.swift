@@ -11,24 +11,89 @@ import SwiftUI
 @main
 struct HA_MenuApp: App {
     @Environment(\.scenePhase) var scenePhase
+    @Environment(\.openWindow) var openWindow
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
-    
+        
     var body: some Scene {
-        WindowGroup {
-            EmptyView()
-                .frame(width: .zero)
+#if DEBUG
+        let icon = "StatusBarButtonImageDebug"
+#else
+        let icon = "StatusBarButtonImage"
+#endif
+        
+        MenuBarExtra("HA Menu", image: icon) {
+            Button("One") {
+                
+            }
+            .keyboardShortcut("1")
+            Button("Two") {
+                
+            }
+            .keyboardShortcut("2")
+            Button("Three") {
+                
+            }
+            .keyboardShortcut("3")
+            
+            Divider()
+            
+            Button("Preferences...") {
+                openWindow(id: "preferences")
+//                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+            }
+            
+            Divider()
+            
+            Button("About") {
+                let options = [String: Any]()
+                NSApp.orderFrontStandardAboutPanel(options)
+                NSApp.activate(ignoringOtherApps: true)
+            }
+            
+            Divider()
+            
+            Button("Quit") {
+                
+                NSApplication.shared.terminate(nil)
+                
+            }.keyboardShortcut("q")
+            
+        }
+        .menuBarExtraStyle(.menu)
+        .onChange(of: scenePhase) { newPhase in //<-- HERE TOO! This modifier allows you to detect change of scene.
+            if newPhase == .inactive {
+                //Code for moved to inactive
+                print("Moved to inactive")
+            } else if newPhase == .active {
+                //Code for moved to foreground
+                print("Moved to foreground - now active")
+                //This is where you would want to change your text
+            } else if newPhase == .background {
+                //Code for moved to background
+                print("Moved to background")
+            }
         }
         
-        //    Settings {
-        //      EmptyView()
-        //    }
+        Window("Preferences", id: "preferences") {
+            ContentView()
+                .frame(minWidth: 500, minHeight: 300)
+                .onReceive(NotificationCenter.default.publisher(for: NSApplication.willUpdateNotification), perform: { _ in
+                    hideButtons()
+                })
+                .onAppear() {
+                    // Disable the menu
+                }
+                .onDisappear() {
+                    // Re-enable the menu
+                }
+        }
         
         WindowGroup {
             ContentView()
                 .frame(minWidth: 500, minHeight: 300)
                 .onReceive(NotificationCenter.default.publisher(for: NSApplication.willUpdateNotification), perform: { _ in
-                                    hideButtons()
-                                })
+                    hideButtons()
+                })
                 .onAppear() {
                     // Disable the menu
                 }
@@ -41,9 +106,15 @@ struct HA_MenuApp: App {
     
     func hideButtons() {
         for window in NSApplication.shared.windows {
-//            window.standardWindowButton(NSWindow.ButtonType.zoomButton)?.isEnabled = false
+            //            window.standardWindowButton(NSWindow.ButtonType.zoomButton)?.isEnabled = false
             window.standardWindowButton(NSWindow.ButtonType.miniaturizeButton)?.isEnabled = false
-
+            
+        }
+        
+        for window in NSApplication.shared.windows {
+            if window.title == "Preferences" {
+                window.level = .floating
+            }
         }
     }
 }
@@ -54,7 +125,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     
     final private class MacExtrasConfigurator: NSObject, NSMenuDelegate {
         @Environment(\.openURL) private var openURL
-
+        
         private var statusBar: NSStatusBar
         private var statusItem: NSStatusItem
         
@@ -69,9 +140,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             
             super.init()
             
-            createMenu()
+//            createMenu()
         }
-    
+        
         
         // MARK: - MenuConfig
         
