@@ -36,7 +36,7 @@ struct HA_MenuApp: App {
             
             Divider()
             
-            Button("Preferences...") {
+            Button("Preferences\u{2026}") {
                 openWindow(id: "preferences")
             }
             .keyboardShortcut(",")
