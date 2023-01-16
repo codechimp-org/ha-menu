@@ -9,14 +9,23 @@ import SwiftUI
 
 struct ServerStatusView: View {
     var body: some View {
-        VStack(alignment: .leading){
+        VStack(alignment: .leading) {
             Text("Server Name")
-            Text("Connected")
+                .font(.title3)
+            HStack() {
+                Circle()
+                    .fill(.green)
+                    .frame(width: 10, height: 10)
+                Text("Connected")
+            }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
-        .background(.green)
-        .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+        .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(.gray, lineWidth: 1)
+        )
+        .background(Color("DarkSystem"))
     }
 }
 
