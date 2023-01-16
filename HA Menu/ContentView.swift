@@ -25,7 +25,7 @@ struct ContentView: View {
             
             HStack {
                 Spacer()
-                Button("Add Server...") {
+                Button("Add Server\u{2026}") {
                     
                 }
             }
