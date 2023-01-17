@@ -9,13 +9,43 @@ import SwiftUI
 
 struct ServerView: View {
     
+    @State var serverName: String = ""
+    @State var serverUrl: String = ""
+    @State var serverToken: String = ""
+    
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        GeometryReader { geometry in
+            VStack(alignment: .leading) {
+                
+                HStack() {
+                    Text("Server Name:")
+                        .frame(minWidth: 100, alignment: .leading)
+                    TextField("Enter server friendly name", text: $serverName)
+                }
+                
+                HStack() {
+                    Text("Server URL:")
+                        .frame(minWidth: 100, alignment: .leading)
+                    TextField("Enter server url", text: $serverUrl)
+                }
+                
+                HStack() {
+                    Text("Token:")
+                        .frame(minWidth: 100, alignment: .leading)
+                    TextField("Enter server token", text: $serverToken)
+                }
+                
+                Spacer()
+            }
+            
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
     }
 }
 
 struct ServerView_Previews: PreviewProvider {
     static var previews: some View {
-        ServerView()
+        ServerView(serverName: "Test")
     }
 }

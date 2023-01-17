@@ -38,6 +38,7 @@ struct HA_MenuApp: App {
             
             Button("Preferences\u{2026}") {
                 openWindow(id: "preferences")
+                NSApp.activate(ignoringOtherApps: true)
             }
             .keyboardShortcut(",")
             

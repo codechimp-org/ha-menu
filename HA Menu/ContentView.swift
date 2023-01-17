@@ -30,57 +30,31 @@ struct ContentView: View {
                     LazyVStack
                     {
                         ForEach((0..<serverItems.count), id: \.self)
-                        {index in
-                            HStack() {
-                                VStack(alignment: .leading) {
-                                    Text(serverItems[index])
-                                        .font(.title3)
-                                    HStack() {
-                                        Circle()
-                                            .fill(.green)
-                                            .frame(width: 10, height: 10)
-                                        Text("Connected")
-                                            .font(.caption)
-                                    }
+                        {
+                            index in
+                            ServerStatusView(serverName: serverItems[index])
+                                .onTapGesture {
+                                    select = serverItems[index]
+                                    showSubview(view: AnyView(ServerView(serverName: serverItems[index]).frame(maxWidth: .infinity, maxHeight: .infinity)))
                                 }
-                                Spacer()
-                                Label("forward", systemImage: "chevron.right")
-                                    .labelStyle(IconOnlyLabelStyle())
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding()
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .stroke(Color("BorderColor"), lineWidth: 1)
-                            )
-                            .background(Color("PanelColor"))
-                            .onTapGesture {
-                                showSubview(view: AnyView(Text("Subview!").frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.white)))
-                            }
-                            
-                            
-                            //                            ServerStatusView(serverName: serverItems[index], action: {
-                            //                                showSubview(view: AnyView(Text("Subview!").frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.white)))
-                            //                            })
-                            //                            .frame(maxWidth: .infinity, minHeight: 200)
-                            
-                            //                            Button(action: {
-                            //                                    showSubview(view: AnyView(Text("Subview!").frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.white)))
-                            //                                }, label: {
-                            //                                    Text("go to subview")
-                            //                                })
-                            
-                            //                            NavigationLink(destination: ServerView(), tag: serverItems[index], selection: $select)
-                            //                            {
-                            //                                ServerStatusView(serverName: serverItems[index])
-                            //                            }
                         }
-                        //                    .listRowBackground(Color.clear)
-                        //                    .listRowSeparator(.hidden)
+                    }
+                }
+                
+                HStack {
+                    Toggle(isOn: .constant(false)) {
+                        Text("Start at login")
+                    }
+                    .toggleStyle(.switch)
+                    .controlSize(ControlSize.small)
+                    
+                    Spacer()
+                    
+                    Button("Add Server\u{2026}") {
                         
                     }
-                    //                .scrollContentBackground(.hidden)
                 }
+                
             }
             .toolbar
             {
@@ -89,49 +63,7 @@ struct ContentView: View {
                     Label("Upload", systemImage: "square.and.arrow.up")
                 }
             }
-            .navigationTitle("Servers")
-            
-            HStack {
-                Spacer()
-                Button("Add Server\u{2026}") {
-                    
-                }
-            }
-            
-            Toggle(isOn: .constant(false)) {
-                Text("Start at login")
-            }
-            .toggleStyle(.switch)
-            .controlSize(ControlSize.small)
-            
-            
-            //            VStack(alignment: .leading) {
-            //                HStack {
-            //                    Text("Server")
-            //                        .frame(width: 50, alignment: .leading)
-            //                    TextField("", text: $server)
-            //                }
-            //
-            //                HStack(alignment: .top) {
-            //                    Text("Token")
-            //                        .frame(width: 50, alignment: .leading)
-            //                    TextField("", text: $token)
-            //                        .frame(height: 100)
-            //
-            //                }
-            //            }
-            //            .padding(EdgeInsets(top: 10, leading: 10, bottom: 5, trailing: 10))
-            //
-            //            HStack {
-            //                TextField("", text: $input)
-            //                    .textFieldStyle(.roundedBorder)
-            //
-            //                Button("Add Entity") {
-            //                    print("add entity")
-            //                }
-            //                .padding(.leading, 5)
-            //            }
-            //            .padding(EdgeInsets(top: 0, leading: 10, bottom: 5, trailing: 10))
+            .navigationTitle( (showingSubview ? select! : "HA Menu") )
             
             Spacer()
         }
