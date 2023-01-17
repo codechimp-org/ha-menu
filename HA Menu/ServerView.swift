@@ -36,6 +36,23 @@ struct ServerView: View {
                     TextField("Enter server token", text: $serverToken)
                 }
                 
+                HStack(alignment: .center) {
+                    HStack(alignment: .center) {
+                        Circle()
+                            .fill(Color("StatusOKColor"))
+                            .frame(width: 10, height: 10)
+                        Text("Connected")
+                            .font(.footnote)
+                            .foregroundColor(Color("GrayControlColor"))
+                    }
+                    
+                    Spacer()
+                    
+                    Button("Connect") {
+                        
+                    }
+                }
+                
                 Spacer()
             }
             

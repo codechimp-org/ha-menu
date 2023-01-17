@@ -17,9 +17,9 @@ struct ServerStatusView: View {
                 Text(serverName)
                     .font(.title3)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: -5, trailing: 0))
-                HStack() {
+                HStack(alignment: .center) {
                     Circle()
-                        .fill(.green)
+                        .fill(Color("StatusOKColor"))
                         .frame(width: 10, height: 10)
                     Text("Connected")
                         .font(.footnote)
