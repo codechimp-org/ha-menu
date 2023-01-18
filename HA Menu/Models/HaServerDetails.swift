@@ -22,39 +22,40 @@ struct HaServerDetails: Codable, Identifiable {
         
         return request
     }
-}
-
-@propertyWrapper
-struct Trimmed: Codable {
-    private(set) var value: String = ""
-
-    var wrappedValue: String {
-        get { value }
-        set { value = newValue.trimmingCharacters(in: .whitespacesAndNewlines) }
-    }
-
-    init(wrappedValue initialValue: String) {
-        self.wrappedValue = initialValue
-    }
-}
-
-@propertyWrapper
-struct SanitizedUrl: Codable {
-    private(set) var value: String = ""
     
-    var wrappedValue: String {
-        get { value }
-        set {
-            value = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
-            
-            // Remove trailing slash
-            if (value.hasSuffix("/")) {
-                value = String(value.dropLast())
-            }
+    @propertyWrapper
+    struct Trimmed: Codable {
+        private(set) var value: String = ""
+        
+        var wrappedValue: String {
+            get { value }
+            set { value = newValue.trimmingCharacters(in: .whitespacesAndNewlines) }
+        }
+        
+        init(wrappedValue initialValue: String) {
+            self.wrappedValue = initialValue
         }
     }
+    
+    @propertyWrapper
+    struct SanitizedUrl: Codable {
+        private(set) var value: String = ""
         
-    init(wrappedValue initialValue: String) {
-        self.wrappedValue = initialValue
+        var wrappedValue: String {
+            get { value }
+            set {
+                value = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+                
+                // Remove trailing slash
+                if (value.hasSuffix("/")) {
+                    value = String(value.dropLast())
+                }
+            }
+        }
+        
+        init(wrappedValue initialValue: String) {
+            self.wrappedValue = initialValue
+        }
     }
+    
 }
