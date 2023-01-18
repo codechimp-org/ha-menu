@@ -8,15 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    
-    @State var server: String = ""
-    @State var token: String = ""
-    @State var input: String = ""
-    
-    
+        
     @State private var currentSubview = AnyView(ServerView())
     @State private var showingSubview = false
-    
     
     var serverItems = ["Server 1", "Server 2", "Server 3",  "Server 4",  "Server 5"]
     @State var select: String? = "Server 1"
