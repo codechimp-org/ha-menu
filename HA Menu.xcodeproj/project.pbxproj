@@ -19,7 +19,6 @@
 		49E7C72429769B0A000941A0 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C72329769B0A000941A0 /* ServerView.swift */; };
 		49E7C7282976B119000941A0 /* StackNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C7272976B119000941A0 /* StackNavigationView.swift */; };
 		49E7C72A2977FEE6000941A0 /* HaServerDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C7292977FEE6000941A0 /* HaServerDetails.swift */; };
-		49E7C72D297801F0000941A0 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C72C297801F0000941A0 /* StringUtils.swift */; };
 		49E7C73129780432000941A0 /* ArrayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C73029780432000941A0 /* ArrayUtils.swift */; };
 		49E7C73329782E55000941A0 /* HaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C73229782E55000941A0 /* HaService.swift */; };
 		49E7C735297836E0000941A0 /* HaState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C734297836E0000941A0 /* HaState.swift */; };
@@ -61,7 +60,6 @@
 		49E7C72329769B0A000941A0 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		49E7C7272976B119000941A0 /* StackNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackNavigationView.swift; sourceTree = "<group>"; };
 		49E7C7292977FEE6000941A0 /* HaServerDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaServerDetails.swift; sourceTree = "<group>"; };
-		49E7C72C297801F0000941A0 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		49E7C73029780432000941A0 /* ArrayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayUtils.swift; sourceTree = "<group>"; };
 		49E7C73229782E55000941A0 /* HaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaService.swift; sourceTree = "<group>"; };
 		49E7C734297836E0000941A0 /* HaState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaState.swift; sourceTree = "<group>"; };
@@ -160,7 +158,6 @@
 		49E7C72B297801CE000941A0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				49E7C72C297801F0000941A0 /* StringUtils.swift */,
 				49E7C73029780432000941A0 /* ArrayUtils.swift */,
 			);
 			path = Utils;
@@ -320,7 +317,6 @@
 				49E7C72A2977FEE6000941A0 /* HaServerDetails.swift in Sources */,
 				49E4CB092827ED3900980582 /* HA_MenuApp.swift in Sources */,
 				49E7C73329782E55000941A0 /* HaService.swift in Sources */,
-				49E7C72D297801F0000941A0 /* StringUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
