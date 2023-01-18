@@ -18,6 +18,13 @@
 		49E7C7222975ADBF000941A0 /* ServerStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C7212975ADBF000941A0 /* ServerStatusView.swift */; };
 		49E7C72429769B0A000941A0 /* ServerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C72329769B0A000941A0 /* ServerView.swift */; };
 		49E7C7282976B119000941A0 /* StackNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C7272976B119000941A0 /* StackNavigationView.swift */; };
+		49E7C72A2977FEE6000941A0 /* HaServerDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C7292977FEE6000941A0 /* HaServerDetails.swift */; };
+		49E7C72D297801F0000941A0 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C72C297801F0000941A0 /* StringUtils.swift */; };
+		49E7C73129780432000941A0 /* ArrayUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C73029780432000941A0 /* ArrayUtils.swift */; };
+		49E7C73329782E55000941A0 /* HaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C73229782E55000941A0 /* HaService.swift */; };
+		49E7C735297836E0000941A0 /* HaState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C734297836E0000941A0 /* HaState.swift */; };
+		49E7C73729783704000941A0 /* HaStateAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C73629783704000941A0 /* HaStateAttributes.swift */; };
+		49E7C7392978372D000941A0 /* HaEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49E7C7382978372D000941A0 /* HaEntity.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +60,13 @@
 		49E7C7212975ADBF000941A0 /* ServerStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStatusView.swift; sourceTree = "<group>"; };
 		49E7C72329769B0A000941A0 /* ServerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerView.swift; sourceTree = "<group>"; };
 		49E7C7272976B119000941A0 /* StackNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackNavigationView.swift; sourceTree = "<group>"; };
+		49E7C7292977FEE6000941A0 /* HaServerDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaServerDetails.swift; sourceTree = "<group>"; };
+		49E7C72C297801F0000941A0 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
+		49E7C73029780432000941A0 /* ArrayUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayUtils.swift; sourceTree = "<group>"; };
+		49E7C73229782E55000941A0 /* HaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaService.swift; sourceTree = "<group>"; };
+		49E7C734297836E0000941A0 /* HaState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaState.swift; sourceTree = "<group>"; };
+		49E7C73629783704000941A0 /* HaStateAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaStateAttributes.swift; sourceTree = "<group>"; };
+		49E7C7382978372D000941A0 /* HaEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HaEntity.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +117,8 @@
 		49E4CB072827ED3900980582 /* HA Menu */ = {
 			isa = PBXGroup;
 			children = (
+				49E7C72F2978027A000941A0 /* Models */,
+				49E7C72B297801CE000941A0 /* Utils */,
 				49E4CB082827ED3900980582 /* HA_MenuApp.swift */,
 				49E4CB0A2827ED3900980582 /* ContentView.swift */,
 				49E7C7272976B119000941A0 /* StackNavigationView.swift */,
@@ -139,6 +155,27 @@
 				49E4CB262827ED3A00980582 /* HA_MenuUITestsLaunchTests.swift */,
 			);
 			path = "HA MenuUITests";
+			sourceTree = "<group>";
+		};
+		49E7C72B297801CE000941A0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				49E7C72C297801F0000941A0 /* StringUtils.swift */,
+				49E7C73029780432000941A0 /* ArrayUtils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		49E7C72F2978027A000941A0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				49E7C7292977FEE6000941A0 /* HaServerDetails.swift */,
+				49E7C73229782E55000941A0 /* HaService.swift */,
+				49E7C734297836E0000941A0 /* HaState.swift */,
+				49E7C7382978372D000941A0 /* HaEntity.swift */,
+				49E7C73629783704000941A0 /* HaStateAttributes.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,9 +311,16 @@
 			files = (
 				49E4CB0B2827ED3900980582 /* ContentView.swift in Sources */,
 				49E7C72429769B0A000941A0 /* ServerView.swift in Sources */,
+				49E7C73729783704000941A0 /* HaStateAttributes.swift in Sources */,
+				49E7C7392978372D000941A0 /* HaEntity.swift in Sources */,
+				49E7C735297836E0000941A0 /* HaState.swift in Sources */,
 				49E7C7282976B119000941A0 /* StackNavigationView.swift in Sources */,
+				49E7C73129780432000941A0 /* ArrayUtils.swift in Sources */,
 				49E7C7222975ADBF000941A0 /* ServerStatusView.swift in Sources */,
+				49E7C72A2977FEE6000941A0 /* HaServerDetails.swift in Sources */,
 				49E4CB092827ED3900980582 /* HA_MenuApp.swift in Sources */,
+				49E7C73329782E55000941A0 /* HaService.swift in Sources */,
+				49E7C72D297801F0000941A0 /* StringUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
