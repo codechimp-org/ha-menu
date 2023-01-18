@@ -57,5 +57,5 @@ struct HaServerDetails: Codable, Identifiable {
             self.wrappedValue = initialValue
         }
     }
-    
 }
+

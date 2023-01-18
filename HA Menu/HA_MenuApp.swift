@@ -12,6 +12,8 @@ import SwiftUI
 struct HA_MenuApp: App {
     @Environment(\.scenePhase) var scenePhase
     @Environment(\.openWindow) var openWindow
+    
+    @AppStorage("Servers") var haServerDetails: Data = Data()
         
     var body: some Scene {
 #if DEBUG
@@ -114,6 +116,42 @@ struct HA_MenuApp: App {
         for window in NSApplication.shared.windows {
             if window.title == "Preferences" {
                 window.level = .floating
+            }
+        }
+    }
+    
+    func getHaServerDetails(data: Data) -> [HaServerDetails] {
+            return HaServerDetailsStorage.loadHaServerDetailsArray(data: data)
+        }
+    
+    func addHaServerDetails() {
+        var tmpHaServerDetails = getHaServerDetails(data: haServerDetails)
+        
+        tmpHaServerDetails.append(HaServerDetails())
+        
+        haServerDetails = HaServerDetailsStorage.archiveHaServerDetailsArray(object: tmpHaServerDetails)
+    }
+    
+    class HaServerDetailsStorage: NSObject {
+        
+        static func archiveHaServerDetailsArray(object : [HaServerDetails]) -> Data {
+            do {
+                let data = try NSKeyedArchiver.archivedData(withRootObject: object, requiringSecureCoding: false)
+                return data
+            } catch {
+                fatalError("Can't encode data: \(error)")
+            }
+
+        }
+
+        static func loadHaServerDetailsArray(data: Data) -> [HaServerDetails] {
+            do {
+                guard let array = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [HaServerDetails] else {
+                    return []
+                }
+                return array
+            } catch {
+                fatalError("loadHaServerDetailsArray - Can't encode data: \(error)")
             }
         }
     }
