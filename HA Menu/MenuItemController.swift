@@ -59,21 +59,23 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     }
 
     public func menuWillOpen(_ menu: NSMenu){
-        self.removeDynamicMenuItems()
+        // Dirty fix for Sonoma which doesn't like menu items being changed during WillOpen
+        DispatchQueue.main.async {
+            self.removeDynamicMenuItems()
 
-        self.addDynamicMenuItems(){
-            result in
-            switch result {
-            case .success( _):
-                self.checkForUpdate()
-            case .failure( _):
-                break
+            self.addDynamicMenuItems(){
+                result in
+                switch result {
+                case .success( _):
+                    self.checkForUpdate()
+                case .failure( _):
+                    break
+                }
             }
         }
     }
-
+    
     public func menuDidClose(_ menu: NSMenu){
-
     }
     
     func buildStaticMenu() {
