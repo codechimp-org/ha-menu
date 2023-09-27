@@ -9,7 +9,7 @@ Currently HA Menu supports
 * Opening and Closing Covers
 * Viewing sensor values (Sensors have to be specifically added to a group)  
 
-HA Menu supports MacOS 10.13 (High Sierra) and later.
+HA Menu supports MacOS 11.5 (Big Sur) and later.
 
 ![alt text](Art/menu.png "HA Menu")
 
