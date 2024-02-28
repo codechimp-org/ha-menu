@@ -1,5 +1,10 @@
-![Logo](https://github.com/codechimp-org/ha-menu/blob/master/Art/logo.png)
 # HA Menu
+
+[![GitHub Release][releases-shield]](releases)
+[![Downloads][download-latest-shield]](Downloads)
+[![License][license-shield]](LICENSE)
+
+![Logo](https://github.com/codechimp-org/ha-menu/blob/master/Art/logo.png)
 
 A Mac OS Menu Bar app to perform common Home Assistant functions  
 Currently HA Menu supports  
@@ -69,4 +74,10 @@ ha_menu:
 ```
 
 ## Say Thanks
-If you like HA Menu buy me a :coffee: via [PayPal](https://www.paypal.me/codechimporg/2)
+If you would like to show your support for HA Menu
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/codechimp)
+
+[license-shield]: https://img.shields.io/github/license/codechimp-org/ha-menu.svg?style=for-the-badge
+[releases-shield]: https://img.shields.io/github/release/codechimp-org/ha-menu.svg?style=for-the-badge
+[download-latest-shield]: https://img.shields.io/github/downloads/codechimp-org/ha-menu/latest/total?style=for-the-badge
