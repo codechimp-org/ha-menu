@@ -6,7 +6,7 @@
 
 ![Logo](https://github.com/codechimp-org/ha-menu/blob/master/Art/logo.png)
 
-A Mac OS Menu Bar app to perform common Home Assistant functions  
+A MacOS Menu Bar app to perform common Home Assistant functions  
 Currently HA Menu supports  
 * Turning available switches, lights, automations and input_boolean's on and off
 * Activating scenes, scripts, buttons and input_buttons
