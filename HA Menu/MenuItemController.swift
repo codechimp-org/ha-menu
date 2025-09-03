@@ -28,8 +28,8 @@ final class MenuItemController: NSObject, NSMenuDelegate {
     let menuItemTypeInfo = 997
     let menuItemTypeError = 999
 
-    let releasesFeedURL = URL(string: "https://github.com/codechimp-org/ha-menu/releases.atom")!
-    let releasesURL = URL(string: "https://github.com/codechimp-org/ha-menu/releases")!
+    let releasesFeedURL = URL(string: "https://hamenu-releases-atom.codechimp.org")!
+    let releasesURL = URL(string: "https://hamenu-releases.codechimp.org")!
     
     override init() {
         preferences = Preferences()
