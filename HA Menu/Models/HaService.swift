@@ -33,12 +33,20 @@ class HaService {
 
     /// Builds an endpoint URL from the configured server value.
     /// Accepts http/https hosts with optional port and optional trailing
-    /// slash(es); trims pasted whitespace/newlines, strips trailing slashes
-    /// so no `//api/...` double-slash is produced, and assumes http when the
-    /// user omits the scheme (e.g. `192.168.1.4:8123`). Returns nil for
-    /// truly bad input (empty, unparseable, non-http(s) scheme, missing host).
+    /// slash(es); trims pasted whitespace/newlines, drops invisible pasted
+    /// characters (zero-width spaces, BOM, control chars) that look clean in
+    /// the Server field yet break URL parsing, strips trailing slashes so no
+    /// `//api/...` double-slash is produced, and assumes http when the user
+    /// omits the scheme (e.g. `192.168.1.4:8123`). Returns nil for truly bad
+    /// input (empty, unparseable, non-http(s) scheme, missing host).
     func apiURL(path: String) -> URL? {
-        var base = prefs.server.trimmingCharacters(in: .whitespacesAndNewlines)
+        // Invisible characters that survive whitespace trimming but make
+        // URLComponents fail (or produce a wrong host) while the Server
+        // field looks exactly like a valid URL.
+        let invisible = CharacterSet(charactersIn: "\u{200B}\u{200C}\u{200D}\u{FEFF}")
+            .union(.controlCharacters)
+        var base = prefs.server.components(separatedBy: invisible).joined()
+        base = base.trimmingCharacters(in: .whitespacesAndNewlines)
         if base.isEmpty {
             return nil
         }
