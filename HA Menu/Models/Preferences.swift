@@ -37,7 +37,11 @@ struct Preferences {
 
     var token: String {
         get {
-            return UserDefaults.standard.string(forKey: "token") ?? ""
+            // Trim on read as well as on write: tokens stored by older
+            // builds (or restored prefs) may carry a pasted trailing
+            // newline that breaks Authorization header creation while the
+            // field looks clean. Reinstalls never clear UserDefaults.
+            return (UserDefaults.standard.string(forKey: "token") ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespacesAndNewlines), forKey: "token")

@@ -96,9 +96,11 @@ class PrefsViewController: NSViewController {
                         self.textfieldStatus.stringValue = "Unknown Response"
                     case .JSONDecodeError:
                         self.textfieldStatus.stringValue = "Error Decoding JSON"
-                    case .UnknownError:
+                    case .UnknownError(let message):
                         print(haServiceApiError.localizedDescription)
-                        self.textfieldStatus.stringValue = "Unknown Error (check your server/port)"
+                        self.textfieldStatus.stringValue = message.isEmpty
+                            ? "Unknown Error (check your server/port)"
+                            : "Unknown Error (check your server/port): \(message)"
                     }
                 }
             }

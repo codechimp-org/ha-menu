@@ -237,8 +237,10 @@ final class MenuItemController: NSObject, NSMenuDelegate {
                     self.addErrorMenuItem(message: "Unknown Response")
                 case .JSONDecodeError:
                     self.addErrorMenuItem(message: "Error Decoding JSON")
-                case .UnknownError:
-                    self.addErrorMenuItem(message: "Unknown Error (check your server/port)")
+                case .UnknownError(let message):
+                    self.addErrorMenuItem(message: message.isEmpty
+                        ? "Unknown Error (check your server/port)"
+                        : "Unknown Error (check your server/port): \(message)")
                 }
                 completionHandler(.failure(haServiceApiError))
                 break

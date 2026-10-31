@@ -21,6 +21,18 @@ class HaService {
         case UnknownResponse
         case JSONDecodeError
         case UnknownError(message: String)
+
+        // Surface the underlying transport error detail: without this the
+        // default LocalizedError text discards the associated message and
+        // every transport failure looks identical in the UI and logs.
+        var errorDescription: String? {
+            switch self {
+            case .UnknownError(let message):
+                return message.isEmpty ? "Unknown Error" : "Unknown Error: \(message)"
+            default:
+                return nil
+            }
+        }
     }
 
     enum HaServiceEntityError: Error {
