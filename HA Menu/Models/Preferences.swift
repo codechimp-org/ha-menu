@@ -21,15 +21,17 @@ struct Preferences {
 
     var server: String {
         get {
-            var serverUrl = UserDefaults.standard.string(forKey: "server") ?? ""
-            // Remove trailing slash
-            if (serverUrl.hasSuffix("/")) {
-                serverUrl.remove(at: serverUrl.index(before: serverUrl.endIndex))
+            var serverUrl = (UserDefaults.standard.string(forKey: "server") ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+            // Remove all trailing slashes so endpoint paths can be appended cleanly.
+            // Stop at "://" so a bare scheme ("http://") is preserved and still
+            // fails validation as invalid rather than being mangled.
+            while serverUrl.hasSuffix("/") && !serverUrl.hasSuffix("://") {
+                serverUrl = String(serverUrl.dropLast())
             }
             return serverUrl
         }
         set {
-            UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "server")
+            UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespacesAndNewlines), forKey: "server")
         }
     }
 
@@ -38,7 +40,7 @@ struct Preferences {
             return UserDefaults.standard.string(forKey: "token") ?? ""
         }
         set {
-            UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "token")
+            UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespacesAndNewlines), forKey: "token")
         }
     }
 

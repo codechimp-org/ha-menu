@@ -31,6 +31,34 @@ class HaService {
 
     var prefs = Preferences()
 
+    /// Builds an endpoint URL from the configured server value.
+    /// Accepts http/https hosts with optional port and optional trailing
+    /// slash(es); trims pasted whitespace/newlines, strips trailing slashes
+    /// so no `//api/...` double-slash is produced, and assumes http when the
+    /// user omits the scheme (e.g. `192.168.1.4:8123`). Returns nil for
+    /// truly bad input (empty, unparseable, non-http(s) scheme, missing host).
+    func apiURL(path: String) -> URL? {
+        var base = prefs.server.trimmingCharacters(in: .whitespacesAndNewlines)
+        if base.isEmpty {
+            return nil
+        }
+        if !base.contains("://") {
+            base = "http://" + base
+        }
+        guard var components = URLComponents(string: base),
+            let scheme = components.scheme?.lowercased(),
+            scheme == "http" || scheme == "https",
+            let host = components.host, !host.isEmpty else {
+            return nil
+        }
+        var basePath = components.path
+        while basePath.hasSuffix("/") {
+            basePath = String(basePath.dropLast())
+        }
+        components.path = basePath + path
+        return components.url
+    }
+
     func createAuthURLRequest(url: URL) -> URLRequest {
         var request = URLRequest(url: url)
 
@@ -47,7 +75,7 @@ class HaService {
             return
         }
 
-        guard let url = URL(string: "\(prefs.server)/api/states") else {
+        guard let url = apiURL(path: "/api/states") else {
             completionHandler(.failure(.InvalidURL))
             return
         }
@@ -120,9 +148,11 @@ class HaService {
 
     func toggleEntityState(haEntity: HaEntity) {
         let params = ["entity_id": haEntity.entityId]
-        let urlString = "\(prefs.server)/api/services/\(haEntity.domain)/toggle"
 
-        var request = createAuthURLRequest(url: URL(string: urlString)!)
+        guard let url = apiURL(path: "/api/services/\(haEntity.domain)/toggle") else {
+            return
+        }
+        var request = createAuthURLRequest(url: url)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
@@ -138,7 +168,10 @@ class HaService {
     func selectInputSelectOption(haEntity: HaEntity, option: String) {
         let params = ["entity_id": haEntity.entityId, "option": option]
 
-        var request = createAuthURLRequest(url: URL(string: "\(prefs.server)/api/services/input_select/select_option")!)
+        guard let url = apiURL(path: "/api/services/input_select/select_option") else {
+            return
+        }
+        var request = createAuthURLRequest(url: url)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
@@ -153,9 +186,11 @@ class HaService {
 
     func turnOnEntity(haEntity: HaEntity) {
         let params = ["entity_id": haEntity.entityId]
-        let urlString = "\(prefs.server)/api/services/\(haEntity.domain)/turn_on"
 
-        var request = createAuthURLRequest(url: URL(string: urlString)!)
+        guard let url = apiURL(path: "/api/services/\(haEntity.domain)/turn_on") else {
+            return
+        }
+        var request = createAuthURLRequest(url: url)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
@@ -170,9 +205,11 @@ class HaService {
     
     func pressEntity(haEntity: HaEntity) {
         let params = ["entity_id": haEntity.entityId]
-        let urlString = "\(prefs.server)/api/services/\(haEntity.domain)/press"
 
-        var request = createAuthURLRequest(url: URL(string: urlString)!)
+        guard let url = apiURL(path: "/api/services/\(haEntity.domain)/press") else {
+            return
+        }
+        var request = createAuthURLRequest(url: url)
 
         request.httpMethod = "POST"
         request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
