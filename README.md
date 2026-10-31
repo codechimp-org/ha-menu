@@ -1,6 +1,15 @@
 # HA Menu
 
-## ⚠️ This application is now retired.
+### ⚠️ This application is now retired.
+
+Some alternatives
+
+[Itsyhome](https://itsyhome.app)
+
+[HomeGlance](https://gethomeglance.com)
+
+[Peek](https://github.com/tiagonoronha/peek)
+
 
 ![Logo](https://github.com/codechimp-org/ha-menu/blob/master/Art/logo.png)
 
