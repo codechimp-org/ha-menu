@@ -41,6 +41,7 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         if let statusButton = statusItem.button {
             #if DEBUG
             let icon = NSImage(named: "StatusBarButtonImageDebug")
+            icon?.isTemplate = true
             #else
             let icon = NSImage(named: "StatusBarButtonImage")
             icon?.isTemplate = true // best for dark mode
@@ -56,6 +57,55 @@ final class MenuItemController: NSObject, NSMenuDelegate {
         statusItem.menu = menu
         
         menu.delegate = self
+
+        checkMenuBarVisibility()
+    }
+
+    // MARK: - macOS 27 (Golden Gate) Menu Bar privacy gate
+    //
+    // Golden Gate hides each app's NSStatusItem until the user enables it in
+    // System Settings > Control Center > Menu Bar. When hidden,
+    // `statusItem.isVisible` is false and the button has no window/screen.
+    // Point the user at the toggle instead of leaving them with no icon.
+    // Deferred + non-blocking: never stalls launch, never crashes if the
+    // status item is unavailable.
+    private func checkMenuBarVisibility() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            guard let self = self else { return }
+
+            let button = self.statusItem.button
+            guard button != nil else { return }
+
+            var hidden = false
+            if #available(macOS 11.0, *) {
+                hidden = !self.statusItem.isVisible
+            }
+            if button?.window?.screen == nil {
+                hidden = true
+            }
+            // Zero-sized button frame is another symptom of a gated item.
+            if let frame = button?.frame, frame.isEmpty {
+                hidden = true
+            }
+
+            guard hidden else { return }
+
+            let alert = NSAlert()
+            alert.messageText = "HA Menu icon is hidden"
+            alert.informativeText = "macOS is hiding the HA Menu icon in the menu bar. Enable HA Menu in System Settings > Control Center > Menu Bar, then relaunch HA Menu."
+            alert.alertStyle = .informational
+            alert.addButton(withTitle: "Open System Settings")
+            alert.addButton(withTitle: "Dismiss")
+
+            // Async so presenting the prompt never blocks launch.
+            DispatchQueue.main.async {
+                let response = alert.runModal()
+                if response == .alertFirstButtonReturn,
+                   let url = URL(string: "x-apple.systempreferences:com.apple.ControlCenter-Settings.extension?MenuBar") {
+                    NSWorkspace.shared.open(url)
+                }
+            }
+        }
     }
 
     public func menuWillOpen(_ menu: NSMenu){
@@ -108,29 +158,21 @@ final class MenuItemController: NSObject, NSMenuDelegate {
 
     @objc func openHA(sender: NSMenuItem) {
 
-        if #available(OSX 10.15, *) {
-            let url = NSURL(fileURLWithPath: "/Applications/Home Assistant.app", isDirectory: true) as URL
+        // Deployment target (11.5) guarantees macOS 10.15+, so the modern
+        // openApplication(at:configuration:) API is always available.
+        let url = NSURL(fileURLWithPath: "/Applications/Home Assistant.app", isDirectory: true) as URL
 
-            let path = "/bin"
-            let configuration = NSWorkspace.OpenConfiguration()
-            configuration.arguments = [path]
-            configuration.promptsUserIfNeeded = false
+        let path = "/bin"
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.arguments = [path]
+        configuration.promptsUserIfNeeded = false
 
-            NSWorkspace.shared.openApplication(at: url,
-                                               configuration: configuration) { (app, error) in
-                                                if error != nil {
-                                                    // Fallback to opening website
-                                                    NSWorkspace.shared.open(NSURL(string: self.prefs.server)! as URL)
-                                                }
-            }
-
-        } else {
-            // Fallback on earlier versions
-            if !NSWorkspace.shared.launchApplication("Home Assistant") {
-                // Fallback to opening website
-                NSWorkspace.shared.open(NSURL(string: self.prefs.server)! as URL)
-            }
-
+        NSWorkspace.shared.openApplication(at: url,
+                                           configuration: configuration) { (app, error) in
+                                            if error != nil {
+                                                // Fallback to opening website
+                                                NSWorkspace.shared.open(NSURL(string: self.prefs.server)! as URL)
+                                            }
         }
 
     }

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-@NSApplicationMain
+@main
 class LauncherAppDelegate: NSObject, NSApplicationDelegate {
 
 
@@ -28,7 +28,12 @@ class LauncherAppDelegate: NSObject, NSApplicationDelegate {
             for _ in 1...4 {
                 path = path.deletingLastPathComponent as NSString
             }
-            NSWorkspace.shared.launchApplication(path as String)
+            let appURL = URL(fileURLWithPath: path as String, isDirectory: true)
+            let configuration = NSWorkspace.OpenConfiguration()
+            configuration.promptsUserIfNeeded = false
+            NSWorkspace.shared.openApplication(at: appURL,
+                                               configuration: configuration,
+                                               completionHandler: nil)
         }
         else {
             self.terminate()

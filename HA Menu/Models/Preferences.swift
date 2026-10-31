@@ -16,7 +16,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "settingsVersion")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -31,7 +30,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "server")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -41,7 +39,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "token")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -51,7 +48,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "launch")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -61,7 +57,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "betaNotifications")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -90,7 +85,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespaces), forKey: "group")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -111,7 +105,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_lights")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -121,7 +114,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_switches")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -131,7 +123,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_automations")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -141,7 +132,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_inputbooleans")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -151,7 +141,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_inputselects")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -161,7 +150,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_scenes")
-            UserDefaults.standard.synchronize()
         }
     }
 
@@ -171,7 +159,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_scripts")
-            UserDefaults.standard.synchronize()
         }
     }
     
@@ -181,7 +168,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_covers")
-            UserDefaults.standard.synchronize()
         }
     }
     
@@ -191,7 +177,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_buttons")
-            UserDefaults.standard.synchronize()
         }
     }
     
@@ -201,7 +186,6 @@ struct Preferences {
         }
         set {
             UserDefaults.standard.set(newValue, forKey: "domain_inputbuttons")
-            UserDefaults.standard.synchronize()
         }
     }
 

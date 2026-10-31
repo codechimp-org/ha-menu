@@ -11,7 +11,7 @@ import ServiceManagement
 
 let launcherAppId = "org.codechimp.HA-Menu-Launcher"
 
-@NSApplicationMain
+@main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var menuItemController: MenuItemController?
@@ -70,7 +70,23 @@ extension AppDelegate {
     }
 
     func updateFromPrefs() {
-        SMLoginItemSetEnabled(launcherAppId as CFString, prefs.launch)
+        if #available(macOS 13.0, *) {
+            do {
+                if prefs.launch {
+                    try SMAppService.mainApp.register()
+                } else {
+                    try SMAppService.mainApp.unregister()
+                }
+            } catch {
+                // SMAppService can throw (e.g. requiresApproval when the user
+                // must enable the app in System Settings > General > Login Items).
+                // Never crash the host app for a login-item failure.
+                print("SMAppService error: \(error)")
+            }
+        } else {
+            // macOS 11.5 - 12 fallback for the pre-13 login-item API.
+            SMLoginItemSetEnabled(launcherAppId as CFString, prefs.launch)
+        }
     }
 
 }
