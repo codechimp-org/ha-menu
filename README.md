@@ -1,8 +1,6 @@
 # HA Menu
 
-[![GitHub Release][releases-shield]](releases)
-[![Downloads][download-latest-shield]](Downloads)
-[![License][license-shield]](LICENSE)
+## ⚠️ This application is now retired.
 
 ![Logo](https://github.com/codechimp-org/ha-menu/blob/master/Art/logo.png)
 
